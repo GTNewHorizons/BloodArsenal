@@ -56,7 +56,6 @@ public class BloodArsenalConfig
     public static int lpMaterializerCost;
 
 	// Miscellaneous
-    public static boolean versionCheckingAllowed;
 	public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
@@ -118,7 +117,6 @@ public class BloodArsenalConfig
         lightningSigilMultiplier = config.get(lpSettings, "Lightning Sigil cost (multiplier); Default: 1500", 1500).getInt(lightningSigilMultiplier);
         lpMaterializerCost = config.get(lpSettings, "Converts this number to 100LE (from this (SN) to 100 (LE)); Default: 150", 150).getInt(lpMaterializerCost);
 
-        versionCheckingAllowed = config.get(misc, "Is auto-magic version checking allowed?", false, "Allows for your version to be checked against the latest version").getBoolean();
         isRedGood = config.get(misc, "Is RED > PURPLE?", false, "Purple is always better than Red. But I won't tell you how to live your life. Even if it is incorrect.").getBoolean(isRedGood);
         cakeIsLie = config.get(misc, "The cake is a lie", false, "The cake is a lie").getBoolean(cakeIsLie);
         isGlassDangerous = config.get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp").getBoolean(isGlassDangerous);

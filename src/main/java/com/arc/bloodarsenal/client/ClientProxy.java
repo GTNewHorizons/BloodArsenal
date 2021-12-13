@@ -1,12 +1,10 @@
 package com.arc.bloodarsenal.client;
 
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.CommonProxy;
 import com.arc.bloodarsenal.common.block.ModBlocks;
 import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
 import com.arc.bloodarsenal.common.items.ModItems;
 import com.arc.bloodarsenal.common.items.sigil.SigilUtils;
-import com.arc.bloodarsenal.common.misc.VersionChecker;
 import com.arc.bloodarsenal.client.renderer.block.*;
 import com.arc.bloodarsenal.client.renderer.item.RenderBow;
 import com.arc.bloodarsenal.client.renderer.block.TilePortableAltarRenderer;
@@ -51,11 +49,6 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerEvents()
     {
-        if (BloodArsenalConfig.versionCheckingAllowed)
-        {
-            new VersionChecker().init();
-        }
-
         MinecraftForge.EVENT_BUS.register(new SigilUtils());
     }
 
