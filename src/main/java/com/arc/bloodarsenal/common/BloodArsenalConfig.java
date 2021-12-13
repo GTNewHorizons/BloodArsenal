@@ -56,7 +56,6 @@ public class BloodArsenalConfig
     public static int lpMaterializerCost;
 
 	// Miscellaneous
-    public static boolean versionCheckingAllowed;
 	public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
@@ -88,10 +87,10 @@ public class BloodArsenalConfig
         config.addCustomCategoryComment(lpSettings, "Change the LP costs for things");
 	    config.addCustomCategoryComment(misc, "Random stuffs");
 
-        vampiricAuraID = config.get(potionId, "Vampiric Aura", 50).getInt(vampiricAuraID);
-        bleedingID = config.get(potionId, "Bleeding", 51).getInt(bleedingID);
-        swimmingID = config.get(potionId, "Swimming", 52).getInt(swimmingID);
-        soulBurnID = config.get(potionId, "Soul Burn", 53).getInt(soulBurnID);
+        vampiricAuraID = config.get(potionId, "Vampiric Aura", 120).getInt(vampiricAuraID);
+        bleedingID = config.get(potionId, "Bleeding", 121).getInt(bleedingID);
+        swimmingID = config.get(potionId, "Swimming", 122).getInt(swimmingID);
+        soulBurnID = config.get(potionId, "Soul Burn", 123).getInt(soulBurnID);
 
         ritualDisabledWither = config.get(ritualBlacklist, "Ritual of Withering", false).getBoolean(ritualDisabledWither);
         ritualDisabledMidas = config.get(ritualBlacklist, "Midas Touch", false).getBoolean(ritualDisabledMidas);
@@ -111,15 +110,14 @@ public class BloodArsenalConfig
         bloodInfusedWoodID = config.get(modSettings, "[Tinker's Construct] Material ID for Blood Infused Wood; Default: 250", 250).getInt(bloodInfusedWoodID);
         bloodInfusedIronID = config.get(modSettings, "[Tinker's Construct] Material ID for Blood Infused Iron; Default: 251", 251).getInt(bloodInfusedIronID);
 
-        sigilSwimmingCost = config.get(lpSettings, "Sigil of Swimming cost; Default: 150", 150).getInt(sigilSwimmingCost);
+        sigilSwimmingCost = config.get(lpSettings, "Sigil of Swimming cost; Default: 250", 250).getInt(sigilSwimmingCost);
         sigilDivinityCost = config.get(lpSettings, "Sigil of Divinity cost; Default: 1000000", 1000000).getInt(sigilDivinityCost);
-        enderSigilOpenCost = config.get(lpSettings, "Ender Sigil cost (to open the Ender Chest); Default: 200", 200).getInt(enderSigilOpenCost);
-        enderSigilTeleportMultiplier = config.get(lpSettings, "Ender Sigil cost (to teleport (multiplier)); Default: 250", 250).getInt(enderSigilTeleportMultiplier);
-        lightningSigilMultiplier = config.get(lpSettings, "Lightning Sigil cost (multiplier); Default: 1000", 1000).getInt(lightningSigilMultiplier);
+        enderSigilOpenCost = config.get(lpSettings, "Ender Sigil cost (to open the Ender Chest); Default: 400", 400).getInt(enderSigilOpenCost);
+        enderSigilTeleportMultiplier = config.get(lpSettings, "Ender Sigil cost (to teleport (multiplier)); Default: 500", 500).getInt(enderSigilTeleportMultiplier);
+        lightningSigilMultiplier = config.get(lpSettings, "Lightning Sigil cost (multiplier); Default: 1500", 1500).getInt(lightningSigilMultiplier);
         lpMaterializerCost = config.get(lpSettings, "Converts this number to 100LE (from this (SN) to 100 (LE)); Default: 150", 150).getInt(lpMaterializerCost);
 
-        versionCheckingAllowed = config.get(misc, "Is auto-magic version checking allowed?", true, "Allows for your version to be checked against the latest version").getBoolean();
-        isRedGood = config.get(misc, "Is RED > PURPLE?", false, "Purple is always better than Red. But I won't tell you how to live your life. Even if it is incorrectly.").getBoolean(isRedGood);
+        isRedGood = config.get(misc, "Is RED > PURPLE?", false, "Purple is always better than Red. But I won't tell you how to live your life. Even if it is incorrect.").getBoolean(isRedGood);
         cakeIsLie = config.get(misc, "The cake is a lie", false, "The cake is a lie").getBoolean(cakeIsLie);
         isGlassDangerous = config.get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp").getBoolean(isGlassDangerous);
 

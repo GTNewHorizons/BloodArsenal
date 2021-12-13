@@ -5,7 +5,6 @@ import com.arc.bloodarsenal.common.gui.GuiHandler;
 import com.arc.bloodarsenal.common.items.ModItems;
 import com.arc.bloodarsenal.common.items.book.BloodBurnedTome;
 import com.arc.bloodarsenal.common.items.sigil.holding.AHPacketHandler;
-import com.arc.bloodarsenal.common.misc.CommandDownloadMod;
 import com.arc.bloodarsenal.common.potion.PotionBloodArsenal;
 import com.arc.bloodarsenal.common.rituals.RitualRegistry;
 import com.arc.bloodarsenal.common.thaumcraft.BloodArsenalThaumcraft;
@@ -178,11 +177,5 @@ public class BloodArsenal
             logger.info("Loaded Forge Multipart integration");
             ModBlocks.registerMultiparts();
         }
-    }
-
-    @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event)
-    {
-        event.registerServerCommand(new CommandDownloadMod());
     }
 }
