@@ -31,11 +31,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Calendar;
 
-@Mod(modid = BloodArsenal.MODID, version = BloodArsenal.VERSION, name = "Blood Arsenal", dependencies = "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic", guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
+@Mod(modid = BloodArsenal.MODID, version = BloodArsenal.VERSION, name = "GRADLETOKEN_MODNAME", dependencies = "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic", guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
 public class BloodArsenal
 {
-    public final static String MODID = "BloodArsenal";
-    public final static String VERSION = "@VERSION@";
+    public final static String MODID = "GRADLETOKEN_MODID";
+    public final static String VERSION = "GRADLETOKEN_VERSION";
 
     @SidedProxy(clientSide = "com.arc.bloodarsenal.client.ClientProxy", serverSide = "com.arc.bloodarsenal.common.CommonProxy")
     public static CommonProxy proxy;
