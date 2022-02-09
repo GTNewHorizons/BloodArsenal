@@ -104,8 +104,8 @@ public class EntityBloodHound extends EntityTameable
     {
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
-        this.dataWatcher.addObject(19, 0);
-        this.dataWatcher.addObject(20, BlockColored.func_150032_b(1));
+        this.dataWatcher.addObject(19, (byte) 0);
+        this.dataWatcher.addObject(20, (byte) BlockColored.func_150032_b(1));
     }
 
     protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
