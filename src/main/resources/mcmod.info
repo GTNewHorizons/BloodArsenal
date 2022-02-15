@@ -1,7 +1,7 @@
 [
 {
   "modid": "${modId}",
-  "name": "{$modName}",
+  "name": "${modName}",
   "description": "Blood-themed tools, weapons, armor and much more!",
   "version": "${modVersion}",
   "mcversion": "${minecraftVersion}",
