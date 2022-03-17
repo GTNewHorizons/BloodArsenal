@@ -216,7 +216,7 @@ public class BlockCompacter extends BlockContainer
                                 multiplier = multiplier * ((accelerationUpgrades + 3) / 3);
 
                                 IBloodOrb bloodOrb = (IBloodOrb) item;
-
+,
                                 if (bloodOrb.getOrbLevel() >= tier)
                                 {
                                     int cost = ((tier * 10) * (int) (multiplier * 5)) + capacity;
@@ -369,13 +369,13 @@ public class BlockCompacter extends BlockContainer
         }
 
         lpAmount = altar.getFluidAmount();
-        consumptionMultiplier = (float) (0.20 * upgrades.getSpeedUpgrades());
-        efficiencyMultiplier = (float) Math.pow(0.85, upgrades.getSpeedUpgrades());
-        sacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSacrificeUpgrades());
-        selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSelfSacrificeUpgrades());
-        capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrades.getBetterCapacitiveUpgrades()) + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
-        dislocationMultiplier = (float) (Math.pow(1.2, upgrades.getDisplacementUpgrades()));
-        orbCapacityMultiplier = (float) (1 + 0.02 * upgrades.getOrbCapacitiveUpgrades());
+        consumptionMultiplier = (float) (0.25 * upgrades.getSpeedUpgrades());
+        efficiencyMultiplier = (float) Math.pow(0.80, upgrades.getSpeedUpgrades());
+        sacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSacrificeUpgrades());
+        selfSacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSelfSacrificeUpgrades());
+        capacityMultiplier = (float) ((1 * Math.pow(1.14, upgrades.getBetterCapacitiveUpgrades()) + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
+        dislocationMultiplier = (float) (Math.pow(1.5, upgrades.getDisplacementUpgrades()));
+        orbCapacityMultiplier = (float) (1 + 0.04 * upgrades.getOrbCapacitiveUpgrades());
         capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
         bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
 
