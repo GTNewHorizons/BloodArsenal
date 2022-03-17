@@ -216,7 +216,7 @@ public class BlockCompacter extends BlockContainer
                                 multiplier = multiplier * ((accelerationUpgrades + 3) / 3);
 
                                 IBloodOrb bloodOrb = (IBloodOrb) item;
-,
+
                                 if (bloodOrb.getOrbLevel() >= tier)
                                 {
                                     int cost = ((tier * 10) * (int) (multiplier * 5)) + capacity;
