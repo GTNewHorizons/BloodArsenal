@@ -251,3 +251,10 @@ blood_arsenal.research_page.ROD_blood_wood.2=apply the same principles to Alchem
 blood_arsenal.research_name.ROD_blood_wood_staff=Blood Infused Wood Staff Core
 blood_arsenal.research_text.ROD_blood_wood_staff=Bringing Doom to the party
 blood_arsenal.research_page.ROD_blood_wood_staff.1=Even with your supremely regenerative wand and caps, you are still not yet satisfied. You know that when the Blood Rods are turned into Blood Staff Cores, they regenerate four times faster but holds half the amount of vis. Working with some dark magics and a Blood Staff Core, you can now create a living terror. This mighty staff regenerates 2 times faster than the Blood Staff but this is where the regenerative capabilities of Blood Infused Wood meet its limits: the wood itself seemingly tries to regenerate faster than it physically can. To compensate for this, it has to draw Life from the player every time it regenerates vis. And unlike the other blood wands, it doesn't care if you survive or not...
+
+#Rituals
+ritual.ARC001Wither.name=Ritual of Withering
+ritual.ARC002Midas.name=Midas Touch
+ritual.ARC003Enchant.name=The Enchantress's Spell
+ritual.ARC004MobDisable.name=Ritual of Mob Oppression
+ritual.ARC005Fisherman.name=Fisherman's Hymn
