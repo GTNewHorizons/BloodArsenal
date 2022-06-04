@@ -2,6 +2,8 @@ package com.arc.bloodarsenal.common.block;
 
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -13,11 +15,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import squeek.applecore.api.food.FoodValues;
+import squeek.applecore.api.food.IEdibleBlock;
+import squeek.applecore.api.food.ItemFoodProxy;
 
 import java.util.Random;
 
-public class BlockBloodCake extends Block
+@Optional.Interface(iface = "squeek.applecore.api.food.IEdibleBlock", modid = "AppleCore")
+public class BlockBloodCake extends Block implements IEdibleBlock
 {
+    private boolean isEdibleAtMaxHunger = false;
     @SideOnly(Side.CLIENT)
     private IIcon cakeTop;
     @SideOnly(Side.CLIENT)
@@ -111,9 +118,16 @@ public class BlockBloodCake extends Block
     {
         String playerEating = player.getCommandSenderName();
 
-        if (player.canEat(false))
+        if (player.canEat(isEdibleAtMaxHunger))
         {
-            player.getFoodStats().addStats(2, 1.5F);
+            if (Loader.isModLoaded("AppleCore"))
+            {
+                onEatenCompatibility(new ItemStack(this), player);
+            }
+            else
+            {
+                player.getFoodStats().addStats(2, 1.5F);
+            }
             SoulNetworkHandler.syphonFromNetwork(playerEating, 200);
 
             if (BloodArsenalConfig.cakeIsLie)
@@ -176,5 +190,25 @@ public class BlockBloodCake extends Block
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {
         return new ItemStack(this);
+    }
+
+    // === AppleCore methods ===
+
+    @Override
+    public void setEdibleAtMaxHunger(boolean edibleAtMaxHunger)
+    {
+        isEdibleAtMaxHunger = edibleAtMaxHunger;
+    }
+
+    @Override
+    public FoodValues getFoodValues(ItemStack itemStack)
+    {
+        return new FoodValues(2, 1.5f);
+    }
+
+    @Optional.Method(modid = "AppleCore")
+    public void onEatenCompatibility(ItemStack itemStack, EntityPlayer player)
+    {
+        player.getFoodStats().func_151686_a(new ItemFoodProxy(this), itemStack);
     }
 }
