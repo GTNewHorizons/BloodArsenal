@@ -15,6 +15,8 @@ import com.arc.bloodarsenal.common.items.tool.*;
 import com.arc.bloodarsenal.common.thaumcraft.*;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
+import java.util.Arrays;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemReed;
 import net.minecraft.item.ItemStack;
@@ -24,11 +26,7 @@ import thaumcraft.api.wands.StaffRod;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class ModItems
-{
+public class ModItems {
     public static Item bound_bow;
     public static Item blood_orange;
     public static Item blood_infused_pickaxe_wood;
@@ -103,8 +101,7 @@ public class ModItems
 
     public static ArrayList<String> itemsNotToBeRegistered = new ArrayList<String>();
 
-    public static void init()
-    {
+    public static void init() {
         bound_bow = registerItem(new BoundBow(), "bound_bow");
         blood_orange = registerItem(new ItemBloodOrange(), "blood_orange");
         blood_infused_pickaxe_wood = registerItem(new InfusedWoodPickaxe(), "blood_infused_pickaxe_wood");
@@ -165,44 +162,58 @@ public class ModItems
     }
 
     @Optional.Method(modid = "Baubles")
-    public static void registerBaubles()
-    {
+    public static void registerBaubles() {
         vampire_ring = registerItem(new VampireRing(), "vampire_ring");
         self_sacrifice_amulet = registerItem(new SelfSacrificeAmulet(), "self_sacrifice_amulet");
         sacrifice_amulet = registerItem(new SacrificeAmulet(), "sacrifice_amulet");
         empowered_sacrifice_amulet = registerItem(new EmpoweredSacrificeAmulet(), "empowered_sacrifice_amulet");
-        empowered_self_sacrifice_amulet = registerItem(new EmpoweredSelfSacrificeAmulet(), "empowered_self_sacrifice_amulet");
+        empowered_self_sacrifice_amulet =
+                registerItem(new EmpoweredSelfSacrificeAmulet(), "empowered_self_sacrifice_amulet");
     }
 
     @Optional.Method(modid = "Thaumcraft")
-    public static void registerThaumcraftItems()
-    {
+    public static void registerThaumcraftItems() {
         wandCore = (new ItemWandCores()).setUnlocalizedName("wand_cores");
         GameRegistry.registerItem(wandCore, "wand_cores");
         wandCap = (new ItemWandCaps()).setUnlocalizedName("wand_caps");
         GameRegistry.registerItem(wandCap, "wand_caps");
-        WAND_ROD_BLOOD_INFUSED_WOOD = new WandRod("blood_wood", 100, new ItemStack(wandCore, 1, 0), 16, new BloodWoodWandUpdate(), new ResourceLocation("bloodarsenal", "models/wand_rod_blood_wood.png"));
-        STAFF_ROD_BLOOD_INFUSED_WOOD = new StaffRod("blood_wood", 60, new ItemStack(wandCore, 1, 1), 27, new BloodWoodStaffUpdate(), new ResourceLocation("bloodarsenal", "models/wand_rod_blood_wood.png"));
-        WAND_CAP_BLOOD_INFUSED_IRON = new BloodyWandCap("blood_iron", 0.85F, Arrays.asList(new Aspect[]{Aspect.WATER}), 0.80F, new ItemStack(wandCap, 1, 0), 5, new ResourceLocation("bloodarsenal", "models/wand_cap_blood_iron.png"));
+        WAND_ROD_BLOOD_INFUSED_WOOD = new WandRod(
+                "blood_wood",
+                100,
+                new ItemStack(wandCore, 1, 0),
+                16,
+                new BloodWoodWandUpdate(),
+                new ResourceLocation("bloodarsenal", "models/wand_rod_blood_wood.png"));
+        STAFF_ROD_BLOOD_INFUSED_WOOD = new StaffRod(
+                "blood_wood",
+                60,
+                new ItemStack(wandCore, 1, 1),
+                27,
+                new BloodWoodStaffUpdate(),
+                new ResourceLocation("bloodarsenal", "models/wand_rod_blood_wood.png"));
+        WAND_CAP_BLOOD_INFUSED_IRON = new BloodyWandCap(
+                "blood_iron",
+                0.85F,
+                Arrays.asList(new Aspect[] {Aspect.WATER}),
+                0.80F,
+                new ItemStack(wandCap, 1, 0),
+                5,
+                new ResourceLocation("bloodarsenal", "models/wand_cap_blood_iron.png"));
     }
 
-    public static Item registerItem(Item item, String unlocalizedName)
-    {
+    public static Item registerItem(Item item, String unlocalizedName) {
         item.setUnlocalizedName(unlocalizedName);
         item.setTextureName(BloodArsenal.MODID + ":" + unlocalizedName);
         item.setCreativeTab(BloodArsenal.BA_TAB);
         itemsNotToBeRegistered.clear();
 
-        for (String unlocName : BloodArsenalConfig.itemsToBeDisabled)
-        {
-            if (unlocName.equals(unlocalizedName))
-            {
+        for (String unlocName : BloodArsenalConfig.itemsToBeDisabled) {
+            if (unlocName.equals(unlocalizedName)) {
                 itemsNotToBeRegistered.add(unlocName);
             }
         }
 
-        if (!itemsNotToBeRegistered.contains(unlocalizedName))
-        {
+        if (!itemsNotToBeRegistered.contains(unlocalizedName)) {
             GameRegistry.registerItem(item, unlocalizedName);
         }
 

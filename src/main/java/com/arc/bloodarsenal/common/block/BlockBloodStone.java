@@ -2,6 +2,7 @@ package com.arc.bloodarsenal.common.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -10,18 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-import java.util.List;
-
-public class BlockBloodStone extends Block
-{
+public class BlockBloodStone extends Block {
     private IIcon blood_stone_1;
     private IIcon blood_stone_2;
     private IIcon blood_stone_3;
     private IIcon blood_stone_4;
     private IIcon blood_stone_5;
 
-    public BlockBloodStone()
-    {
+    public BlockBloodStone() {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
@@ -30,8 +27,7 @@ public class BlockBloodStone extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
+    public void registerBlockIcons(IIconRegister iconRegister) {
         blood_stone_1 = iconRegister.registerIcon("BloodArsenal:blood_stone_1");
         blood_stone_2 = iconRegister.registerIcon("BloodArsenal:blood_stone_2");
         blood_stone_3 = iconRegister.registerIcon("BloodArsenal:blood_stone_3");
@@ -41,28 +37,22 @@ public class BlockBloodStone extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item par1Item, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        if (this.equals(ModBlocks.blood_stone))
-        {
+    public void getSubBlocks(Item par1Item, CreativeTabs par2CreativeTabs, List par3List) {
+        if (this.equals(ModBlocks.blood_stone)) {
             par3List.add(new ItemStack(par1Item, 1, 0));
             par3List.add(new ItemStack(par1Item, 1, 1));
             par3List.add(new ItemStack(par1Item, 1, 2));
             par3List.add(new ItemStack(par1Item, 1, 3));
             par3List.add(new ItemStack(par1Item, 1, 4));
-        }
-        else
-        {
+        } else {
             super.getSubBlocks(par1Item, par2CreativeTabs, par3List);
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        switch (meta)
-        {
+    public IIcon getIcon(int side, int meta) {
+        switch (meta) {
             case 0:
                 return blood_stone_1;
 
@@ -84,8 +74,7 @@ public class BlockBloodStone extends Block
     }
 
     @Override
-    public int damageDropped(int metadata)
-    {
+    public int damageDropped(int metadata) {
         return metadata;
     }
 }

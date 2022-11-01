@@ -12,12 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RenderBloodTNTPrimed extends Render
-{
+public class RenderBloodTNTPrimed extends Render {
     private RenderBlocks blockRenderer = new RenderBlocks();
 
-    public RenderBloodTNTPrimed()
-    {
+    public RenderBloodTNTPrimed() {
         this.shadowSize = 0.5F;
     }
 
@@ -27,23 +25,25 @@ public class RenderBloodTNTPrimed extends Render
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(EntityBloodTNT p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
-    {
+    public void doRender(
+            EntityBloodTNT p_76986_1_,
+            double p_76986_2_,
+            double p_76986_4_,
+            double p_76986_6_,
+            float p_76986_8_,
+            float p_76986_9_) {
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)p_76986_2_, (float)p_76986_4_, (float)p_76986_6_);
+        GL11.glTranslatef((float) p_76986_2_, (float) p_76986_4_, (float) p_76986_6_);
         float f2;
 
-        if ((float)p_76986_1_.fuse - p_76986_9_ + 1.0F < 10.0F)
-        {
-            f2 = 1.0F - ((float)p_76986_1_.fuse - p_76986_9_ + 1.0F) / 10.0F;
+        if ((float) p_76986_1_.fuse - p_76986_9_ + 1.0F < 10.0F) {
+            f2 = 1.0F - ((float) p_76986_1_.fuse - p_76986_9_ + 1.0F) / 10.0F;
 
-            if (f2 < 0.0F)
-            {
+            if (f2 < 0.0F) {
                 f2 = 0.0F;
             }
 
-            if (f2 > 1.0F)
-            {
+            if (f2 > 1.0F) {
                 f2 = 1.0F;
             }
 
@@ -53,12 +53,11 @@ public class RenderBloodTNTPrimed extends Render
             GL11.glScalef(f3, f3, f3);
         }
 
-        f2 = (1.0F - ((float)p_76986_1_.fuse - p_76986_9_ + 1.0F) / 100.0F) * 0.8F;
+        f2 = (1.0F - ((float) p_76986_1_.fuse - p_76986_9_ + 1.0F) / 100.0F) * 0.8F;
         this.bindEntityTexture(p_76986_1_);
         this.blockRenderer.renderBlockAsItem(ModBlocks.blood_tnt, 0, p_76986_1_.getBrightness(p_76986_9_));
 
-        if (p_76986_1_.fuse / 5 % 2 == 0)
-        {
+        if (p_76986_1_.fuse / 5 % 2 == 0) {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_BLEND);
@@ -77,17 +76,15 @@ public class RenderBloodTNTPrimed extends Render
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntityBloodTNT p_110775_1_)
-    {
+    protected ResourceLocation getEntityTexture(EntityBloodTNT p_110775_1_) {
         return TextureMap.locationBlocksTexture;
     }
 
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(Entity p_110775_1_)
-    {
-        return this.getEntityTexture((EntityBloodTNT)p_110775_1_);
+    protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+        return this.getEntityTexture((EntityBloodTNT) p_110775_1_);
     }
 
     /**
@@ -96,8 +93,13 @@ public class RenderBloodTNTPrimed extends Render
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
-    {
-        this.doRender((EntityBloodTNT)p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
+    public void doRender(
+            Entity p_76986_1_,
+            double p_76986_2_,
+            double p_76986_4_,
+            double p_76986_6_,
+            float p_76986_8_,
+            float p_76986_9_) {
+        this.doRender((EntityBloodTNT) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }
 }

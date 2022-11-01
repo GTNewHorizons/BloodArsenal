@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import com.arc.bloodarsenal.common.BloodArsenal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,14 +13,10 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import java.util.List;
-
-public class InfusedWoodShovel extends ItemSpade implements IBindable
-{
+public class InfusedWoodShovel extends ItemSpade implements IBindable {
     private int energyUsed;
 
-    public InfusedWoodShovel()
-    {
+    public InfusedWoodShovel() {
         super(BloodArsenal.infusedWood);
         setMaxStackSize(1);
         setUnlocalizedName("blood_infused_shovel_wood");
@@ -29,41 +26,40 @@ public class InfusedWoodShovel extends ItemSpade implements IBindable
         setEnergyUsed(50);
     }
 
-    public void setEnergyUsed(int par1)
-    {
+    public void setEnergyUsed(int par1) {
         energyUsed = par1;
     }
 
-    public int getEnergyUsed()
-    {
+    public int getEnergyUsed() {
         return energyUsed;
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer , List par3List, boolean par4)
-    {
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
-            {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        if (!(par1ItemStack.stackTagCompound == null)) {
+            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals("")) {
                 par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
             }
         }
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
         return par1ItemStack;
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3Block, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
-    {
-        if (par7EntityLivingBase instanceof EntityPlayer)
-        {
+    public boolean onBlockDestroyed(
+            ItemStack par1ItemStack,
+            World par2World,
+            Block par3Block,
+            int par4,
+            int par5,
+            int par6,
+            EntityLivingBase par7EntityLivingBase) {
+        if (par7EntityLivingBase instanceof EntityPlayer) {
             EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par7EntityLivingBase, getEnergyUsed());
         }
 
@@ -71,8 +67,7 @@ public class InfusedWoodShovel extends ItemSpade implements IBindable
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean isFull3D()
-    {
+    public boolean isFull3D() {
         return true;
     }
 }

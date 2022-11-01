@@ -4,21 +4,17 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class BloodStoneBlock extends ItemBlock
-{
-    public BloodStoneBlock(Block block)
-    {
+public class BloodStoneBlock extends ItemBlock {
+    public BloodStoneBlock(Block block) {
         super(block);
         setHasSubtypes(true);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack itemStack)
-    {
+    public String getUnlocalizedName(ItemStack itemStack) {
         String name;
 
-        switch (itemStack.getItemDamage())
-        {
+        switch (itemStack.getItemDamage()) {
             case 0:
                 name = "blood_stone_1";
                 break;
@@ -47,8 +43,7 @@ public class BloodStoneBlock extends ItemBlock
     }
 
     @Override
-    public int getMetadata(int par1)
-    {
+    public int getMetadata(int par1) {
         return par1;
     }
 }

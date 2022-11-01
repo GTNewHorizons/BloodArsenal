@@ -18,8 +18,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-public class TileLPMaterializer extends TileEntity implements IInventory, IFluidTank, IFluidHandler
-{
+public class TileLPMaterializer extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
     private ItemStack[] inv;
 
     protected FluidStack fluid;
@@ -29,8 +28,7 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
 
     private int bufferCapacity;
 
-    public TileLPMaterializer()
-    {
+    public TileLPMaterializer() {
         this.inv = new ItemStack[1];
         fluid = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 0);
         fluidOutput = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 0);
@@ -40,35 +38,30 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
-            if (slot >= 0 && slot < inv.length)
-            {
+            if (slot >= 0 && slot < inv.length) {
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
 
-        if (!par1NBTTagCompound.hasKey("Empty"))
-        {
+        if (!par1NBTTagCompound.hasKey("Empty")) {
             FluidStack fluid = this.fluid.loadFluidStackFromNBT(par1NBTTagCompound);
 
-            if (fluid != null)
-            {
+            if (fluid != null) {
                 setMainFluid(fluid);
             }
 
-            FluidStack fluidOut = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
+            FluidStack fluidOut =
+                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
 
-            if (fluidOut != null)
-            {
+            if (fluidOut != null) {
                 setOutputFluid(fluidOut);
             }
         }
@@ -81,15 +74,12 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
-            if (inv[i] != null)
-            {
+        for (int i = 0; i < inv.length; i++) {
+            if (inv[i] != null) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
                 inv[i].writeToNBT(tag);
@@ -97,17 +87,13 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
             }
         }
 
-        if (fluid != null)
-        {
+        if (fluid != null) {
             fluid.writeToNBT(par1NBTTagCompound);
-        }
-        else
-        {
+        } else {
             par1NBTTagCompound.setString("Empty", "");
         }
 
-        if (fluidOutput != null)
-        {
+        if (fluidOutput != null) {
             par1NBTTagCompound.setInteger("outputAmount", fluidOutput.amount);
         }
 
@@ -119,24 +105,20 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
         writeCustomNBT(par1NBTTagCompound);
     }
 
-    public void readCustomNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readCustomNBT(NBTTagCompound par1NBTTagCompound) {
         NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
-        if (nbttaglist.tagCount() > 0)
-        {
+        if (nbttaglist.tagCount() > 0) {
             NBTTagCompound tagList = nbttaglist.getCompoundTagAt(0);
             inv[0] = ItemStack.loadItemStackFromNBT(tagList);
         }
     }
 
-    public void writeCustomNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeCustomNBT(NBTTagCompound par1NBTTagCompound) {
         NBTTagList nbttaglist = new NBTTagList();
         NBTTagCompound tagList = new NBTTagCompound();
 
-        if (inv[0] != null)
-        {
+        if (inv[0] != null) {
             tagList.setByte("Slot", (byte) 0);
             inv[0].writeToNBT(tagList);
             nbttaglist.appendTag(tagList);
@@ -145,34 +127,26 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return 1;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot)
-    {
+    public ItemStack getStackInSlot(int slot) {
         return inv[slot];
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
+    public ItemStack decrStackSize(int slot, int amt) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
+        if (stack != null) {
+            if (stack.stackSize <= amt) {
                 setInventorySlotContents(slot, null);
-            }
-            else
-            {
+            } else {
                 stack = stack.splitStack(amt);
 
-                if (stack.stackSize == 0)
-                {
+                if (stack.stackSize == 0) {
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -182,12 +156,10 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
+    public ItemStack getStackInSlotOnClosing(int slot) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
+        if (stack != null) {
             setInventorySlotContents(slot, null);
         }
 
@@ -195,38 +167,33 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack itemStack)
-    {
+    public void setInventorySlotContents(int slot, ItemStack itemStack) {
         inv[slot] = itemStack;
 
-        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
-        {
+        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
             itemStack.stackSize = getInventoryStackLimit();
         }
     }
 
     @Override
-    public String getInventoryName()
-    {
+    public String getInventoryName() {
         return "TileLPMaterializer";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
+    public boolean hasCustomInventoryName() {
         return false;
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 1;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+                && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
@@ -236,40 +203,32 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
-    {
+    public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 0;
     }
 
-    public void sendChatInfoToPlayer(EntityPlayer player)
-    {
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
+    public void sendChatInfoToPlayer(EntityPlayer player) {
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
     }
 
     @Override
-    public Packet getDescriptionPacket()
-    {
+    public Packet getDescriptionPacket() {
         return PacketHandler.getPacket(this);
     }
 
-    public void handlePacketData(int[] intData, int[] fluidData, int capacity)
-    {
-        if (intData == null)
-        {
+    public void handlePacketData(int[] intData, int[] fluidData, int capacity) {
+        if (intData == null) {
             return;
         }
 
-        if (intData.length == 3)
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                if (intData[i * 3 + 2] != 0)
-                {
-                    ItemStack is = new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+        if (intData.length == 3) {
+            for (int i = 0; i < 1; i++) {
+                if (intData[i * 3 + 2] != 0) {
+                    ItemStack is =
+                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
-                {
+                } else {
                     inv[i] = null;
                 }
             }
@@ -284,23 +243,18 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
         this.capacity = capacity;
     }
 
-    public int[] buildIntDataList()
-    {
-        int[] sortList = new int[3];//3 ints per stack (1 * 3)
+    public int[] buildIntDataList() {
+        int[] sortList = new int[3]; // 3 ints per stack (1 * 3)
         int pos;
 
-        for (ItemStack is : inv)
-        {
+        for (ItemStack is : inv) {
             pos = 0;
 
-            if (is != null)
-            {
+            if (is != null) {
                 sortList[pos++] = Item.getIdFromItem(is.getItem());
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
-            {
+            } else {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
@@ -310,46 +264,37 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
         return sortList;
     }
 
-    //Actual Stuffs
+    // Actual Stuffs
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         super.updateEntity();
 
-        if (getTankAbove() != null)
-        {
+        if (getTankAbove() != null) {
             IFluidHandler aboveTank = getTankAbove();
 
-            if (aboveTank.canFill(ForgeDirection.DOWN, fluid.getFluid()))
-            {
+            if (aboveTank.canFill(ForgeDirection.DOWN, fluid.getFluid())) {
                 aboveTank.fill(ForgeDirection.DOWN, fluidOutput, true);
                 drain(ForgeDirection.UP, fluidOutput, true);
             }
         }
 
-        if (getTankBelow() != null)
-        {
+        if (getTankBelow() != null) {
             IFluidHandler belowTank = getTankBelow();
 
-            if (belowTank.canFill(ForgeDirection.UP, fluid.getFluid()))
-            {
+            if (belowTank.canFill(ForgeDirection.UP, fluid.getFluid())) {
                 belowTank.fill(ForgeDirection.UP, fluidOutput, true);
                 drain(ForgeDirection.DOWN, fluidOutput, true);
             }
         }
 
-        if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
-        {
+        if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             materialize();
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        }
-        else
-        {
+        } else {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
-        if (worldObj.getWorldTime() % 10 == 0)
-        {
+        if (worldObj.getWorldTime() % 10 == 0) {
             int syphonMax = 500;
             int fluidOutputted;
             fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
@@ -358,76 +303,69 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
             this.fluid.amount -= fluidOutputted;
         }
 
-        if (worldObj != null)
-        {
+        if (worldObj != null) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
-    public void materialize()
-    {
+    public void materialize() {
         ItemStack orb = this.getStackInSlot(0);
 
-        if (orb == null)
-        {
+        if (orb == null) {
             return;
         }
 
-        if (fluid.amount <= capacity - 100)
-        {
-            if (!SoulNetworkHandler.canSyphonFromOnlyNetwork(orb, BloodArsenalConfig.lpMaterializerCost))
-            {
+        if (fluid.amount <= capacity - 100) {
+            if (!SoulNetworkHandler.canSyphonFromOnlyNetwork(orb, BloodArsenalConfig.lpMaterializerCost)) {
                 SoulNetworkHandler.causeNauseaToPlayer(orb);
                 return;
             }
 
-            if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(orb, BloodArsenalConfig.lpMaterializerCost))
-            {
+            if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(orb, BloodArsenalConfig.lpMaterializerCost)) {
                 return;
             }
 
-            if (worldObj.getWorldTime() % 4 == 0)
-            {
-                SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+            if (worldObj.getWorldTime() % 4 == 0) {
+                SpellHelper.sendIndexedParticleToAllAround(
+                        worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
             }
 
             fluid.amount += 100;
         }
     }
 
-    private IFluidHandler getTankAbove()
-    {
-        return worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) != null && worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof IFluidHandler ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) : null;
+    private IFluidHandler getTankAbove() {
+        return worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) != null
+                        && worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof IFluidHandler
+                ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)
+                : null;
     }
 
-    private IFluidHandler getTankBelow()
-    {
-        return worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) != null && worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof IFluidHandler ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) : null;
+    private IFluidHandler getTankBelow() {
+        return worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) != null
+                        && worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof IFluidHandler
+                ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord)
+                : null;
     }
 
-    //Fluid Stuffs
+    // Fluid Stuffs
     @Override
-    public int fill(FluidStack resource, boolean doFill)
-    {
+    public int fill(FluidStack resource, boolean doFill) {
         return 0;
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
-    {
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         return 0;
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
-    {
-        if (resource == null)
-        {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+        if (resource == null) {
             return null;
         }
 
-        if (!resource.isFluidEqual(fluidOutput))
-        {
+        if (!resource.isFluidEqual(fluidOutput)) {
             return null;
         }
 
@@ -435,44 +373,37 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public FluidStack drain(int maxDrain, boolean doDrain)
-    {
-        if (fluidOutput == null)
-        {
+    public FluidStack drain(int maxDrain, boolean doDrain) {
+        if (fluidOutput == null) {
             return null;
         }
 
         int drained = maxDrain;
 
-        if (fluidOutput.amount < drained)
-        {
+        if (fluidOutput.amount < drained) {
             drained = fluidOutput.amount;
         }
 
         FluidStack stack = new FluidStack(fluidOutput, drained);
 
-        if (doDrain)
-        {
+        if (doDrain) {
             fluidOutput.amount -= drained;
 
-            if (fluidOutput.amount <= 0)
-            {
+            if (fluidOutput.amount <= 0) {
                 fluidOutput = null;
             }
 
-            if (this != null)
-            {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, 1000));
+            if (this != null) {
+                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(
+                        fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, 1000));
             }
         }
 
-        if (fluidOutput == null)
-        {
+        if (fluidOutput == null) {
             fluidOutput = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 0);
         }
 
-        if (worldObj != null)
-        {
+        if (worldObj != null) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
@@ -480,44 +411,36 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid)
-    {
+    public boolean canFill(ForgeDirection from, Fluid fluid) {
         return false;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid)
-    {
+    public boolean canDrain(ForgeDirection from, Fluid fluid) {
         return this.fluidOutput != null && this.fluid.getFluid().equals(fluidOutput.getFluid());
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxEmpty, boolean doDrain)
-    {
+    public FluidStack drain(ForgeDirection from, int maxEmpty, boolean doDrain) {
         return this.drain(maxEmpty, doDrain);
     }
-    
-    public void setMainFluid(FluidStack fluid)
-    {
+
+    public void setMainFluid(FluidStack fluid) {
         this.fluid = fluid;
     }
 
-    public void setOutputFluid(FluidStack fluid)
-    {
+    public void setOutputFluid(FluidStack fluid) {
         this.fluidOutput = fluid;
     }
 
     @Override
-    public FluidStack getFluid()
-    {
+    public FluidStack getFluid() {
         return fluid;
     }
 
     @Override
-    public int getFluidAmount()
-    {
-        if (fluid == null)
-        {
+    public int getFluidAmount() {
+        if (fluid == null) {
             return 0;
         }
 
@@ -525,47 +448,37 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     @Override
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return capacity;
     }
 
     @Override
-    public FluidTankInfo getInfo()
-    {
+    public FluidTankInfo getInfo() {
         return new FluidTankInfo(this);
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from)
-    {
+    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
-        return new FluidTankInfo[]{compositeTank.getInfo()};
+        return new FluidTankInfo[] {compositeTank.getInfo()};
     }
 
-    public int[] buildFluidList()
-    {
+    public int[] buildFluidList() {
         int[] sortList = new int[4];
 
-        if (this.fluid == null)
-        {
+        if (this.fluid == null) {
             sortList[0] = AlchemicalWizardry.lifeEssenceFluid.getID();
             sortList[1] = 0;
-        }
-        else
-        {
+        } else {
             sortList[0] = this.fluid.getFluid().getID();
             sortList[1] = this.fluid.amount;
         }
 
-        if (this.fluidOutput == null)
-        {
+        if (this.fluidOutput == null) {
             sortList[2] = AlchemicalWizardry.lifeEssenceFluid.getID();
             sortList[3] = 0;
-        }
-        else
-        {
+        } else {
             sortList[2] = this.fluidOutput.getFluid().getID();
             sortList[3] = this.fluidOutput.amount;
         }

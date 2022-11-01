@@ -12,31 +12,26 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import java.util.EnumMap;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.EnumMap;
-
-public enum PacketHandler
-{
+public enum PacketHandler {
     INSTANCE;
 
     private EnumMap<Side, FMLEmbeddedChannel> channels;
 
-    PacketHandler()
-    {
+    PacketHandler() {
         this.channels = NetworkRegistry.INSTANCE.newChannel("BloodArsenal", new BATileCodec());
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             addClientHandler();
         }
     }
 
     @SideOnly(Side.CLIENT)
-    private void addClientHandler()
-    {
+    private void addClientHandler() {
         FMLEmbeddedChannel clientChannel = this.channels.get(Side.CLIENT);
 
         String tileCodec = clientChannel.findChannelHandlerNameForType(BATileCodec.class);
@@ -45,16 +40,13 @@ public enum PacketHandler
         clientChannel.pipeline().addAfter(tileCodec, "TileLPMaterializer", new TileLPMaterializerMessageHandler());
     }
 
-    private static class TilePortableAltarMessageHandler extends SimpleChannelInboundHandler<TilePortableAltarMessage>
-    {
+    private static class TilePortableAltarMessageHandler extends SimpleChannelInboundHandler<TilePortableAltarMessage> {
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, TilePortableAltarMessage msg) throws Exception
-        {
+        protected void channelRead0(ChannelHandlerContext ctx, TilePortableAltarMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
             TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
 
-            if (te instanceof TilePortableAltar)
-            {
+            if (te instanceof TilePortableAltar) {
                 TilePortableAltar altar = (TilePortableAltar) te;
 
                 altar.handlePacketData(msg.items, msg.fluids, msg.capacity);
@@ -62,16 +54,13 @@ public enum PacketHandler
         }
     }
 
-    private static class TileLifeInfuserMessageHandler extends SimpleChannelInboundHandler<TileLifeInfuserMessage>
-    {
+    private static class TileLifeInfuserMessageHandler extends SimpleChannelInboundHandler<TileLifeInfuserMessage> {
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, TileLifeInfuserMessage msg) throws Exception
-        {
+        protected void channelRead0(ChannelHandlerContext ctx, TileLifeInfuserMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
             TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
 
-            if (te instanceof TileLifeInfuser)
-            {
+            if (te instanceof TileLifeInfuser) {
                 TileLifeInfuser tile = (TileLifeInfuser) te;
 
                 tile.handlePacketData(msg.items, msg.fluids, msg.capacity);
@@ -79,16 +68,14 @@ public enum PacketHandler
         }
     }
 
-    private static class TileLPMaterializerMessageHandler extends SimpleChannelInboundHandler<TileLPMaterializerMessage>
-    {
+    private static class TileLPMaterializerMessageHandler
+            extends SimpleChannelInboundHandler<TileLPMaterializerMessage> {
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, TileLPMaterializerMessage msg) throws Exception
-        {
+        protected void channelRead0(ChannelHandlerContext ctx, TileLPMaterializerMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
             TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
 
-            if (te instanceof TileLPMaterializer)
-            {
+            if (te instanceof TileLPMaterializer) {
                 TileLPMaterializer tile = (TileLPMaterializer) te;
 
                 tile.handlePacketData(msg.items, msg.fluids, msg.capacity);
@@ -96,13 +83,11 @@ public enum PacketHandler
         }
     }
 
-    public static class BAMessage
-    {
+    public static class BAMessage {
         int index;
     }
 
-    public static class TilePortableAltarMessage extends BAMessage
-    {
+    public static class TilePortableAltarMessage extends BAMessage {
         int x;
         int y;
         int z;
@@ -112,8 +97,7 @@ public enum PacketHandler
         int capacity;
     }
 
-    public static class TileLifeInfuserMessage extends BAMessage
-    {
+    public static class TileLifeInfuserMessage extends BAMessage {
         int x;
         int y;
         int z;
@@ -123,8 +107,7 @@ public enum PacketHandler
         int capacity;
     }
 
-    public static class TileLPMaterializerMessage extends BAMessage
-    {
+    public static class TileLPMaterializerMessage extends BAMessage {
         int x;
         int y;
         int z;
@@ -134,43 +117,34 @@ public enum PacketHandler
         int capacity;
     }
 
-    private class ClientToServerCodec extends FMLIndexedMessageToMessageCodec<BAMessage>
-    {
-        public ClientToServerCodec()
-        {
-        }
+    private class ClientToServerCodec extends FMLIndexedMessageToMessageCodec<BAMessage> {
+        public ClientToServerCodec() {}
 
         @Override
-        public void encodeInto(ChannelHandlerContext ctx, BAMessage msg, ByteBuf target) throws Exception
-        {
+        public void encodeInto(ChannelHandlerContext ctx, BAMessage msg, ByteBuf target) throws Exception {
             target.writeInt(msg.index);
         }
 
         @Override
-        public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, BAMessage msg)
-        {
-//            int index = source.readInt();
+        public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, BAMessage msg) {
+            //            int index = source.readInt();
 
             System.out.println("Packet is recieved and being decoded");
         }
     }
 
-    private class BATileCodec extends FMLIndexedMessageToMessageCodec<BAMessage>
-    {
-        public BATileCodec()
-        {
+    private class BATileCodec extends FMLIndexedMessageToMessageCodec<BAMessage> {
+        public BATileCodec() {
             addDiscriminator(0, TilePortableAltarMessage.class);
             addDiscriminator(1, TileLifeInfuserMessage.class);
             addDiscriminator(2, TileLPMaterializerMessage.class);
         }
 
         @Override
-        public void encodeInto(ChannelHandlerContext ctx, BAMessage msg, ByteBuf target) throws Exception
-        {
+        public void encodeInto(ChannelHandlerContext ctx, BAMessage msg, ByteBuf target) throws Exception {
             target.writeInt(msg.index);
 
-            switch (msg.index)
-            {
+            switch (msg.index) {
                 case 0:
                     target.writeInt(((TilePortableAltarMessage) msg).x);
                     target.writeInt(((TilePortableAltarMessage) msg).y);
@@ -178,12 +152,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TilePortableAltarMessage) msg).items != null);
 
-                    if (((TilePortableAltarMessage) msg).items != null)
-                    {
+                    if (((TilePortableAltarMessage) msg).items != null) {
                         int[] items = ((TilePortableAltarMessage) msg).items;
 
-                        for (int j = 0; j < items.length; j++)
-                        {
+                        for (int j = 0; j < items.length; j++) {
                             int i = items[j];
                             target.writeInt(i);
                         }
@@ -191,12 +163,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TilePortableAltarMessage) msg).fluids != null);
 
-                    if (((TilePortableAltarMessage) msg).fluids != null)
-                    {
+                    if (((TilePortableAltarMessage) msg).fluids != null) {
                         int[] fluids = ((TilePortableAltarMessage) msg).fluids;
 
-                        for (int j = 0; j < fluids.length; j++)
-                        {
+                        for (int j = 0; j < fluids.length; j++) {
                             int i = fluids[j];
                             target.writeInt(i);
                         }
@@ -213,12 +183,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TileLifeInfuserMessage) msg).items != null);
 
-                    if (((TileLifeInfuserMessage) msg).items != null)
-                    {
+                    if (((TileLifeInfuserMessage) msg).items != null) {
                         int[] items = ((TileLifeInfuserMessage) msg).items;
 
-                        for (int j = 0; j < items.length; j++)
-                        {
+                        for (int j = 0; j < items.length; j++) {
                             int i = items[j];
                             target.writeInt(i);
                         }
@@ -226,12 +194,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TileLifeInfuserMessage) msg).fluids != null);
 
-                    if (((TileLifeInfuserMessage) msg).fluids != null)
-                    {
+                    if (((TileLifeInfuserMessage) msg).fluids != null) {
                         int[] fluids = ((TileLifeInfuserMessage) msg).fluids;
 
-                        for (int j = 0; j < fluids.length; j++)
-                        {
+                        for (int j = 0; j < fluids.length; j++) {
                             int i = fluids[j];
                             target.writeInt(i);
                         }
@@ -248,12 +214,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TileLPMaterializerMessage) msg).items != null);
 
-                    if (((TileLPMaterializerMessage) msg).items != null)
-                    {
+                    if (((TileLPMaterializerMessage) msg).items != null) {
                         int[] items = ((TileLPMaterializerMessage) msg).items;
 
-                        for (int j = 0; j < items.length; j++)
-                        {
+                        for (int j = 0; j < items.length; j++) {
                             int i = items[j];
                             target.writeInt(i);
                         }
@@ -261,12 +225,10 @@ public enum PacketHandler
 
                     target.writeBoolean(((TileLPMaterializerMessage) msg).fluids != null);
 
-                    if (((TileLPMaterializerMessage) msg).fluids != null)
-                    {
+                    if (((TileLPMaterializerMessage) msg).fluids != null) {
                         int[] fluids = ((TileLPMaterializerMessage) msg).fluids;
 
-                        for (int j = 0; j < fluids.length; j++)
-                        {
+                        for (int j = 0; j < fluids.length; j++) {
                             int i = fluids[j];
                             target.writeInt(i);
                         }
@@ -279,12 +241,10 @@ public enum PacketHandler
         }
 
         @Override
-        public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, BAMessage msg)
-        {
+        public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, BAMessage msg) {
             int index = dat.readInt();
 
-            switch (index)
-            {
+            switch (index) {
                 case 0:
                     ((TilePortableAltarMessage) msg).x = dat.readInt();
                     ((TilePortableAltarMessage) msg).y = dat.readInt();
@@ -293,12 +253,10 @@ public enum PacketHandler
 
                     ((TilePortableAltarMessage) msg).items = new int[TilePortableAltar.sizeInv * 3];
 
-                    if (hasStacks)
-                    {
+                    if (hasStacks) {
                         ((TilePortableAltarMessage) msg).items = new int[TilePortableAltar.sizeInv * 3];
 
-                        for (int i = 0; i < ((TilePortableAltarMessage) msg).items.length; i++)
-                        {
+                        for (int i = 0; i < ((TilePortableAltarMessage) msg).items.length; i++) {
                             ((TilePortableAltarMessage) msg).items[i] = dat.readInt();
                         }
                     }
@@ -306,10 +264,8 @@ public enum PacketHandler
                     boolean hasFluids = dat.readBoolean();
                     ((TilePortableAltarMessage) msg).fluids = new int[6];
 
-                    if (hasFluids)
-                    {
-                        for (int i = 0; i < ((TilePortableAltarMessage) msg).fluids.length; i++)
-                        {
+                    if (hasFluids) {
+                        for (int i = 0; i < ((TilePortableAltarMessage) msg).fluids.length; i++) {
                             ((TilePortableAltarMessage) msg).fluids[i] = dat.readInt();
                         }
                     }
@@ -326,12 +282,10 @@ public enum PacketHandler
 
                     ((TileLifeInfuserMessage) msg).items = new int[TileLifeInfuser.sizeInv * 3];
 
-                    if (hasStacks2)
-                    {
+                    if (hasStacks2) {
                         ((TileLifeInfuserMessage) msg).items = new int[TileLifeInfuser.sizeInv * 3];
 
-                        for (int i = 0; i < ((TileLifeInfuserMessage) msg).items.length; i++)
-                        {
+                        for (int i = 0; i < ((TileLifeInfuserMessage) msg).items.length; i++) {
                             ((TileLifeInfuserMessage) msg).items[i] = dat.readInt();
                         }
                     }
@@ -339,10 +293,8 @@ public enum PacketHandler
                     boolean hasFluids2 = dat.readBoolean();
                     ((TileLifeInfuserMessage) msg).fluids = new int[4];
 
-                    if (hasFluids2)
-                    {
-                        for (int i = 0; i < ((TileLifeInfuserMessage) msg).fluids.length; i++)
-                        {
+                    if (hasFluids2) {
+                        for (int i = 0; i < ((TileLifeInfuserMessage) msg).fluids.length; i++) {
                             ((TileLifeInfuserMessage) msg).fluids[i] = dat.readInt();
                         }
                     }
@@ -359,12 +311,10 @@ public enum PacketHandler
 
                     ((TileLPMaterializerMessage) msg).items = new int[TileLifeInfuser.sizeInv * 3];
 
-                    if (hasStacks3)
-                    {
+                    if (hasStacks3) {
                         ((TileLPMaterializerMessage) msg).items = new int[TileLifeInfuser.sizeInv * 3];
 
-                        for (int i = 0; i < ((TileLPMaterializerMessage) msg).items.length; i++)
-                        {
+                        for (int i = 0; i < ((TileLPMaterializerMessage) msg).items.length; i++) {
                             ((TileLPMaterializerMessage) msg).items[i] = dat.readInt();
                         }
                     }
@@ -372,10 +322,8 @@ public enum PacketHandler
                     boolean hasFluids3 = dat.readBoolean();
                     ((TileLPMaterializerMessage) msg).fluids = new int[4];
 
-                    if (hasFluids3)
-                    {
-                        for (int i = 0; i < ((TileLPMaterializerMessage) msg).fluids.length; i++)
-                        {
+                    if (hasFluids3) {
+                        for (int i = 0; i < ((TileLPMaterializerMessage) msg).fluids.length; i++) {
                             ((TileLPMaterializerMessage) msg).fluids[i] = dat.readInt();
                         }
                     }
@@ -387,8 +335,7 @@ public enum PacketHandler
         }
     }
 
-    public static Packet getPacket(TilePortableAltar tile)
-    {
+    public static Packet getPacket(TilePortableAltar tile) {
         TilePortableAltarMessage msg = new TilePortableAltarMessage();
         msg.index = 0;
         msg.x = tile.xCoord;
@@ -401,8 +348,7 @@ public enum PacketHandler
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getPacket(TileLifeInfuser tile)
-    {
+    public static Packet getPacket(TileLifeInfuser tile) {
         TileLifeInfuserMessage msg = new TileLifeInfuserMessage();
         msg.index = 1;
         msg.x = tile.xCoord;
@@ -415,8 +361,7 @@ public enum PacketHandler
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getPacket(TileLPMaterializer tile)
-    {
+    public static Packet getPacket(TileLPMaterializer tile) {
         TileLPMaterializerMessage msg = new TileLPMaterializerMessage();
         msg.index = 2;
         msg.x = tile.xCoord;
@@ -429,29 +374,46 @@ public enum PacketHandler
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public void sendTo(Packet message, EntityPlayerMP player)
-    {
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
+    public void sendTo(Packet message, EntityPlayerMP player) {
+        this.channels
+                .get(Side.SERVER)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+                .set(FMLOutboundHandler.OutboundTarget.PLAYER);
+        this.channels
+                .get(Side.SERVER)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
+                .set(player);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
-    public void sendToAll(Packet message)
-    {
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
+    public void sendToAll(Packet message) {
+        this.channels
+                .get(Side.SERVER)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+                .set(FMLOutboundHandler.OutboundTarget.ALL);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
-    public void sendToAllAround(Packet message, NetworkRegistry.TargetPoint point)
-    {
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
+    public void sendToAllAround(Packet message, NetworkRegistry.TargetPoint point) {
+        this.channels
+                .get(Side.SERVER)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+                .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
+        this.channels
+                .get(Side.SERVER)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
+                .set(point);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
-    public void sendToServer(Packet message)
-    {
-        this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        this.channels.get(Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+    public void sendToServer(Packet message) {
+        this.channels
+                .get(Side.CLIENT)
+                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+                .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
+        this.channels
+                .get(Side.CLIENT)
+                .writeAndFlush(message)
+                .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

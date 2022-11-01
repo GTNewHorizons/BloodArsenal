@@ -16,6 +16,7 @@ import com.arc.bloodarsenal.common.tileentity.TileCompacter;
 import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,10 +32,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
-import java.util.List;
-
-public class BlockCompacter extends BlockContainer
-{
+public class BlockCompacter extends BlockContainer {
     private String ritualName;
     private int direction;
 
@@ -62,11 +60,11 @@ public class BlockCompacter extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+
     @SideOnly(Side.CLIENT)
     private IIcon sideIcon;
 
-    public BlockCompacter()
-    {
+    public BlockCompacter() {
         super(Material.iron);
         setHardness(8.0F);
         setResistance(5.0F);
@@ -74,33 +72,25 @@ public class BlockCompacter extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
-    {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
         world.markBlockForUpdate(x, y, z);
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-        if (tileEntity != null && !player.isSneaking())
-        {
+        if (tileEntity != null && !player.isSneaking()) {
             ItemStack playerItem = player.getCurrentEquippedItem();
 
-            if (playerItem == null)
-            {
+            if (playerItem == null) {
                 return false;
-            }
-            else
-            {
+            } else {
                 Item item = playerItem.getItem();
 
-                if (!(item instanceof IBloodOrb))
-                {
+                if (!(item instanceof IBloodOrb)) {
                     return false;
-                }
-                else
-                {
+                } else {
                     Block block = world.getBlock(x, y + 1, z);
 
-                    if (block != null)
-                    {
+                    if (block != null) {
                         TileEntity tile;
 
                         world.markBlockForUpdate(x, y, z);
@@ -109,28 +99,22 @@ public class BlockCompacter extends BlockContainer
                         String owner = player.getCommandSenderName();
                         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
 
-                        if (block instanceof BlockMasterStone)
-                        {
+                        if (block instanceof BlockMasterStone) {
                             tile = world.getTileEntity(x, y + 1, z);
 
                             checkRitual(tile);
 
                             List<RitualComponent> ritualList = Rituals.getRitualList(ritualName);
 
-                            if (ritualList == null)
-                            {
+                            if (ritualList == null) {
                                 return false;
-                            }
-                            else
-                            {
+                            } else {
                                 float multiplier = 1;
 
-                                for (RitualComponent ritualComponent : ritualList)
-                                {
+                                for (RitualComponent ritualComponent : ritualList) {
                                     int stoneType = ritualComponent.getStoneType();
 
-                                    switch (stoneType)
-                                    {
+                                    switch (stoneType) {
                                         case 0:
                                             break;
 
@@ -157,43 +141,37 @@ public class BlockCompacter extends BlockContainer
                                 }
 
                                 int activationCost = Rituals.getCostForActivation(ritualName);
-                                int cost = (activationCost * (int) multiplier) / 2; //Divided by 2 since this fires twice apparently and also because I'm nice
+                                int cost = (activationCost * (int) multiplier)
+                                        / 2; // Divided by 2 since this fires twice apparently and also because I'm nice
 
-                                if (cost <= currentEssence)
-                                {
+                                if (cost <= currentEssence) {
                                     compactRitual(tile);
                                     SoulNetworkHandler.syphonFromNetwork(owner, cost);
                                     --player.inventory.getCurrentItem().stackSize;
-                                }
-                                else
-                                {
-                                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.compacter.notEnoughLP")));
+                                } else {
+                                    player.addChatComponentMessage(new ChatComponentText(
+                                            StatCollector.translateToLocal("message.compacter.notEnoughLP")));
                                     return true;
                                 }
                             }
 
                             return true;
-                        }
-                        else if (block instanceof BlockAltar && world.getTileEntity(x, y + 1, z) != null)
-                        {
+                        } else if (block instanceof BlockAltar && world.getTileEntity(x, y + 1, z) != null) {
                             tile = world.getTileEntity(x, y + 1, z);
 
                             TEAltar altar = (TEAltar) tile;
                             checkAltar(altar);
 
-                            if (tier == 0)
-                            {
+                            if (tier == 0) {
                                 return false;
-                            }
-                            else if (altar.getStackInSlot(0) != null)
-                            {
-                                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.compacter.itemInAltar")));
-                            }
-                            else
-                            {
+                            } else if (altar.getStackInSlot(0) != null) {
+                                player.addChatComponentMessage(new ChatComponentText(
+                                        StatCollector.translateToLocal("message.compacter.itemInAltar")));
+                            } else {
                                 float multiplier = 1;
 
-                                AltarUpgradeComponent upgradeComponent = UpgradedAltars.getUpgrades(world, x, y + 1, z, tier);
+                                AltarUpgradeComponent upgradeComponent =
+                                        UpgradedAltars.getUpgrades(world, x, y + 1, z, tier);
 
                                 int speedUpgrades = upgradeComponent.getSpeedUpgrades();
                                 int efficiencyUpgrades = upgradeComponent.getEfficiencyUpgrades();
@@ -217,24 +195,20 @@ public class BlockCompacter extends BlockContainer
 
                                 IBloodOrb bloodOrb = (IBloodOrb) item;
 
-                                if (bloodOrb.getOrbLevel() >= tier)
-                                {
+                                if (bloodOrb.getOrbLevel() >= tier) {
                                     int cost = ((tier * 10) * (int) (multiplier * 5)) + capacity;
 
-                                    if (cost <= currentEssence)
-                                    {
+                                    if (cost <= currentEssence) {
                                         compactAltar(tile);
                                         SoulNetworkHandler.syphonFromNetwork(owner, cost);
                                         --player.inventory.getCurrentItem().stackSize;
+                                    } else {
+                                        player.addChatComponentMessage(new ChatComponentText(
+                                                StatCollector.translateToLocal("message.compacter.notEnoughLP")));
                                     }
-                                    else
-                                    {
-                                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.compacter.notEnoughLP")));
-                                    }
-                                }
-                                else
-                                {
-                                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.compacter.wrongOrbTier")));
+                                } else {
+                                    player.addChatComponentMessage(new ChatComponentText(
+                                            StatCollector.translateToLocal("message.compacter.wrongOrbTier")));
                                 }
                             }
 
@@ -245,37 +219,31 @@ public class BlockCompacter extends BlockContainer
                     return true;
                 }
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
+    public IIcon getIcon(int side, int meta) {
         return side == 1 ? this.topIcon : (side == 0 ? this.blockIcon : this.sideIcon);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister p_149651_1_)
-    {
+    public void registerBlockIcons(IIconRegister p_149651_1_) {
         this.blockIcon = p_149651_1_.registerIcon(this.getTextureName() + "_bottom");
         this.topIcon = p_149651_1_.registerIcon(this.getTextureName() + "_top");
         this.sideIcon = p_149651_1_.registerIcon(this.getTextureName() + "_side");
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new TileCompacter();
     }
 
-    private void checkRitual(TileEntity tileEntity)
-    {
+    private void checkRitual(TileEntity tileEntity) {
         TEMasterStone masterStone = (TEMasterStone) tileEntity;
         World world = masterStone.getWorld();
         int x = masterStone.xCoord;
@@ -284,12 +252,9 @@ public class BlockCompacter extends BlockContainer
 
         ritualName = Rituals.checkValidRitual(world, x, y, z);
 
-        if (ritualName.equals(""))
-        {
+        if (ritualName.equals("")) {
             return;
-        }
-        else
-        {
+        } else {
             direction = Rituals.getDirectionOfRitual(world, x, y, z, ritualName);
         }
 
@@ -297,8 +262,7 @@ public class BlockCompacter extends BlockContainer
         world.markBlockForUpdate(x, y + 1, z);
     }
 
-    private void compactRitual(TileEntity tileEntity)
-    {
+    private void compactRitual(TileEntity tileEntity) {
         TEMasterStone masterStone = (TEMasterStone) tileEntity;
         World world = masterStone.getWorld();
         int x = masterStone.xCoord;
@@ -307,16 +271,20 @@ public class BlockCompacter extends BlockContainer
 
         List<RitualComponent> ritualList = Rituals.getRitualList(ritualName);
 
-        if (ritualList == null)
-        {
+        if (ritualList == null) {
             return;
         }
 
-        for (RitualComponent ritualComponent : ritualList)
-        {
-            world.setBlockToAir(x + ritualComponent.getX(direction), y + ritualComponent.getY(), z + ritualComponent.getZ(direction));
+        for (RitualComponent ritualComponent : ritualList) {
+            world.setBlockToAir(
+                    x + ritualComponent.getX(direction),
+                    y + ritualComponent.getY(),
+                    z + ritualComponent.getZ(direction));
             world.setBlockToAir(x, y, z);
-            world.markBlockForUpdate(x + ritualComponent.getX(direction), y + ritualComponent.getY(), z + ritualComponent.getZ(direction));
+            world.markBlockForUpdate(
+                    x + ritualComponent.getX(direction),
+                    y + ritualComponent.getY(),
+                    z + ritualComponent.getZ(direction));
         }
 
         world.setBlock(x, y, z, ModBlocks.compacted_mrs);
@@ -325,12 +293,9 @@ public class BlockCompacter extends BlockContainer
         world.markBlockForUpdate(x, y, z);
     }
 
-    private void configureMRS(World world, int x, int y, int z, Block block)
-    {
-        if (block instanceof BlockCompactedMRS)
-        {
-            if (world.getBlock(x, y, z) == block)
-            {
+    private void configureMRS(World world, int x, int y, int z, Block block) {
+        if (block instanceof BlockCompactedMRS) {
+            if (world.getBlock(x, y, z) == block) {
                 TileCompactedMRS tile = (TileCompactedMRS) world.getTileEntity(x, y, z);
 
                 tile.setRitualName(ritualName);
@@ -340,23 +305,20 @@ public class BlockCompacter extends BlockContainer
         }
     }
 
-    private void checkAltar(TEAltar altar)
-    {
+    private void checkAltar(TEAltar altar) {
         World world = altar.getWorldObj();
         int x = altar.xCoord;
         int y = altar.yCoord;
         int z = altar.zCoord;
 
         tier = altar.getTier();
-        if (tier == 0)
-        {
+        if (tier == 0) {
             return;
         }
 
         AltarUpgradeComponent upgrades = UpgradedAltars.getUpgrades(world, x, y, z, tier);
 
-        if (upgrades == null)
-        {
+        if (upgrades == null) {
             this.consumptionMultiplier = 0;
             this.efficiencyMultiplier = 1;
             this.sacrificeEfficiencyMultiplier = 0;
@@ -373,7 +335,8 @@ public class BlockCompacter extends BlockContainer
         efficiencyMultiplier = (float) Math.pow(0.80, upgrades.getSpeedUpgrades());
         sacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSacrificeUpgrades());
         selfSacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSelfSacrificeUpgrades());
-        capacityMultiplier = (float) ((1 * Math.pow(1.14, upgrades.getBetterCapacitiveUpgrades()) + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
+        capacityMultiplier = (float) ((1 * Math.pow(1.14, upgrades.getBetterCapacitiveUpgrades())
+                + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
         dislocationMultiplier = (float) (Math.pow(1.5, upgrades.getDisplacementUpgrades()));
         orbCapacityMultiplier = (float) (1 + 0.04 * upgrades.getOrbCapacitiveUpgrades());
         capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
@@ -393,8 +356,7 @@ public class BlockCompacter extends BlockContainer
         world.markBlockForUpdate(x, y - 1, z);
     }
 
-    private void compactAltar(TileEntity tileEntity)
-    {
+    private void compactAltar(TileEntity tileEntity) {
         TEAltar altar = (TEAltar) tileEntity;
         World world = altar.getWorldObj();
         int x = altar.xCoord;
@@ -403,13 +365,12 @@ public class BlockCompacter extends BlockContainer
 
         List<AltarComponent> altarComponents = UpgradedAltars.getAltarUpgradeListForTier(tier);
 
-        if (altarComponents != null && !world.isRemote)
-        {
-            for (AltarComponent altarComponent : altarComponents)
-            {
+        if (altarComponents != null && !world.isRemote) {
+            for (AltarComponent altarComponent : altarComponents) {
                 world.setBlockToAir(x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
                 world.setBlockToAir(x, y, z);
-                world.markBlockForUpdate(x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
+                world.markBlockForUpdate(
+                        x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
             }
         }
 
@@ -420,12 +381,9 @@ public class BlockCompacter extends BlockContainer
         world.markBlockForUpdate(x, y - 1, z);
     }
 
-    private void configureAltar(World world, int x, int y, int z, Block block)
-    {
-        if (block instanceof BlockPortableAltar)
-        {
-            if (world.getBlock(x, y, z) == block)
-            {
+    private void configureAltar(World world, int x, int y, int z, Block block) {
+        if (block instanceof BlockPortableAltar) {
+            if (world.getBlock(x, y, z) == block) {
                 TilePortableAltar altar = (TilePortableAltar) world.getTileEntity(x, y, z);
 
                 altar.setTier(tier);
@@ -439,7 +397,16 @@ public class BlockCompacter extends BlockContainer
                 altar.setCapacityMultiplier(capacityMultiplier);
                 altar.setCapacity(capacity);
                 altar.setBufferCapacity(bufferCapacity);
-                altar.setUpgrades(speedUpgrades, efficiencyUpgrades, sacrificeUpgrades, selfSacrificeUpgrades, displacementUpgrades, altarCapacitiveUpgrades, orbCapacitiveUpgrades, betterCapacitiveUpgrades, accelerationUpgrades);
+                altar.setUpgrades(
+                        speedUpgrades,
+                        efficiencyUpgrades,
+                        sacrificeUpgrades,
+                        selfSacrificeUpgrades,
+                        displacementUpgrades,
+                        altarCapacitiveUpgrades,
+                        orbCapacitiveUpgrades,
+                        betterCapacitiveUpgrades,
+                        accelerationUpgrades);
 
                 world.markBlockForUpdate(x, y, z);
 

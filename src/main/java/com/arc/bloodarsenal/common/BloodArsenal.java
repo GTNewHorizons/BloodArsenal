@@ -1,5 +1,6 @@
 package com.arc.bloodarsenal.common;
 
+import com.arc.bloodarsenal.common.block.ModBlocks;
 import com.arc.bloodarsenal.common.entity.ModLivingDropsEvent;
 import com.arc.bloodarsenal.common.gui.GuiHandler;
 import com.arc.bloodarsenal.common.items.ModItems;
@@ -15,9 +16,12 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Calendar;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import com.arc.bloodarsenal.common.block.ModBlocks;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
@@ -26,19 +30,22 @@ import net.minecraftforge.common.util.EnumHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Calendar;
+@Mod(
+        modid = BloodArsenal.MODID,
+        version = BloodArsenal.VERSION,
+        name = "GRADLETOKEN_MODNAME",
+        dependencies =
+                "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic",
+        guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
+public class BloodArsenal {
+    public static final String MODID = "GRADLETOKEN_MODID";
+    public static final String VERSION = "GRADLETOKEN_VERSION";
 
-@Mod(modid = BloodArsenal.MODID, version = BloodArsenal.VERSION, name = "GRADLETOKEN_MODNAME", dependencies = "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic", guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
-public class BloodArsenal
-{
-    public final static String MODID = "GRADLETOKEN_MODID";
-    public final static String VERSION = "GRADLETOKEN_VERSION";
-
-    @SidedProxy(clientSide = "com.arc.bloodarsenal.client.ClientProxy", serverSide = "com.arc.bloodarsenal.common.CommonProxy")
+    @SidedProxy(
+            clientSide = "com.arc.bloodarsenal.client.ClientProxy",
+            serverSide = "com.arc.bloodarsenal.common.CommonProxy")
     public static CommonProxy proxy;
+
     @Mod.Instance("BloodArsenal")
     public static BloodArsenal instance;
 
@@ -50,19 +57,22 @@ public class BloodArsenal
     public static Item.ToolMaterial infusedWood = EnumHelper.addToolMaterial("InfusedWood", 1, 0, 5.0F, 1.0F, 0);
     public static Item.ToolMaterial infusedIron = EnumHelper.addToolMaterial("InfusedIron", 3, 0, 11.0F, 4.0F, 0);
     public static Item.ToolMaterial infusedDiamond = EnumHelper.addToolMaterial("InfusedDiamond", 5, 0, 17.0F, 9.0F, 0);
-    public static Item.ToolMaterial infusedNetherium = EnumHelper.addToolMaterial("InfusedNetherium", 8, 0, 31.0F, 18.0F, 0);
+    public static Item.ToolMaterial infusedNetherium =
+            EnumHelper.addToolMaterial("InfusedNetherium", 8, 0, 31.0F, 18.0F, 0);
 
-    public static ItemArmor.ArmorMaterial vampireArmor = EnumHelper.addArmorMaterial("VampireArmor", 0, new int[]{2, 7, 4, 2}, 0);
-    public static ItemArmor.ArmorMaterial lifeImbuedArmor = EnumHelper.addArmorMaterial("ImbuedArmor", 0, new int[]{4, 13, 9, 4}, 0);
-    public static ItemArmor.ArmorMaterial glassArmor = EnumHelper.addArmorMaterial("GlassArmor", 0, new int[]{1, 4, 3, 1}, 4);
-    public static ItemArmor.ArmorMaterial elementalLifeImbuedArmor = EnumHelper.addArmorMaterial("ElementalImbuedArmor", 0, new int[]{6, 16, 12, 6}, 0);
+    public static ItemArmor.ArmorMaterial vampireArmor =
+            EnumHelper.addArmorMaterial("VampireArmor", 0, new int[] {2, 7, 4, 2}, 0);
+    public static ItemArmor.ArmorMaterial lifeImbuedArmor =
+            EnumHelper.addArmorMaterial("ImbuedArmor", 0, new int[] {4, 13, 9, 4}, 0);
+    public static ItemArmor.ArmorMaterial glassArmor =
+            EnumHelper.addArmorMaterial("GlassArmor", 0, new int[] {1, 4, 3, 1}, 4);
+    public static ItemArmor.ArmorMaterial elementalLifeImbuedArmor =
+            EnumHelper.addArmorMaterial("ElementalImbuedArmor", 0, new int[] {6, 16, 12, 6}, 0);
 
-	public static Logger logger = LogManager.getLogger(MODID);
-    public static CreativeTabs BA_TAB = new CreativeTabs("BA_TAB")
-    {
+    public static Logger logger = LogManager.getLogger(MODID);
+    public static CreativeTabs BA_TAB = new CreativeTabs("BA_TAB") {
         @Override
-        public Item getTabIconItem()
-        {
+        public Item getTabIconItem() {
             return ModItems.bound_bow;
         }
     };
@@ -70,45 +80,38 @@ public class BloodArsenal
     public static final AHPacketHandler packetPipeline = new AHPacketHandler();
     public static DamageSource deathFromBlood = new DamageSource("deathFromBlood").setDamageBypassesArmor();
 
-    public static boolean isHalloween()
-    {
+    public static boolean isHalloween() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.MONTH) == Calendar.OCTOBER;
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-	    BloodArsenalConfig.init(new File(event.getModConfigurationDirectory(), "BloodArsenal.cfg"));
+    public void preInit(FMLPreInitializationEvent event) {
+        BloodArsenalConfig.init(new File(event.getModConfigurationDirectory(), "BloodArsenal.cfg"));
 
-	    ModBlocks.init();
+        ModBlocks.init();
         ModBlocks.registerTileEntities();
 
-	    ModItems.init();
+        ModItems.init();
 
-	    Potion[] potionTypes;
+        Potion[] potionTypes;
 
-	    for (Field f : Potion.class.getDeclaredFields())
-        {
-	        f.setAccessible(true);
+        for (Field f : Potion.class.getDeclaredFields()) {
+            f.setAccessible(true);
 
-	        try
-            {
-	            if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a"))
-                {
-	                Field modfield = Field.class.getDeclaredField("modifiers");
-	                modfield.setAccessible(true);
-	                modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-	                potionTypes = (Potion[]) f.get(null);
-	                final Potion[] newPotionTypes = new Potion[256];
-	                System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
-	                f.set(null, newPotionTypes);
+            try {
+                if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
+                    Field modfield = Field.class.getDeclaredField("modifiers");
+                    modfield.setAccessible(true);
+                    modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+                    potionTypes = (Potion[]) f.get(null);
+                    final Potion[] newPotionTypes = new Potion[256];
+                    System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
+                    f.set(null, newPotionTypes);
                 }
-            }
-            catch (Exception e)
-            {
-	            logger.error("ポケモン！");
-	            logger.error(e);
+            } catch (Exception e) {
+                logger.error("ポケモン！");
+                logger.error(e);
             }
         }
 
@@ -124,56 +127,58 @@ public class BloodArsenal
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         BloodArsenalRecipes.registerBindingRecipes();
         BloodArsenalRecipes.registerAltarRecipes();
         BloodArsenalRecipes.registerRecipes();
         RitualRegistry.initRituals();
 
         proxy.init();
-	//manual call to registerEntityTrackers bc it wont get called client side... also removed the internal call from the proxy
-	CommonProxy.registerEntityTrackers();
+        // manual call to registerEntityTrackers bc it wont get called client side... also removed the internal call
+        // from the proxy
+        CommonProxy.registerEntityTrackers();
 
         FMLInterModComms.sendMessage("Waila", "register", "com.arc.bloodarsenal.common.misc.WAILAPlugin.registerAddon");
 
-        vampiricAura = new PotionBloodArsenal(BloodArsenalConfig.vampiricAuraID, false, 0).setIconIndex(0, 0).setPotionName("Vampiric Aura");
-        bleeding = new PotionBloodArsenal(BloodArsenalConfig.bleedingID, true, 0).setIconIndex(1, 0).setPotionName("Bleeding");
-        swimming = new PotionBloodArsenal(BloodArsenalConfig.swimmingID, false, 0).setIconIndex(2, 0).setPotionName("Swimming");
-        soulBurn = new PotionBloodArsenal(BloodArsenalConfig.soulBurnID, true, 0).setIconIndex(3, 0).setPotionName("Soul Burn");
+        vampiricAura = new PotionBloodArsenal(BloodArsenalConfig.vampiricAuraID, false, 0)
+                .setIconIndex(0, 0)
+                .setPotionName("Vampiric Aura");
+        bleeding = new PotionBloodArsenal(BloodArsenalConfig.bleedingID, true, 0)
+                .setIconIndex(1, 0)
+                .setPotionName("Bleeding");
+        swimming = new PotionBloodArsenal(BloodArsenalConfig.swimmingID, false, 0)
+                .setIconIndex(2, 0)
+                .setPotionName("Swimming");
+        soulBurn = new PotionBloodArsenal(BloodArsenalConfig.soulBurnID, true, 0)
+                .setIconIndex(3, 0)
+                .setPotionName("Soul Burn");
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-        if (Loader.isModLoaded("Baubles") && BloodArsenalConfig.baublesIntegration)
-        {
+    public void postInit(FMLPostInitializationEvent event) {
+        if (Loader.isModLoaded("Baubles") && BloodArsenalConfig.baublesIntegration) {
             logger.info("Loaded Baubles integration");
             ModItems.registerBaubles();
             BloodArsenalRecipes.addBaublesRecipe();
         }
 
-        if (Loader.isModLoaded("TConstruct") && BloodArsenalConfig.tinkersIntegration)
-        {
+        if (Loader.isModLoaded("TConstruct") && BloodArsenalConfig.tinkersIntegration) {
             logger.info("Loaded Tinker's Construct integration");
             BloodArsenalTinkers.INSTANCE.init();
         }
 
-        if (Loader.isModLoaded("guideapi") && BloodArsenalConfig.guideAPIIntegration)
-        {
+        if (Loader.isModLoaded("guideapi") && BloodArsenalConfig.guideAPIIntegration) {
             logger.info("Loaded Guide-API integration");
             BloodBurnedTome.registerTome();
         }
 
-        if (Loader.isModLoaded("ForbiddenMagic") && BloodArsenalConfig.thaumcraftIntegration)
-        {
+        if (Loader.isModLoaded("ForbiddenMagic") && BloodArsenalConfig.thaumcraftIntegration) {
             logger.info("Loaded Thaumcraft/Forbidden Magic integration");
             ModItems.registerThaumcraftItems();
             BloodArsenalThaumcraft.addResearch();
         }
 
-        if (Loader.isModLoaded("ForgeMultipart") && BloodArsenalConfig.forgeMultipartIntegration)
-        {
+        if (Loader.isModLoaded("ForgeMultipart") && BloodArsenalConfig.forgeMultipartIntegration) {
             logger.info("Loaded Forge Multipart integration");
             ModBlocks.registerMultiparts();
         }

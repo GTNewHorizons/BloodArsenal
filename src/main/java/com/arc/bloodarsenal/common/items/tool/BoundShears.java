@@ -6,6 +6,9 @@ import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.entity.mob.EntityBloodHound;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,21 +28,16 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class BoundShears extends ItemShears implements IBindable
-{
+public class BoundShears extends ItemShears implements IBindable {
     private int energyUsed;
 
     @SideOnly(Side.CLIENT)
     private IIcon active;
+
     @SideOnly(Side.CLIENT)
     private IIcon passive;
-    
-    public BoundShears()
-    {
+
+    public BoundShears() {
         super();
         setMaxStackSize(1);
         setUnlocalizedName("bound_shears");
@@ -47,73 +45,77 @@ public class BoundShears extends ItemShears implements IBindable
         setEnergyUsed(50);
     }
 
-    public void setEnergyUsed(int i)
-    {
+    public void setEnergyUsed(int i) {
         energyUsed = i;
     }
 
-    public int getEnergyUsed()
-    {
+    public int getEnergyUsed() {
         return energyUsed;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3Block, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
-    {
+    public boolean onBlockDestroyed(
+            ItemStack par1ItemStack,
+            World par2World,
+            Block par3Block,
+            int par4,
+            int par5,
+            int par6,
+            EntityLivingBase par7EntityLivingBase) {
         if (!(par7EntityLivingBase instanceof EntityPlayer)) return false;
         EntityPlayer player = (EntityPlayer) par7EntityLivingBase;
 
-        if (!player.capabilities.isCreativeMode)
-        {
+        if (!player.capabilities.isCreativeMode) {
             EnergyItems.syphonBatteries(par1ItemStack, player, 50);
         }
 
-        if (par3Block.getMaterial() != Material.leaves && par3Block != Blocks.web && par3Block != Blocks.tallgrass && par3Block != Blocks.vine && par3Block != Blocks.tripwire && !(par3Block instanceof IShearable))
-        {
+        if (par3Block.getMaterial() != Material.leaves
+                && par3Block != Blocks.web
+                && par3Block != Blocks.tallgrass
+                && par3Block != Blocks.vine
+                && par3Block != Blocks.tripwire
+                && !(par3Block instanceof IShearable)) {
             return super.onBlockDestroyed(par1ItemStack, par2World, par3Block, par4, par5, par6, par7EntityLivingBase);
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
 
-    public boolean func_150897_b(Block par1Block)
-    {
+    public boolean func_150897_b(Block par1Block) {
         return par1Block == Blocks.web || par1Block == Blocks.redstone_wire || par1Block == Blocks.tripwire;
     }
 
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
-    {
-        return par2Block != Blocks.web && par2Block.getMaterial() != Material.leaves ? (par2Block == Blocks.wool ? 5.0F : super.func_150893_a(par1ItemStack, par2Block)) : 15.0F;
+    public float func_150893_a(ItemStack par1ItemStack, Block par2Block) {
+        return par2Block != Blocks.web && par2Block.getMaterial() != Material.leaves
+                ? (par2Block == Blocks.wool ? 5.0F : super.func_150893_a(par1ItemStack, par2Block))
+                : 15.0F;
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity)
-    {
+    public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity) {
         NBTTagCompound tag = itemstack.stackTagCompound;
 
-        if (tag.getBoolean("isActive"))
-        {
-            if (!player.capabilities.isCreativeMode)
-            {
+        if (tag.getBoolean("isActive")) {
+            if (!player.capabilities.isCreativeMode) {
                 EnergyItems.syphonBatteries(itemstack, player, 50);
             }
 
-            if (entity.worldObj.isRemote)
-            {
+            if (entity.worldObj.isRemote) {
                 return false;
             }
-            if (entity instanceof IShearable)
-            {
-                IShearable target = (IShearable)entity;
-                if (target.isShearable(itemstack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ))
-                {
-                    ArrayList<ItemStack> drops = target.onSheared(itemstack, entity.worldObj, (int)entity.posX, (int)entity.posY, (int)entity.posZ,
+            if (entity instanceof IShearable) {
+                IShearable target = (IShearable) entity;
+                if (target.isShearable(
+                        itemstack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ)) {
+                    ArrayList<ItemStack> drops = target.onSheared(
+                            itemstack,
+                            entity.worldObj,
+                            (int) entity.posX,
+                            (int) entity.posY,
+                            (int) entity.posZ,
                             EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itemstack));
 
                     Random rand = new Random();
-                    for (ItemStack stack : drops)
-                    {
+                    for (ItemStack stack : drops) {
                         EntityItem ent = entity.entityDropItem(stack, 1.0F);
                         ent.motionY += rand.nextFloat() * 0.05F;
                         ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
@@ -127,33 +129,33 @@ public class BoundShears extends ItemShears implements IBindable
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack itemstack, int x, int y, int z, EntityPlayer player)
-    {
+    public boolean onBlockStartBreak(ItemStack itemstack, int x, int y, int z, EntityPlayer player) {
         NBTTagCompound tag = itemstack.stackTagCompound;
 
-        if (tag.getBoolean("isActive"))
-        {
-            if (player.worldObj.isRemote)
-            {
+        if (tag.getBoolean("isActive")) {
+            if (player.worldObj.isRemote) {
                 return false;
             }
             Block block = player.worldObj.getBlock(x, y, z);
-            if (block instanceof IShearable)
-            {
-                IShearable target = (IShearable)block;
-                if (target.isShearable(itemstack, player.worldObj, x, y, z))
-                {
-                    ArrayList<ItemStack> drops = target.onSheared(itemstack, player.worldObj, x, y, z,
+            if (block instanceof IShearable) {
+                IShearable target = (IShearable) block;
+                if (target.isShearable(itemstack, player.worldObj, x, y, z)) {
+                    ArrayList<ItemStack> drops = target.onSheared(
+                            itemstack,
+                            player.worldObj,
+                            x,
+                            y,
+                            z,
                             EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itemstack));
                     Random rand = new Random();
 
-                    for(ItemStack stack : drops)
-                    {
+                    for (ItemStack stack : drops) {
                         float f = 0.7F;
-                        double d  = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        double d1 = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        double d2 = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                        EntityItem entityitem = new EntityItem(player.worldObj, (double)x + d, (double)y + d1, (double)z + d2, stack);
+                        double d = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+                        double d1 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+                        double d2 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+                        EntityItem entityitem = new EntityItem(
+                                player.worldObj, (double) x + d, (double) y + d1, (double) z + d2, stack);
                         entityitem.delayBeforeCanPickup = 10;
                         player.worldObj.spawnEntityInWorld(entityitem);
                     }
@@ -165,23 +167,17 @@ public class BoundShears extends ItemShears implements IBindable
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.tool.bound_shears1"));
         par3List.add(StatCollector.translateToLocal("tooltip.tool.bound_shears2"));
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
-            {
+        if (!(par1ItemStack.stackTagCompound == null)) {
+            if (par1ItemStack.stackTagCompound.getBoolean("isActive")) {
                 par3List.add("Activated");
-            }
-            else
-            {
+            } else {
                 par3List.add("Deactivated");
             }
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
-            {
+            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals("")) {
                 par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
             }
         }
@@ -189,76 +185,62 @@ public class BoundShears extends ItemShears implements IBindable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon("BloodArsenal:bound_shears");
         active = iconRegister.registerIcon("BloodArsenal:bound_shears");
         passive = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.stackTagCompound == null)
-        {
+    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+        if (stack.stackTagCompound == null) {
             stack.setTagCompound(new NBTTagCompound());
         }
 
         NBTTagCompound tag = stack.stackTagCompound;
 
-        if (tag.getBoolean("isActive"))
-        {
+        if (tag.getBoolean("isActive")) {
             return active;
-        }
-        else
-        {
+        } else {
             return passive;
         }
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
-        if (par3EntityPlayer.isSneaking())
-        {
+        if (par3EntityPlayer.isSneaking()) {
             setActivated(par1ItemStack, !getActivated(par1ItemStack));
             par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
             return par1ItemStack;
         }
 
-        if (!getActivated(par1ItemStack))
-        {
+        if (!getActivated(par1ItemStack)) {
             return par1ItemStack;
         }
 
-        if (!par2World.isRemote)
-        {
+        if (!par2World.isRemote) {
             par2World.spawnEntityInWorld(new EntityBloodHound(par2World));
         }
 
         return par1ItemStack;
     }
 
-    public void setActivated(ItemStack par1ItemStack, boolean newActivated)
-    {
+    public void setActivated(ItemStack par1ItemStack, boolean newActivated) {
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 
-        if (itemTag == null)
-        {
+        if (itemTag == null) {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
         itemTag.setBoolean("isActive", newActivated);
     }
 
-    public boolean getActivated(ItemStack par1ItemStack)
-    {
+    public boolean getActivated(ItemStack par1ItemStack) {
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 
-        if (itemTag == null)
-        {
+        if (itemTag == null) {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
@@ -266,24 +248,20 @@ public class BoundShears extends ItemShears implements IBindable
     }
 
     @Override
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
-    {
-        if (!(par3Entity instanceof EntityPlayer))
-        {
+    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
+        if (!(par3Entity instanceof EntityPlayer)) {
             return;
         }
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
-        if (par1ItemStack.stackTagCompound == null)
-        {
+        if (par1ItemStack.stackTagCompound == null) {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
-        {
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
+        if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay")
+                && par1ItemStack.stackTagCompound.getBoolean("isActive")) {
+            if (!par3EntityPlayer.capabilities.isCreativeMode) {
                 EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20);
             }
         }

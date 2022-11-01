@@ -3,10 +3,8 @@ package com.arc.bloodarsenal.common.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockBloodLamp extends Block
-{
-    public BlockBloodLamp()
-    {
+public class BlockBloodLamp extends Block {
+    public BlockBloodLamp() {
         super(Material.iron);
         setStepSound(soundTypePiston);
         setHardness(5.0F);

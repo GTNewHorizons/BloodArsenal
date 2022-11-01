@@ -19,29 +19,24 @@ import tconstruct.library.crafting.FluidType;
 import tconstruct.library.crafting.Smeltery;
 import tconstruct.smeltery.TinkerSmeltery;
 
-public class BloodArsenalTinkers
-{
-    public final static BloodArsenalTinkers INSTANCE = new BloodArsenalTinkers();
+public class BloodArsenalTinkers {
+    public static final BloodArsenalTinkers INSTANCE = new BloodArsenalTinkers();
 
     public static Fluid bloodInfusedIronFluid;
 
     public BloodArsenalTinkers() {}
 
-    public void init()
-    {
+    public void init() {
         addBloodInfusedWoodMaterial();
         addBloodInfusedIronMaterial();
         BloodArsenalModifiers.initModifiers();
     }
 
-    public void addBloodInfusedWoodMaterial()
-    {
-        if (ModBlocks.blood_infused_planks != null)
-        {
+    public void addBloodInfusedWoodMaterial() {
+        if (ModBlocks.blood_infused_planks != null) {
             int id = BloodArsenalConfig.bloodInfusedWoodID;
 
-            if (id > 0)
-            {
+            if (id > 0) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setInteger("Id", id);
                 tag.setString("Name", "BloodInfusedWood");
@@ -78,14 +73,11 @@ public class BloodArsenalTinkers
         }
     }
 
-    public void addBloodInfusedIronMaterial()
-    {
-        if (ModBlocks.blood_infused_iron_block != null && ModItems.blood_infused_iron != null)
-        {
+    public void addBloodInfusedIronMaterial() {
+        if (ModBlocks.blood_infused_iron_block != null && ModItems.blood_infused_iron != null) {
             int id = BloodArsenalConfig.bloodInfusedIronID;
 
-            if (id > 0)
-            {
+            if (id > 0) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setInteger("Id", id);
                 tag.setString("Name", "BloodInfusedIron");
@@ -104,12 +96,40 @@ public class BloodArsenalTinkers
                 tag.setInteger("Color", 16777215);
                 FMLInterModComms.sendMessage("TConstruct", "addMaterial", tag);
                 FluidRegistry.registerFluid(bloodInfusedIronFluid);
-                FluidType.registerFluidType(bloodInfusedIronFluid.getName(), ModBlocks.blood_infused_iron_block, 0, 850, bloodInfusedIronFluid, true);
-                Smeltery.addMelting(new ItemStack(ModBlocks.blood_infused_iron_block, 1), ModBlocks.blood_infused_iron_block, 0, 850, new FluidStack(bloodInfusedIronFluid, 1296));
-                Smeltery.addMelting(new ItemStack(ModItems.blood_infused_iron, 1, 0), ModBlocks.blood_infused_iron_block, 0, 850, new FluidStack(bloodInfusedIronFluid, 144));
+                FluidType.registerFluidType(
+                        bloodInfusedIronFluid.getName(),
+                        ModBlocks.blood_infused_iron_block,
+                        0,
+                        850,
+                        bloodInfusedIronFluid,
+                        true);
+                Smeltery.addMelting(
+                        new ItemStack(ModBlocks.blood_infused_iron_block, 1),
+                        ModBlocks.blood_infused_iron_block,
+                        0,
+                        850,
+                        new FluidStack(bloodInfusedIronFluid, 1296));
+                Smeltery.addMelting(
+                        new ItemStack(ModItems.blood_infused_iron, 1, 0),
+                        ModBlocks.blood_infused_iron_block,
+                        0,
+                        850,
+                        new FluidStack(bloodInfusedIronFluid, 144));
                 ItemStack ingotcast = new ItemStack(TinkerSmeltery.metalPattern, 1, 0);
-                TConstructRegistry.getBasinCasting().addCastingRecipe(new ItemStack(ModBlocks.blood_infused_iron_block, 1), new FluidStack(bloodInfusedIronFluid, 1296), null, true, 100);
-                TConstructRegistry.getTableCasting().addCastingRecipe(new ItemStack(ModItems.blood_infused_iron, 1), new FluidStack(bloodInfusedIronFluid, 144), ingotcast, false, 50);
+                TConstructRegistry.getBasinCasting()
+                        .addCastingRecipe(
+                                new ItemStack(ModBlocks.blood_infused_iron_block, 1),
+                                new FluidStack(bloodInfusedIronFluid, 1296),
+                                null,
+                                true,
+                                100);
+                TConstructRegistry.getTableCasting()
+                        .addCastingRecipe(
+                                new ItemStack(ModItems.blood_infused_iron, 1),
+                                new FluidStack(bloodInfusedIronFluid, 144),
+                                ingotcast,
+                                false,
+                                50);
                 tag = new NBTTagCompound();
                 tag.setString("FluidName", bloodInfusedIronFluid.getName());
                 tag.setInteger("MaterialId", id);
@@ -119,11 +139,9 @@ public class BloodArsenalTinkers
                 tag.setTag("Item", (new ItemStack(ModItems.blood_infused_iron, 1, 0)).writeToNBT(new NBTTagCompound()));
                 tag.setInteger("Value", 2);
                 FMLInterModComms.sendMessage("TConstruct", "addMaterialItem", tag);
-                BloodArsenal.proxy.executeClientCode(new IClientCode()
-                {
+                BloodArsenal.proxy.executeClientCode(new IClientCode() {
                     @SideOnly(Side.CLIENT)
-                    public void executeClientCode()
-                    {
+                    public void executeClientCode() {
                         (new TextureResourcePackBloodInfusedIron("BloodInfusedIron")).register();
                     }
                 });
@@ -131,9 +149,11 @@ public class BloodArsenalTinkers
         }
     }
 
-    static
-    {
+    static {
         MinecraftForge.EVENT_BUS.register(new TConEvents());
-        bloodInfusedIronFluid = new Fluid("molten.blood_infused_iron").setDensity(3000).setViscosity(6000).setTemperature(1400);
+        bloodInfusedIronFluid = new Fluid("molten.blood_infused_iron")
+                .setDensity(3000)
+                .setViscosity(6000)
+                .setTemperature(1400);
     }
 }

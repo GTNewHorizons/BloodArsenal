@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import java.util.List;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,72 +16,62 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.List;
-
-public class SigilLightning extends EnergyItems implements IBindable, ISigil
-{
-    public SigilLightning()
-    {
+public class SigilLightning extends EnergyItems implements IBindable, ISigil {
+    public SigilLightning() {
         super();
         setMaxStackSize(1);
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         int mode = par1ItemStack.getItemDamage();
         par3List.add(StatCollector.translateToLocal("tooltip.sigil.lightning"));
         par3List.add(StatCollector.translateToLocal("tooltip.sigil.lightning2") + " " + (mode + 1));
 
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
+        if (!(par1ItemStack.stackTagCompound == null)) {
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
         }
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         EnergyItems.checkAndSetItemOwner(itemStack, player);
 
-        if (itemStack.stackTagCompound == null)
-        {
+        if (itemStack.stackTagCompound == null) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (player.isSneaking())
-        {
-            if (!player.isSwingInProgress)
-            {
+        if (player.isSneaking()) {
+            if (!player.isSwingInProgress) {
                 changeMode(itemStack, true);
             }
 
-            if (world.isRemote)
-            {
+            if (world.isRemote) {
                 int mode = itemStack.getItemDamage();
-                IChatComponent chatComponent = new ChatComponentText(StatCollector.translateToLocal("tooltip.sigil.lightning2") + " " + (mode + 1));
+                IChatComponent chatComponent = new ChatComponentText(
+                        StatCollector.translateToLocal("tooltip.sigil.lightning2") + " " + (mode + 1));
                 player.addChatComponentMessage(chatComponent);
             }
 
             player.swingItem();
-        }
-        else
-        {
+        } else {
             int mode = itemStack.getItemDamage();
-            MovingObjectPosition mop = SigilUtils.getTargetBlock(world, (player.prevPosX + (player.posX - player.prevPosX)),
+            MovingObjectPosition mop = SigilUtils.getTargetBlock(
+                    world,
+                    (player.prevPosX + (player.posX - player.prevPosX)),
                     (player.prevPosY + (player.posY - player.prevPosY) + 1.62 - player.yOffset),
                     (player.prevPosZ + (player.posZ - player.prevPosZ)),
                     (player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw)),
-                    (player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch)), false, 128.0);
+                    (player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch)),
+                    false,
+                    128.0);
 
-            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && mop.sideHit != -1)
-            {
+            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && mop.sideHit != -1) {
                 double ex = mop.hitVec.xCoord;
                 double wy = mop.hitVec.yCoord;
                 double zee = mop.hitVec.zCoord;
 
-                switch (mop.sideHit)
-                {
+                switch (mop.sideHit) {
                     case 0:
                         wy -= 2.0;
                         break;
@@ -102,9 +93,8 @@ public class SigilLightning extends EnergyItems implements IBindable, ISigil
 
                 int cost = 0;
 
-                switch (mode)
-                {
-                    // 8 per lightning bolt
+                switch (mode) {
+                        // 8 per lightning bolt
                     case 0:
                         cost = 8 * BloodArsenalConfig.lightningSigilMultiplier;
                         break;
@@ -122,10 +112,11 @@ public class SigilLightning extends EnergyItems implements IBindable, ISigil
                         break;
                 }
 
-                if (SoulNetworkHandler.getCurrentEssence(itemStack.getTagCompound().getString("ownerName")) >= cost || player.capabilities.isCreativeMode)
-                {
-                    switch (mode)
-                    {
+                if (SoulNetworkHandler.getCurrentEssence(
+                                        itemStack.getTagCompound().getString("ownerName"))
+                                >= cost
+                        || player.capabilities.isCreativeMode) {
+                    switch (mode) {
                         case 0:
                             world.spawnEntityInWorld(new EntityLightningBolt(world, ex, wy, zee));
                             break;
@@ -193,17 +184,12 @@ public class SigilLightning extends EnergyItems implements IBindable, ISigil
         return itemStack;
     }
 
-    private void changeMode(ItemStack itemStack, boolean next)
-    {
+    private void changeMode(ItemStack itemStack, boolean next) {
         int mode = itemStack.getItemDamage();
-        if (next)
-        {
-            if (mode < 4)
-            {
+        if (next) {
+            if (mode < 4) {
                 mode++;
-            }
-            else
-            {
+            } else {
                 mode = 0;
             }
         }

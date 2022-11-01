@@ -12,18 +12,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
-{
+public class TilePortableAltarRenderer extends TileEntitySpecialRenderer {
     private ModelPortableBloodAltar modelBloodAltar = new ModelPortableBloodAltar();
     private final RenderItem customRenderItem;
 
-    public TilePortableAltarRenderer()
-    {
-        customRenderItem = new RenderItem()
-        {
+    public TilePortableAltarRenderer() {
+        customRenderItem = new RenderItem() {
             @Override
-            public boolean shouldBob()
-            {
+            public boolean shouldBob() {
                 return false;
             }
         };
@@ -31,18 +27,15 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
-    {
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f) {
         modelBloodAltar.renderBloodAltar((TilePortableAltar) tileEntity, d0, d1, d2);
         modelBloodAltar.renderBloodLevel((TilePortableAltar) tileEntity, d0, d1, d2);
 
-        if (tileEntity instanceof TilePortableAltar)
-        {
+        if (tileEntity instanceof TilePortableAltar) {
             TilePortableAltar tileAltar = (TilePortableAltar) tileEntity;
             GL11.glPushMatrix();
 
-            if (tileAltar.getStackInSlot(0) != null)
-            {
+            if (tileAltar.getStackInSlot(0) != null) {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
                 float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
@@ -50,12 +43,9 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
                 float displacement = 0.2F;
 
-                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
-                {
+                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock) {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
-                }
-                else
-                {
+                } else {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.6F, (float) d2 + 0.5F);
                 }
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
@@ -67,16 +57,12 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    private float getGhostItemScaleFactor(ItemStack itemStack)
-    {
+    private float getGhostItemScaleFactor(ItemStack itemStack) {
         float scaleFactor = 1.0F;
 
-        if (itemStack != null)
-        {
-            if (itemStack.getItem() instanceof ItemBlock)
-            {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
+        if (itemStack != null) {
+            if (itemStack.getItem() instanceof ItemBlock) {
+                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1)) {
                     case 1:
                         return 0.90F;
 
@@ -95,11 +81,8 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
                     default:
                         return 0.90F;
                 }
-            }
-            else
-            {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
+            } else {
+                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1)) {
                     case 1:
                         return 0.65F;
 
@@ -121,108 +104,86 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection)
-    {
-        if (ghostItemStack != null)
-        {
-            if (ghostItemStack.getItem() instanceof ItemBlock)
-            {
-                switch (forgeDirection)
-                {
-                    case DOWN:
-                    {
+    private void translateGhostItemByOrientation(
+            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+        if (ghostItemStack != null) {
+            if (ghostItemStack.getItem() instanceof ItemBlock) {
+                switch (forgeDirection) {
+                    case DOWN: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 2.7F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UP:
-                    {
+                    case UP: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.25F, (float) z + 0.5F);
                         return;
                     }
 
-                    case NORTH:
-                    {
+                    case NORTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.7F);
                         return;
                     }
 
-                    case SOUTH:
-                    {
+                    case SOUTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.3F);
                         return;
                     }
 
-                    case EAST:
-                    {
+                    case EAST: {
                         GL11.glTranslatef((float) x + 0.3F, (float) y + 0.5F, (float) z + 0.5F);
                         return;
                     }
 
-                    case WEST:
-                    {
+                    case WEST: {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.5F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UNKNOWN:
-                    {
+                    case UNKNOWN: {
                         return;
                     }
 
-                    default:
-                    {
+                    default: {
                         return;
                     }
                 }
-            }
-            else
-            {
-                switch (forgeDirection)
-                {
-                    case DOWN:
-                    {
+            } else {
+                switch (forgeDirection) {
+                    case DOWN: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.6F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UP:
-                    {
+                    case UP: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.20F, (float) z + 0.5F);
                         return;
                     }
 
-                    case NORTH:
-                    {
+                    case NORTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.4F, (float) z + 0.7F);
                         return;
                     }
 
-                    case SOUTH:
-                    {
+                    case SOUTH: {
                         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.4F, (float) z + 0.3F);
                         return;
                     }
 
-                    case EAST:
-                    {
+                    case EAST: {
                         GL11.glTranslatef((float) x + 0.3F, (float) y + 0.4F, (float) z + 0.5F);
                         return;
                     }
 
-                    case WEST:
-                    {
+                    case WEST: {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.4F, (float) z + 0.5F);
                         return;
                     }
 
-                    case UNKNOWN:
-                    {
+                    case UNKNOWN: {
                         return;
                     }
 
-                    default:
-                    {
+                    default: {
                         return;
                     }
                 }

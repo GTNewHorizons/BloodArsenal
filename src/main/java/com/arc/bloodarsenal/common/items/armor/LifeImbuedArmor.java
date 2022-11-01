@@ -4,6 +4,8 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.items.ModItems;
 import com.arc.bloodarsenal.common.items.tool.IFillable;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -22,39 +24,30 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 
-import java.util.List;
-import java.util.Random;
-
-public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillable
-{
+public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillable {
     private int maxLP = 100000;
     private String LP_STORED = "LPStored";
     public double absorbRatio = 0.5;
 
-    public LifeImbuedArmor(int armorType)
-    {
+    public LifeImbuedArmor(int armorType) {
         super(BloodArsenal.lifeImbuedArmor, 0, armorType);
         setCreativeTab(BloodArsenal.BA_TAB);
     }
 
     /** IFillable */
     @Override
-    public int getMaxLP()
-    {
+    public int getMaxLP() {
         return maxLP;
     }
 
     @Override
-    public void incrementLPStored(ItemStack itemStack, int incrementAmount)
-    {
+    public void incrementLPStored(ItemStack itemStack, int incrementAmount) {
         setCurrentLPStored(itemStack, getLPStored(itemStack) + incrementAmount);
     }
 
     @Override
-    public int getLPStored(ItemStack container)
-    {
-        if (container.stackTagCompound == null)
-        {
+    public int getLPStored(ItemStack container) {
+        if (container.stackTagCompound == null) {
             setCurrentLPStored(container, 0);
         }
 
@@ -62,66 +55,54 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.armor.lifeImbuedArmor"));
-        par3List.add(StatCollector.translateToLocal("tooltip.fillable.currentAmount") + " " + EnumChatFormatting.RED + par1ItemStack.getTagCompound().getInteger(LP_STORED));
+        par3List.add(StatCollector.translateToLocal("tooltip.fillable.currentAmount") + " " + EnumChatFormatting.RED
+                + par1ItemStack.getTagCompound().getInteger(LP_STORED));
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        if (this != ModItems.life_imbued_leggings)
-        {
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+        if (this != ModItems.life_imbued_leggings) {
             return "BloodArsenal:models/armor/life_imbued_layer_1.png";
-        }
-        else
-        {
+        } else {
             return "BloodArsenal:models/armor/life_imbued_layer_2.png";
         }
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack)
-    {
+    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
         return false;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         return super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
     }
 
     @Override
-    public int getMaxDamage(ItemStack stack)
-    {
+    public int getMaxDamage(ItemStack stack) {
         return maxLP;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
+    public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.rare;
     }
 
     @Override
-    public void setDamage(ItemStack stack, int damage)
-    {
+    public void setDamage(ItemStack stack, int damage) {
         super.setDamage(stack, 0);
     }
 
     @Override
-    public boolean isDamaged(ItemStack stack)
-    {
+    public boolean isDamaged(ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getDisplayDamage(ItemStack stack)
-    {
-        if (stack.stackTagCompound == null)
-        {
+    public int getDisplayDamage(ItemStack stack) {
+        if (stack.stackTagCompound == null) {
             setCurrentLPStored(stack, 0);
         }
 
@@ -129,22 +110,18 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack)
-    {
+    public boolean showDurabilityBar(ItemStack stack) {
         return stack.stackTagCompound == null || !stack.stackTagCompound.getBoolean("CreativeTab");
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list)
-    {
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
         list.add(setCurrentLPStored(new ItemStack(item, 1, 0), 0));
         list.add(setCurrentLPStored(new ItemStack(item, 1, 0), maxLP));
     }
 
-    private ItemStack setCurrentLPStored(ItemStack itemStack, int amount)
-    {
-        if (itemStack.stackTagCompound == null)
-        {
+    private ItemStack setCurrentLPStored(ItemStack itemStack, int amount) {
+        if (itemStack.stackTagCompound == null) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
@@ -152,15 +129,12 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
         return itemStack;
     }
 
-    protected int getBaseAbsorption()
-    {
+    protected int getBaseAbsorption() {
         return 18;
     }
 
-    protected int getAbsorptionRatio()
-    {
-        switch (armorType)
-        {
+    protected int getAbsorptionRatio() {
+        switch (armorType) {
             case 0:
                 return 15;
             case 1:
@@ -175,52 +149,47 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     @Override
-    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
-    {
-        if (getLPStored(armor) >= getLPPerDamage(armor))
-        {
+    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+        if (getLPStored(armor) >= getLPPerDamage(armor)) {
             return Math.min(getBaseAbsorption(), 20) * getAbsorptionRatio() / 100;
         }
         return 0;
     }
 
     @Override
-    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
-    {
-        if (source.isUnblockable())
-        {
+    public ArmorProperties getProperties(
+            EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+        if (source.isUnblockable()) {
             int absorbMax = getLPPerDamage(armor) > 0 ? 25 * getLPStored(armor) / getLPPerDamage(armor) : 0;
-            return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
+            return new ArmorProperties(
+                    0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
         }
 
         int absorbMax = getLPPerDamage(armor) > 0 ? 25 * getLPStored(armor) / getLPPerDamage(armor) : 0;
-        return new ArmorProperties(0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
+        return new ArmorProperties(
+                0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
     }
 
     @Override
-    public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot)
-    {
+    public void damageArmor(EntityLivingBase entity, ItemStack armor, DamageSource source, int damage, int slot) {
         subtractLP(armor, damage * getLPPerDamage(armor), false);
     }
 
-    protected int getLPPerDamage(ItemStack stack)
-    {
-        int unbreakingLevel = MathHelper.clamp_int(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+    protected int getLPPerDamage(ItemStack stack) {
+        int unbreakingLevel = MathHelper.clamp_int(
+                EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
         return 100 * (5 - unbreakingLevel) / 5;
     }
 
-    public int subtractLP(ItemStack container, int maxExtract, boolean simulate)
-    {
-        if (container.stackTagCompound == null)
-        {
+    public int subtractLP(ItemStack container, int maxExtract, boolean simulate) {
+        if (container.stackTagCompound == null) {
             setCurrentLPStored(container, 0);
         }
 
         int stored = container.stackTagCompound.getInteger(LP_STORED);
         int extract = Math.min(maxExtract, stored);
 
-        if (!simulate)
-        {
+        if (!simulate) {
             stored -= extract;
             container.stackTagCompound.setInteger(LP_STORED, stored);
         }
@@ -229,21 +198,19 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack armor)
-    {
-        if (hasArmorSetItem(player, 0) && hasArmorSetItem(player, 1) && hasArmorSetItem(player, 2) && hasArmorSetItem(player, 3))
-        {
-            if (player.getHealth() < player.getMaxHealth() && !player.isPotionActive(AlchemicalWizardry.customPotionInhibit))
-            {
-                if (world.getWorldTime() % 50 == 0)
-                {
+    public void onArmorTick(World world, EntityPlayer player, ItemStack armor) {
+        if (hasArmorSetItem(player, 0)
+                && hasArmorSetItem(player, 1)
+                && hasArmorSetItem(player, 2)
+                && hasArmorSetItem(player, 3)) {
+            if (player.getHealth() < player.getMaxHealth()
+                    && !player.isPotionActive(AlchemicalWizardry.customPotionInhibit)) {
+                if (world.getWorldTime() % 50 == 0) {
                     Random random = new Random();
 
-                    if (random.nextInt(9) > 7)
-                    {
+                    if (random.nextInt(9) > 7) {
                         LifeImbuedArmor thisArmor = (LifeImbuedArmor) armor.getItem();
-                        if (thisArmor.getLPStored(armor) >= 2000)
-                        {
+                        if (thisArmor.getLPStored(armor) >= 2000) {
                             float healHealth = player.getMaxHealth() - player.getHealth();
                             player.setHealth(player.getHealth() + healHealth);
                             player.onUpdate();
@@ -255,21 +222,22 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
         }
     }
 
-    public boolean hasArmorSetItem(EntityPlayer player, int i)
-    {
+    public boolean hasArmorSetItem(EntityPlayer player, int i) {
         ItemStack stack = player.inventory.armorInventory[3 - i];
 
-        if (stack == null)
-        {
+        if (stack == null) {
             return false;
         }
 
-        switch (i)
-        {
-            case 0: return stack.getItem() == ModItems.life_imbued_helmet;
-            case 1: return stack.getItem() == ModItems.life_imbued_chestplate;
-            case 2: return stack.getItem() == ModItems.life_imbued_leggings;
-            case 3: return stack.getItem() == ModItems.life_imbued_boots;
+        switch (i) {
+            case 0:
+                return stack.getItem() == ModItems.life_imbued_helmet;
+            case 1:
+                return stack.getItem() == ModItems.life_imbued_chestplate;
+            case 2:
+                return stack.getItem() == ModItems.life_imbued_leggings;
+            case 3:
+                return stack.getItem() == ModItems.life_imbued_boots;
         }
 
         return false;

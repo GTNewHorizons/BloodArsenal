@@ -12,24 +12,19 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 
-public class VampireRing extends ItemBauble implements IBauble
-{
-    public VampireRing()
-    {
+public class VampireRing extends ItemBauble implements IBauble {
+    public VampireRing() {
         super();
         setMaxStackSize(1);
         setHasSubtypes(true);
     }
 
     @Override
-    public void onWornTick(ItemStack par1ItemStack, EntityLivingBase player)
-    {
+    public void onWornTick(ItemStack par1ItemStack, EntityLivingBase player) {
         super.onWornTick(par1ItemStack, player);
 
-        if (player instanceof EntityPlayerMP && !player.worldObj.isRemote)
-        {
-            if (player.getActivePotionEffect(BloodArsenal.vampiricAura) != null)
-            {
+        if (player instanceof EntityPlayerMP && !player.worldObj.isRemote) {
+            if (player.getActivePotionEffect(BloodArsenal.vampiricAura) != null) {
                 player.removePotionEffect(BloodArsenalConfig.vampiricAuraID);
             }
             player.addPotionEffect(new PotionEffect(BloodArsenalConfig.vampiricAuraID, Integer.MAX_VALUE, 0, true));
@@ -37,26 +32,22 @@ public class VampireRing extends ItemBauble implements IBauble
     }
 
     @Override
-    public void onUnequipped(ItemStack par1ItemStack, EntityLivingBase player)
-    {
+    public void onUnequipped(ItemStack par1ItemStack, EntityLivingBase player) {
         PotionEffect effect = player.getActivePotionEffect(BloodArsenal.vampiricAura);
 
-        if (effect != null)
-        {
+        if (effect != null) {
             player.removePotionEffect(BloodArsenalConfig.vampiricAuraID);
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon("BloodArsenal:vampire_ring");
     }
 
     @Override
-    public BaubleType getBaubleType(ItemStack par1ItemStack)
-    {
+    public BaubleType getBaubleType(ItemStack par1ItemStack) {
         return BaubleType.RING;
     }
 }

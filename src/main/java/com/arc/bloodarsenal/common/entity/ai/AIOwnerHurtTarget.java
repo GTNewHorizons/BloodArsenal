@@ -4,14 +4,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.passive.EntityTameable;
 
-public class AIOwnerHurtTarget extends EntityAITarget
-{
+public class AIOwnerHurtTarget extends EntityAITarget {
     EntityTameable theEntityTameable;
     EntityLivingBase theTarget;
     private int field_142050_e;
 
-    public AIOwnerHurtTarget(EntityTameable p_i1668_1_)
-    {
+    public AIOwnerHurtTarget(EntityTameable p_i1668_1_) {
         super(p_i1668_1_, false);
         this.theEntityTameable = p_i1668_1_;
         this.setMutexBits(1);
@@ -20,25 +18,20 @@ public class AIOwnerHurtTarget extends EntityAITarget
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute()
-    {
-        if (!this.theEntityTameable.isTamed())
-        {
+    public boolean shouldExecute() {
+        if (!this.theEntityTameable.isTamed()) {
             return false;
-        }
-        else
-        {
+        } else {
             EntityLivingBase entitylivingbase = this.theEntityTameable.getOwner();
 
-            if (entitylivingbase == null)
-            {
+            if (entitylivingbase == null) {
                 return false;
-            }
-            else
-            {
+            } else {
                 this.theTarget = entitylivingbase.getLastAttacker();
                 int i = entitylivingbase.getLastAttackerTime();
-                return i != this.field_142050_e && this.isSuitableTarget(this.theTarget, false) && this.theEntityTameable.func_142018_a(this.theTarget, entitylivingbase);
+                return i != this.field_142050_e
+                        && this.isSuitableTarget(this.theTarget, false)
+                        && this.theEntityTameable.func_142018_a(this.theTarget, entitylivingbase);
             }
         }
     }
@@ -46,13 +39,11 @@ public class AIOwnerHurtTarget extends EntityAITarget
     /**
      * Execute a one shot task or start executing a continuous task
      */
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.taskOwner.setAttackTarget(this.theTarget);
         EntityLivingBase entitylivingbase = this.theEntityTameable.getOwner();
 
-        if (entitylivingbase != null)
-        {
+        if (entitylivingbase != null) {
             this.field_142050_e = entitylivingbase.getLastAttackerTime();
         }
 
