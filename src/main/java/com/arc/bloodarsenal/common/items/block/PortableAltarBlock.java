@@ -35,6 +35,8 @@ public class PortableAltarBlock extends ItemBlock
 
     public void addHiddenTooltip(ItemStack par1ItemStack, List par3List)
     {
+        if (!par1ItemStack.hasTagCompound()) return;
+
         String capacity = par1ItemStack.getTagCompound().getString("capacity");
         int alterTier = par1ItemStack.getTagCompound().getInteger("upgradeLevel");
         int currentEssence = par1ItemStack.getTagCompound().getInteger("currentEssence");
