@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -24,10 +25,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-import java.util.List;
-
-public class TilePortableAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar
-{
+public class TilePortableAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar {
     public static final int sizeInv = 1;
     private ItemStack[] inv;
     private int resultID;
@@ -36,7 +34,7 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     public FluidStack fluid;
     public int capacity;
     private boolean isActive;
-    public int liquidRequired; //mB
+    public int liquidRequired; // mB
     private boolean canBeFilled;
     public int consumptionRate;
     private int drainRate;
@@ -68,8 +66,7 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     private int lockdownDuration;
     private int demonBloodDuration;
 
-    public TilePortableAltar()
-    {
+    public TilePortableAltar() {
         this.inv = new ItemStack[1];
         resultID = 0;
         resultDamage = 0;
@@ -96,36 +93,31 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
      *
      * @return	Amount filled
      */
-    public int fillMainTank(int amount) //TODO
-    {
+    public int fillMainTank(int amount) // TODO
+            {
         int filledAmount = Math.min(capacity - fluid.amount, amount);
         fluid.amount += filledAmount;
 
         return filledAmount;
     }
 
-    public int getRSPowerOutput()
-    {
+    public int getRSPowerOutput() {
         return 5;
     }
 
-    public void addToDemonBloodDuration(int dur)
-    {
+    public void addToDemonBloodDuration(int dur) {
         this.demonBloodDuration++;
     }
 
-    public boolean hasDemonBlood()
-    {
+    public boolean hasDemonBlood() {
         return this.demonBloodDuration > 0;
     }
 
-    public void decrementDemonBlood()
-    {
+    public void decrementDemonBlood() {
         this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
     }
 
-    public void readNBTOnPlace(NBTTagCompound tag)
-    {
+    public void readNBTOnPlace(NBTTagCompound tag) {
         fluid.amount = tag.getInteger("currentEssence");
         upgradeLevel = tag.getInteger("upgradeLevel");
         isActive = tag.getBoolean("isActive");
@@ -151,8 +143,7 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         cooldownAfterCrafting = tag.getInteger("cooldownAfterCrafting");
     }
 
-    public void writeNBTOnHarvest(NBTTagCompound tag)
-    {
+    public void writeNBTOnHarvest(NBTTagCompound tag) {
         tag.setInteger("currentEssence", fluid.amount);
         tag.setInteger("upgradeLevel", upgradeLevel);
         tag.setBoolean("isActive", isActive);
@@ -179,18 +170,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
         super.readFromNBT(par1NBTTagCompound);
         NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
-            if (slot >= 0 && slot < inv.length)
-            {
+            if (slot >= 0 && slot < inv.length) {
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
@@ -198,26 +186,24 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         resultID = par1NBTTagCompound.getInteger("resultID");
         resultDamage = par1NBTTagCompound.getInteger("resultDamage");
 
-        if (!par1NBTTagCompound.hasKey("Empty"))
-        {
+        if (!par1NBTTagCompound.hasKey("Empty")) {
             FluidStack fluid = this.fluid.loadFluidStackFromNBT(par1NBTTagCompound);
 
-            if (fluid != null)
-            {
+            if (fluid != null) {
                 setMainFluid(fluid);
             }
 
-            FluidStack fluidOut = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
+            FluidStack fluidOut =
+                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
 
-            if (fluidOut != null)
-            {
+            if (fluidOut != null) {
                 setOutputFluid(fluidOut);
             }
 
-            FluidStack fluidIn = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("inputAmount"));
+            FluidStack fluidIn =
+                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("inputAmount"));
 
-            if (fluidIn != null)
-            {
+            if (fluidIn != null) {
                 setInputFluid(fluidIn);
             }
         }
@@ -247,31 +233,25 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         cooldownAfterCrafting = par1NBTTagCompound.getInteger("cooldownAfterCrafting");
     }
 
-    public void setMainFluid(FluidStack fluid)
-    {
+    public void setMainFluid(FluidStack fluid) {
         this.fluid = fluid;
     }
 
-    public void setOutputFluid(FluidStack fluid)
-    {
+    public void setOutputFluid(FluidStack fluid) {
         this.fluidOutput = fluid;
     }
 
-    public void setInputFluid(FluidStack fluid)
-    {
+    public void setInputFluid(FluidStack fluid) {
         this.fluidInput = fluid;
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         super.writeToNBT(par1NBTTagCompound);
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
-            if (inv[i] != null)
-            {
+        for (int i = 0; i < inv.length; i++) {
+            if (inv[i] != null) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
                 inv[i].writeToNBT(tag);
@@ -283,22 +263,17 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         par1NBTTagCompound.setInteger("resultDamage", resultDamage);
         par1NBTTagCompound.setTag("Inventory", itemList);
 
-        if (fluid != null)
-        {
+        if (fluid != null) {
             fluid.writeToNBT(par1NBTTagCompound);
-        }
-        else
-        {
+        } else {
             par1NBTTagCompound.setString("Empty", "");
         }
 
-        if (fluidOutput != null)
-        {
+        if (fluidOutput != null) {
             par1NBTTagCompound.setInteger("outputAmount", fluidOutput.amount);
         }
 
-        if (fluidInput != null)
-        {
+        if (fluidInput != null) {
             par1NBTTagCompound.setInteger("inputAmount", fluidInput.amount);
         }
 
@@ -328,34 +303,26 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public int getSizeInventory()
-    {
+    public int getSizeInventory() {
         return inv.length;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot)
-    {
+    public ItemStack getStackInSlot(int slot) {
         return inv[slot];
     }
 
     @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
+    public ItemStack decrStackSize(int slot, int amt) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
+        if (stack != null) {
+            if (stack.stackSize <= amt) {
                 setInventorySlotContents(slot, null);
-            }
-            else
-            {
+            } else {
                 stack = stack.splitStack(amt);
 
-                if (stack.stackSize == 0)
-                {
+                if (stack.stackSize == 0) {
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -365,12 +332,10 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
+    public ItemStack getStackInSlotOnClosing(int slot) {
         ItemStack stack = getStackInSlot(slot);
 
-        if (stack != null)
-        {
+        if (stack != null) {
             setInventorySlotContents(slot, null);
         }
 
@@ -378,63 +343,51 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public void setInventorySlotContents(int slot, ItemStack itemStack)
-    {
+    public void setInventorySlotContents(int slot, ItemStack itemStack) {
         inv[slot] = itemStack;
         this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
-        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
-        {
+        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
             itemStack.stackSize = getInventoryStackLimit();
         }
     }
 
     @Override
-    public String getInventoryName()
-    {
+    public String getInventoryName() {
         return "TilePortableAltar";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
+    public boolean hasCustomInventoryName() {
         return false;
     }
 
     @Override
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+                && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
-    public void openInventory()
-    {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory()
-    {
-    }
+    public void closeInventory() {}
 
-    //IFluidTank methods
+    // IFluidTank methods
     @Override
-    public FluidStack getFluid()
-    {
+    public FluidStack getFluid() {
         return fluid;
     }
 
     @Override
-    public int getFluidAmount()
-    {
-        if (fluid == null)
-        {
+    public int getFluidAmount() {
+        if (fluid == null) {
             return 0;
         }
 
@@ -442,116 +395,104 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public int getCapacity()
-    {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity)
-    {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
     @Override
-    public int getCurrentBlood()
-    {
+    public int getCurrentBlood() {
         return getFluidAmount();
     }
 
-    public void setCurrentBlood(int amount)
-    {
+    public void setCurrentBlood(int amount) {
         this.fluid.amount = amount;
     }
 
     @Override
-    public int getTier()
-    {
+    public int getTier() {
         return upgradeLevel;
     }
 
-    public void setTier(int tier)
-    {
+    public void setTier(int tier) {
         this.upgradeLevel = tier;
     }
 
     @Override
-    public int getProgress()
-    {
+    public int getProgress() {
         return progress;
     }
 
     @Override
-    public float getSacrificeMultiplier()
-    {
+    public float getSacrificeMultiplier() {
         return sacrificeEfficiencyMultiplier;
     }
 
-    public void setSacrificeMultiplier(float sacrificeMultiplier)
-    {
+    public void setSacrificeMultiplier(float sacrificeMultiplier) {
         this.sacrificeEfficiencyMultiplier = sacrificeMultiplier;
     }
 
     @Override
-    public float getSelfSacrificeMultiplier()
-    {
+    public float getSelfSacrificeMultiplier() {
         return selfSacrificeEfficiencyMultiplier;
     }
 
-    public void setSelfSacrificeMultiplier(float selfSacrificeMultiplier)
-    {
+    public void setSelfSacrificeMultiplier(float selfSacrificeMultiplier) {
         this.selfSacrificeEfficiencyMultiplier = selfSacrificeMultiplier;
     }
 
     @Override
-    public float getOrbMultiplier()
-    {
+    public float getOrbMultiplier() {
         return orbCapacityMultiplier;
     }
 
-    public void setOrbMultiplier(float orbMultiplier)
-    {
+    public void setOrbMultiplier(float orbMultiplier) {
         this.orbCapacityMultiplier = orbMultiplier;
     }
 
     @Override
-    public float getDislocationMultiplier()
-    {
+    public float getDislocationMultiplier() {
         return dislocationMultiplier;
     }
 
-    public void setDislocationMultiplier(float dislocationMultiplier)
-    {
+    public void setDislocationMultiplier(float dislocationMultiplier) {
         this.dislocationMultiplier = dislocationMultiplier;
     }
 
     @Override
-    public int getBufferCapacity()
-    {
+    public int getBufferCapacity() {
         return bufferCapacity;
     }
 
-    public void setBufferCapacity(int bufferCapacity)
-    {
+    public void setBufferCapacity(int bufferCapacity) {
         this.bufferCapacity = bufferCapacity;
     }
 
-    public void setConsumptionMultiplier(float consumptionMultiplier)
-    {
+    public void setConsumptionMultiplier(float consumptionMultiplier) {
         this.consumptionMultiplier = consumptionMultiplier;
     }
 
-    public void setEfficiencyMultiplier(float efficiencyMultiplier)
-    {
+    public void setEfficiencyMultiplier(float efficiencyMultiplier) {
         this.efficiencyMultiplier = efficiencyMultiplier;
     }
 
-    public void setCapacityMultiplier(float capacityMultiplier)
-    {
+    public void setCapacityMultiplier(float capacityMultiplier) {
         this.capacityMultiplier = capacityMultiplier;
     }
 
-    public void setUpgrades(int speedUpgrades, int efficiencyUpgrades, int sacrificeUpgrades, int selfSacrificeUpgrades, int displacementUpgrades, int altarCapacitiveUpgrades, int orbCapacitiveUpgrades, int betterCapacitiveUpgrades, int accelerationUpgrades)
-    {
+    public void setUpgrades(
+            int speedUpgrades,
+            int efficiencyUpgrades,
+            int sacrificeUpgrades,
+            int selfSacrificeUpgrades,
+            int displacementUpgrades,
+            int altarCapacitiveUpgrades,
+            int orbCapacitiveUpgrades,
+            int betterCapacitiveUpgrades,
+            int accelerationUpgrades) {
         this.speedUpgrades = speedUpgrades;
         this.efficiencyUpgrades = efficiencyUpgrades;
         this.sacrificeUpgrades = sacrificeUpgrades;
@@ -564,141 +505,128 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public FluidTankInfo getInfo()
-    {
+    public FluidTankInfo getInfo() {
         return new FluidTankInfo(this);
     }
 
     @Override
-    public int fill(FluidStack resource, boolean doFill)
-    {
+    public int fill(FluidStack resource, boolean doFill) {
         TileEntity tile = this;
 
-        if (resource == null)
-        {
+        if (resource == null) {
             return 0;
         }
 
-        if (resource.getFluid().getID() != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluid().getID())
-        {
+        if (resource.getFluid().getID()
+                != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1))
+                        .getFluid()
+                        .getID()) {
             return 0;
         }
 
-        if (!doFill)
-        {
-            if (fluidInput == null)
-            {
+        if (!doFill) {
+            if (fluidInput == null) {
                 return Math.min(bufferCapacity, resource.amount);
             }
 
-            if (!fluidInput.isFluidEqual(resource))
-            {
+            if (!fluidInput.isFluidEqual(resource)) {
                 return 0;
             }
 
             return Math.min(bufferCapacity - fluidInput.amount, resource.amount);
         }
 
-        if (fluidInput == null)
-        {
+        if (fluidInput == null) {
             fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
 
-            if (tile != null)
-            {
-                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this, fluidInput.amount));
+            if (tile != null) {
+                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
+                        fluidInput,
+                        tile.getWorldObj(),
+                        tile.xCoord,
+                        tile.yCoord,
+                        tile.zCoord,
+                        this,
+                        fluidInput.amount));
             }
 
             return fluidInput.amount;
         }
 
-        if (!fluidInput.isFluidEqual(resource))
-        {
+        if (!fluidInput.isFluidEqual(resource)) {
             return 0;
         }
 
         int filled = bufferCapacity - fluidInput.amount;
 
-        if (resource.amount < filled)
-        {
+        if (resource.amount < filled) {
             fluidInput.amount += resource.amount;
             filled = resource.amount;
-        }
-        else
-        {
+        } else {
             fluidInput.amount = bufferCapacity;
         }
 
-        if (tile != null)
-        {
-            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this, fluidInput.amount));
+        if (tile != null) {
+            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
+                    fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this, fluidInput.amount));
         }
 
         return filled;
     }
 
     @Override
-    public FluidStack drain(int maxDrain, boolean doDrain)
-    {
-        if (fluidOutput == null)
-        {
+    public FluidStack drain(int maxDrain, boolean doDrain) {
+        if (fluidOutput == null) {
             return null;
         }
 
         int drained = maxDrain;
 
-        if (fluidOutput.amount < drained)
-        {
+        if (fluidOutput.amount < drained) {
             drained = fluidOutput.amount;
         }
 
         FluidStack stack = new FluidStack(fluidOutput, drained);
 
-        if (doDrain)
-        {
+        if (doDrain) {
             fluidOutput.amount -= drained;
 
-            if (fluidOutput.amount <= 0)
-            {
+            if (fluidOutput.amount <= 0) {
                 fluidOutput = null;
             }
 
-            if (this != null)
-            {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, fluidOutput.amount));
+            if (this != null) {
+                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(
+                        fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, fluidOutput.amount));
             }
         }
 
-        if (fluidOutput == null)
-        {
+        if (fluidOutput == null) {
             fluidOutput = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 0);
         }
 
-        if (worldObj != null)
-        {
+        if (worldObj != null) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         return stack;
     }
 
-    //Logic for the actual block is under here
+    // Logic for the actual block is under here
     @Override
-    public void updateEntity()
-    {
+    public void updateEntity() {
         this.decrementDemonBlood();
 
-        if (this.hasDemonBlood() && !worldObj.isRemote)
-        {
-            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+        if (this.hasDemonBlood() && !worldObj.isRemote) {
+            SpellHelper.sendIndexedParticleToAllAround(
+                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
         }
 
-        if (this.lockdownDuration > 0)
-        {
+        if (this.lockdownDuration > 0) {
             this.lockdownDuration--;
         }
 
-        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
-        {
+        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0) {
             {
                 Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
                 block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
@@ -714,35 +642,31 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
                 block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block);
             }
 
-            if (AlchemicalWizardry.lockdownAltar)
-            {
-                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
-                for (EntityPlayer player : list)
-                {
+            if (AlchemicalWizardry.lockdownAltar) {
+                List<EntityPlayer> list =
+                        SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+                for (EntityPlayer player : list) {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
-                    if (regenEffect != null && regenEffect.getAmplifier() >= 2)
-                    {
+                    if (regenEffect != null && regenEffect.getAmplifier() >= 2) {
                         this.lockdownDuration += 20;
                     }
                 }
             }
 
-            if (AlchemicalWizardry.causeHungerWithRegen)
-            {
-                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
-                for (EntityPlayer player : list)
-                {
+            if (AlchemicalWizardry.causeHungerWithRegen) {
+                List<EntityPlayer> list =
+                        SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+                for (EntityPlayer player : list) {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
-                    if (regenEffect != null && regenEffect.getAmplifier() > 0)
-                    {
-                        player.addPotionEffect(new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier() * 2 - 2));
+                    if (regenEffect != null && regenEffect.getAmplifier() > 0) {
+                        player.addPotionEffect(
+                                new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier() * 2 - 2));
                     }
                 }
             }
         }
 
-        if (worldObj.getWorldTime() % Math.max(20 - this.accelerationUpgrades, 1) == 0)
-        {
+        if (worldObj.getWorldTime() % Math.max(20 - this.accelerationUpgrades, 1) == 0) {
             int syphonMax = (int) (20 * this.dislocationMultiplier);
             int fluidInputted;
             int fluidOutputted;
@@ -756,175 +680,187 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             this.fluid.amount -= fluidOutputted;
         }
 
-        if (worldObj.getWorldTime() % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
-        {
+        if (worldObj.getWorldTime() % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0)) {
             startCycle();
         }
 
-        if (!isActive)
-        {
-            if (cooldownAfterCrafting > 0)
-            {
+        if (!isActive) {
+            if (cooldownAfterCrafting > 0) {
                 cooldownAfterCrafting--;
             }
             return;
         }
 
-        if (getStackInSlot(0) == null)
-        {
+        if (getStackInSlot(0) == null) {
             return;
         }
 
         int worldTime = (int) (worldObj.getWorldTime() % 24000);
 
-        if (worldObj.isRemote)
-        {
+        if (worldObj.isRemote) {
             return;
         }
 
-        if (worldTime % 1 == 0)
-        {
-            if (!canBeFilled)
-            {
-                if (fluid != null && fluid.amount >= 1)
-                {
+        if (worldTime % 1 == 0) {
+            if (!canBeFilled) {
+                if (fluid != null && fluid.amount >= 1) {
                     int stackSize = getStackInSlot(0).stackSize;
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+                    int liquidDrained = Math.min(
+                            (int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate),
+                            fluid.amount);
 
-                    if (liquidDrained > (liquidRequired * stackSize - progress))
-                    {
+                    if (liquidDrained > (liquidRequired * stackSize - progress)) {
                         liquidDrained = liquidRequired * stackSize - progress;
                     }
 
                     fluid.amount = fluid.amount - liquidDrained;
                     progress += liquidDrained;
 
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    if (worldTime % 4 == 0) {
+                        SpellHelper.sendIndexedParticleToAllAround(
+                                worldObj,
+                                xCoord,
+                                yCoord,
+                                zCoord,
+                                20,
+                                worldObj.provider.dimensionId,
+                                1,
+                                xCoord,
+                                yCoord,
+                                zCoord);
                     }
 
-                    if (progress >= liquidRequired * stackSize)
-                    {
+                    if (progress >= liquidRequired * stackSize) {
                         ItemStack result;
                         result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
-                        if (result != null)
-                        {
+                        if (result != null) {
                             result.stackSize *= stackSize;
                         }
 
                         setInventorySlotContents(0, result);
                         progress = 0;
 
-                        for (int i = 0; i < 8; i++)
-                        {
-                            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                        for (int i = 0; i < 8; i++) {
+                            SpellHelper.sendIndexedParticleToAllAround(
+                                    worldObj,
+                                    xCoord,
+                                    yCoord,
+                                    zCoord,
+                                    20,
+                                    worldObj.provider.dimensionId,
+                                    4,
+                                    xCoord + 0.5f,
+                                    yCoord + 1.0f,
+                                    zCoord + 0.5f);
                         }
                         this.isActive = false;
                     }
-                }
-                else if (progress > 0)
-                {
+                } else if (progress > 0) {
                     progress -= (int) (efficiencyMultiplier * drainRate);
 
-                    if (worldTime % 2 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
+                    if (worldTime % 2 == 0) {
+                        SpellHelper.sendIndexedParticleToAllAround(
+                                worldObj,
+                                xCoord,
+                                yCoord,
+                                zCoord,
+                                20,
+                                worldObj.provider.dimensionId,
+                                2,
+                                xCoord,
+                                yCoord,
+                                zCoord);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 ItemStack returnedItem = getStackInSlot(0);
 
-                if (!(returnedItem.getItem() instanceof IBloodOrb))
-                {
+                if (!(returnedItem.getItem() instanceof IBloodOrb)) {
                     return;
                 }
 
                 IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
                 NBTTagCompound itemTag = returnedItem.stackTagCompound;
 
-                if (itemTag == null)
-                {
+                if (itemTag == null) {
                     return;
                 }
 
                 String ownerName = itemTag.getString("ownerName");
 
-                if (ownerName.equals(""))
-                {
+                if (ownerName.equals("")) {
                     return;
                 }
 
-                if (fluid != null && fluid.amount >= 1)
-                {
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+                if (fluid != null && fluid.amount >= 1) {
+                    int liquidDrained = Math.min(
+                            (int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate),
+                            fluid.amount);
 
-                    int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
+                    int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(
+                            ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
 
                     fluid.amount = fluid.amount - drain;
 
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                    if (worldTime % 4 == 0) {
+                        SpellHelper.sendIndexedParticleToAllAround(
+                                worldObj,
+                                xCoord,
+                                yCoord,
+                                zCoord,
+                                20,
+                                worldObj.provider.dimensionId,
+                                3,
+                                xCoord,
+                                yCoord,
+                                zCoord);
                     }
                 }
             }
-            if (worldObj != null)
-            {
+            if (worldObj != null) {
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
         }
     }
 
-    public void setActive(boolean active)
-    {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void sacrificialDaggerCall(int amount, boolean isSacrifice)
-    {
-        if (!isSacrifice && this.lockdownDuration > 0)
-        {
-            int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
+    public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
+        if (!isSacrifice && this.lockdownDuration > 0) {
+            int amt = (int) Math.min(
+                    bufferCapacity - fluidInput.amount,
+                    (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
             fluidInput.amount += amt;
-        }
-        else
-        {
-            fluid.amount += Math.min(capacity - fluid.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
+        } else {
+            fluid.amount += Math.min(
+                    capacity - fluid.amount,
+                    (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
         }
     }
 
     @Override
-    public Packet getDescriptionPacket()
-    {
+    public Packet getDescriptionPacket() {
         return PacketHandler.getPacket(this);
     }
 
-    public void handlePacketData(int[] intData, int[] fluidData, int capacity)
-    {
-        if (intData == null)
-        {
+    public void handlePacketData(int[] intData, int[] fluidData, int capacity) {
+        if (intData == null) {
             return;
         }
 
-        if (intData.length == 3)
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                if (intData[i * 3 + 2] != 0)
-                {
-                    ItemStack is = new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+        if (intData.length == 3) {
+            for (int i = 0; i < 1; i++) {
+                if (intData[i * 3 + 2] != 0) {
+                    ItemStack is =
+                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
-                {
+                } else {
                     inv[i] = null;
                 }
             }
@@ -941,21 +877,16 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         this.capacity = capacity;
     }
 
-    public int[] buildIntDataList()
-    {
-        int[] sortList = new int[3];//1 * 3
+    public int[] buildIntDataList() {
+        int[] sortList = new int[3]; // 1 * 3
         int pos = 0;
 
-        for (ItemStack is : inv)
-        {
-            if (is != null)
-            {
+        for (ItemStack is : inv) {
+            if (is != null) {
                 sortList[pos++] = Item.getIdFromItem(is.getItem());
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
-            {
+            } else {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
@@ -965,32 +896,26 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         return sortList;
     }
 
-    public void startCycle()
-    {
-        if (worldObj != null)
-        {
+    public void startCycle() {
+        if (worldObj != null) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         this.checkAndSetAltar();
 
-        if (fluid == null || fluid.amount <= 0)
-        {
+        if (fluid == null || fluid.amount <= 0) {
             return;
         }
 
-        if (getStackInSlot(0) == null)
-        {
+        if (getStackInSlot(0) == null) {
             return;
         }
 
-        if (!isActive)
-        {
+        if (!isActive) {
             progress = 0;
         }
 
-        if (AltarRecipeRegistry.isRequiredItemValid(getStackInSlot(0), upgradeLevel))
-        {
+        if (AltarRecipeRegistry.isRequiredItemValid(getStackInSlot(0), upgradeLevel)) {
             AltarRecipe recipe = AltarRecipeRegistry.getAltarRecipeForItemAndTier(getStackInSlot(0), upgradeLevel);
             this.isActive = true;
             this.liquidRequired = recipe.getLiquidRequired();
@@ -1003,20 +928,16 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         isActive = false;
     }
 
-    public void checkAndSetAltar()
-    {
-        if (this.fluid.amount > this.capacity)
-        {
+    public void checkAndSetAltar() {
+        if (this.fluid.amount > this.capacity) {
             this.fluid.amount = this.capacity;
         }
 
-        if (this.fluidOutput.amount > this.bufferCapacity)
-        {
+        if (this.fluidOutput.amount > this.bufferCapacity) {
             this.fluidOutput.amount = this.bufferCapacity;
         }
 
-        if (this.fluidInput.amount > this.bufferCapacity)
-        {
+        if (this.fluidInput.amount > this.bufferCapacity) {
             this.fluidInput.amount = this.bufferCapacity;
         }
 
@@ -1024,17 +945,14 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
-    {
+    public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 0;
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
-    {
-        //TODO
-        if (resource == null)
-        {
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+        // TODO
+        if (resource == null) {
             return 0;
         }
 
@@ -1048,15 +966,12 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
-    {
-        if (resource == null)
-        {
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+        if (resource == null) {
             return null;
         }
 
-        if (!resource.isFluidEqual(fluidOutput))
-        {
+        if (!resource.isFluidEqual(fluidOutput)) {
             return null;
         }
 
@@ -1064,65 +979,51 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxEmpty, boolean doDrain)
-    {
+    public FluidStack drain(ForgeDirection from, int maxEmpty, boolean doDrain) {
         return this.drain(maxEmpty, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid)
-    {
-        //I changed this, since fluidstack != fluid... :p dunno if it was a accident? so you might wanna check this
+    public boolean canFill(ForgeDirection from, Fluid fluid) {
+        // I changed this, since fluidstack != fluid... :p dunno if it was a accident? so you might wanna check this
         return this.fluidInput != null && this.fluid.getFluid().equals(fluidInput.getFluid());
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid)
-    {
+    public boolean canDrain(ForgeDirection from, Fluid fluid) {
         return true;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from)
-    {
+    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
-        return new FluidTankInfo[]{compositeTank.getInfo()};
+        return new FluidTankInfo[] {compositeTank.getInfo()};
     }
 
-    public int[] buildFluidList()
-    {
+    public int[] buildFluidList() {
         int[] sortList = new int[6];
 
-        if (this.fluid == null)
-        {
+        if (this.fluid == null) {
             sortList[0] = AlchemicalWizardry.lifeEssenceFluid.getID();
             sortList[1] = 0;
-        }
-        else
-        {
+        } else {
             sortList[0] = this.fluid.getFluid().getID();
             sortList[1] = this.fluid.amount;
         }
 
-        if (this.fluidInput == null)
-        {
+        if (this.fluidInput == null) {
             sortList[2] = AlchemicalWizardry.lifeEssenceFluid.getID();
             sortList[3] = 0;
-        }
-        else
-        {
+        } else {
             sortList[2] = this.fluidInput.getFluid().getID();
             sortList[3] = this.fluidInput.amount;
         }
 
-        if (this.fluidOutput == null)
-        {
+        if (this.fluidOutput == null) {
             sortList[4] = AlchemicalWizardry.lifeEssenceFluid.getID();
             sortList[5] = 0;
-        }
-        else
-        {
+        } else {
             sortList[4] = this.fluidOutput.getFluid().getID();
             sortList[5] = this.fluidOutput.amount;
         }
@@ -1130,31 +1031,34 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         return sortList;
     }
 
-    public void sendChatInfoToPlayer(EntityPlayer player)
-    {
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarCurrentTier") + " " + this.upgradeLevel));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.capacity") + " " + this.getCapacity() + "LP"));
+    public void sendChatInfoToPlayer(EntityPlayer player) {
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.altarCurrentTier") + " " + this.upgradeLevel));
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.capacity") + " " + this.getCapacity() + "LP"));
     }
 
-    public void sendMoreChatInfoToPlayer(EntityPlayer player)
-    {
-        if (getStackInSlot(0) != null)
-        {
+    public void sendMoreChatInfoToPlayer(EntityPlayer player) {
+        if (getStackInSlot(0) != null) {
             int stackSize = getStackInSlot(0).stackSize;
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarProgress") + " " + progress + "LP/" + liquidRequired * stackSize + "LP"));
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.consumptionRate") + " " + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
+            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarProgress") + " "
+                    + progress + "LP/" + liquidRequired * stackSize + "LP"));
+            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.consumptionRate") + " "
+                    + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
         }
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.inputTank") + " " + this.fluidInput.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.outputTank") + " " + this.fluidOutput.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.inputTank") + " " + this.fluidInput.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(
+                StatCollector.translateToLocal("message.outputTank") + " " + this.fluidOutput.amount + "LP"));
     }
 
     @Override
-    public void requestPauseAfterCrafting(int amount)
-    {
-        if (this.isActive)
-        {
+    public void requestPauseAfterCrafting(int amount) {
+        if (this.isActive) {
             this.cooldownAfterCrafting = amount;
         }
     }

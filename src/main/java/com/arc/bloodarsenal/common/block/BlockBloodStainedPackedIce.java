@@ -1,14 +1,11 @@
 package com.arc.bloodarsenal.common.block;
 
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-import java.util.Random;
-
-public class BlockBloodStainedPackedIce extends Block
-{
-    public BlockBloodStainedPackedIce()
-    {
+public class BlockBloodStainedPackedIce extends Block {
+    public BlockBloodStainedPackedIce() {
         super(Material.packedIce);
         slipperiness = 0.99F;
         setHardness(1.0F);
@@ -16,8 +13,7 @@ public class BlockBloodStainedPackedIce extends Block
         setStepSound(soundTypeGlass);
     }
 
-    public int quantityDropped(Random par1)
-    {
+    public int quantityDropped(Random par1) {
         return 0;
     }
 }

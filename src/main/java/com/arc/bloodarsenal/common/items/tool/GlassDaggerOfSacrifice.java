@@ -8,6 +8,8 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.google.common.collect.Multimap;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,15 +28,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.List;
-import java.util.Random;
-
-public class GlassDaggerOfSacrifice extends EnergyItems
-{
+public class GlassDaggerOfSacrifice extends EnergyItems {
     private float weaponDamage;
 
-    public GlassDaggerOfSacrifice()
-    {
+    public GlassDaggerOfSacrifice() {
         super();
         setMaxStackSize(1);
         setEnergyUsed(100);
@@ -44,33 +41,35 @@ public class GlassDaggerOfSacrifice extends EnergyItems
     }
 
     @Override
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
-    {
-        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote || (par3EntityLivingBase instanceof EntityPlayer && SpellHelper.isFakePlayer(par3EntityLivingBase.worldObj, (EntityPlayer) par3EntityLivingBase)))
-        {
+    public boolean hitEntity(
+            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+        if (par3EntityLivingBase == null
+                || par2EntityLivingBase == null
+                || par3EntityLivingBase.worldObj.isRemote
+                || (par3EntityLivingBase instanceof EntityPlayer
+                        && SpellHelper.isFakePlayer(
+                                par3EntityLivingBase.worldObj, (EntityPlayer) par3EntityLivingBase))) {
             return false;
         }
 
-        if (par2EntityLivingBase instanceof IHoardDemon)
-        {
+        if (par2EntityLivingBase instanceof IHoardDemon) {
             return false;
         }
 
-        if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
-        {
+        if (par2EntityLivingBase.isChild()
+                || par2EntityLivingBase instanceof EntityPlayer
+                || par2EntityLivingBase instanceof IBossDisplayData) {
             return false;
         }
 
         World world = par2EntityLivingBase.worldObj;
 
-        if (par2EntityLivingBase.isDead || par2EntityLivingBase.getHealth() < 0.5f)
-        {
+        if (par2EntityLivingBase.isDead || par2EntityLivingBase.getHealth() < 0.5f) {
             return false;
         }
 
-        if (par2EntityLivingBase instanceof IDemon)
-        {
-            ((IDemon)par2EntityLivingBase).setDropCrystal(false);
+        if (par2EntityLivingBase instanceof IDemon) {
+            ((IDemon) par2EntityLivingBase).setDropCrystal(false);
             this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }
 
@@ -83,23 +82,21 @@ public class GlassDaggerOfSacrifice extends EnergyItems
         else if (par2EntityLivingBase instanceof EntityEnderman) lifeEssence = 300;
         else if (par2EntityLivingBase instanceof EntityAnimal) lifeEssence = 350;
 
-        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
-        {
+        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence)) {
             double posX = par2EntityLivingBase.posX;
             double posY = par2EntityLivingBase.posY;
             double posZ = par2EntityLivingBase.posZ;
 
-            for (int i = 0; i < 8; i++)
-            {
-                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
+            for (int i = 0; i < 8; i++) {
+                SpellHelper.sendIndexedParticleToAllAround(
+                        world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
             }
 
             par2EntityLivingBase.setHealth(-1);
             par2EntityLivingBase.onDeath(BloodArsenal.deathFromBlood);
         }
 
-        if (!par2EntityLivingBase.isDead)
-        {
+        if (!par2EntityLivingBase.isDead) {
             par2EntityLivingBase.addPotionEffect(new PotionEffect(BloodArsenalConfig.bleedingID, 20, 0));
         }
 
@@ -107,47 +104,47 @@ public class GlassDaggerOfSacrifice extends EnergyItems
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.tool.glassDaggerOfSacrifice"));
     }
 
     @Override
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
-    {
-        if (par2Block == Blocks.web)
-        {
+    public float func_150893_a(ItemStack par1ItemStack, Block par2Block) {
+        if (par2Block == Blocks.web) {
             return 15.0F;
-        } else
-        {
+        } else {
             Material material = par2Block.getMaterial();
-            return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : 1.5F;
+            return material != Material.plants
+                            && material != Material.vine
+                            && material != Material.coral
+                            && material != Material.leaves
+                            && material != Material.gourd
+                    ? 1.0F
+                    : 1.5F;
         }
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-    {
+    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack) {
         return false;
     }
 
     @Override
-    public Multimap getItemAttributeModifiers()
-    {
+    public Multimap getItemAttributeModifiers() {
         Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", 2.0d, 0));
+        multimap.put(
+                SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
+                new AttributeModifier(field_111210_e, "Tool modifier", 2.0d, 0));
         return multimap;
     }
 
-    public boolean findAndNotifyAltarOfDemon(World world, EntityLivingBase sacrifice)
-    {
+    public boolean findAndNotifyAltarOfDemon(World world, EntityLivingBase sacrifice) {
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
         IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
-        if (altarEntity == null)
-        {
+        if (altarEntity == null) {
             return false;
         }
 
@@ -156,15 +153,13 @@ public class GlassDaggerOfSacrifice extends EnergyItems
         return true;
     }
 
-    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)
-    {
+    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount) {
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
         IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
-        if (altarEntity == null)
-        {
+        if (altarEntity == null) {
             return false;
         }
 
@@ -173,20 +168,15 @@ public class GlassDaggerOfSacrifice extends EnergyItems
         return true;
     }
 
-    public IBloodAltar getAltar(World world, int x, int y, int z)
-    {
+    public IBloodAltar getAltar(World world, int x, int y, int z) {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
-                for (int k = -2; k <= 1; k++)
-                {
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                for (int k = -2; k <= 1; k++) {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if (tileEntity instanceof IBloodAltar)
-                    {
+                    if (tileEntity instanceof IBloodAltar) {
                         return (IBloodAltar) tileEntity;
                     }
                 }

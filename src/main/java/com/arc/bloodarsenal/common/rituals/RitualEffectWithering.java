@@ -7,6 +7,8 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -14,24 +16,18 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RitualEffectWithering extends RitualEffect
-{
+public class RitualEffectWithering extends RitualEffect {
     public static final int reductusDrain = 15;
     public static final int virtusDrain = 15;
     public static final int praesidiumDrain = 5;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
         LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
+        if (data == null) {
             data = new LifeEssenceNetwork(owner);
             worldSave.setItemData(owner, data);
         }
@@ -44,8 +40,7 @@ public class RitualEffectWithering extends RitualEffect
 
         int timeDelay = 50;
 
-        if (world.getWorldTime() % timeDelay != 0)
-        {
+        if (world.getWorldTime() % timeDelay != 0) {
             return;
         }
 
@@ -54,17 +49,14 @@ public class RitualEffectWithering extends RitualEffect
         int range = 15 * (hasPraesidium ? 3 : 1);
         int vertRange = 15 * (hasPraesidium ? 3 : 1);
 
-        List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
+        List<EntityLivingBase> list =
+                SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
         int entityCount = 0;
 
-        for(EntityLivingBase livingEntity : list)
-        {
-            if (livingEntity instanceof EntityPlayer)
-            {
+        for (EntityLivingBase livingEntity : list) {
+            if (livingEntity instanceof EntityPlayer) {
                 entityCount += 10;
-            }
-            else
-            {
+            } else {
                 entityCount++;
             }
         }
@@ -74,55 +66,44 @@ public class RitualEffectWithering extends RitualEffect
         int cost = getCostPerRefresh() * (hasVirtus ? 3 : 1);
         int potency = hasVirtus ? 1 : 0;
 
-        if (currentEssence < cost * entityCount)
-        {
+        if (currentEssence < cost * entityCount) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        }
-        else
-        {
+        } else {
             entityCount = 0;
 
             boolean hasReductus = canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
-            for (EntityLivingBase livingEntity : list)
-            {
-                hasReductus = hasReductus && canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
-                if (hasReductus && !(livingEntity instanceof EntityPlayer))
-                {
+            for (EntityLivingBase livingEntity : list) {
+                hasReductus = hasReductus
+                        && canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+                if (hasReductus && !(livingEntity instanceof EntityPlayer)) {
                     continue;
                 }
 
                 PotionEffect effect = livingEntity.getActivePotionEffect(Potion.wither);
-                if (effect == null || (effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
-                {
-                    if (!hasVirtus || (canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false)))
-                    {
+                if (effect == null
+                        || (effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay)) {
+                    if (!hasVirtus
+                            || (canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false))) {
                         livingEntity.addPotionEffect(new PotionEffect(Potion.wither.id, timeDelay + 2, potency));
-                        if (hasReductus)
-                        {
+                        if (hasReductus) {
                             canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                         }
-                        if (hasVirtus)
-                        {
+                        if (hasVirtus) {
                             canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
                         }
 
-                        if (livingEntity instanceof EntityPlayer)
-                        {
+                        if (livingEntity instanceof EntityPlayer) {
                             entityCount += 10;
-                        }
-                        else
-                        {
+                        } else {
                             entityCount++;
                         }
                     }
                 }
             }
 
-            if(entityCount > 0)
-            {
-                if (hasPraesidium)
-                {
+            if (entityCount > 0) {
+                if (hasPraesidium) {
                     canDrainReagent(ritualStone, ReagentRegistry.praesidiumReagent, praesidiumDrain, true);
                 }
                 data.currentEssence = currentEssence - cost * entityCount;
@@ -132,14 +113,12 @@ public class RitualEffectWithering extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return 30;
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> witherRitual = new ArrayList<RitualComponent>();
         witherRitual.add(new RitualComponent(1, 0, -1, RitualComponent.DUSK));
         witherRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.DUSK));

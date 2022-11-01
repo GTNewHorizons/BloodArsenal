@@ -4,10 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockInfusedIron extends Block
-{
-    public BlockInfusedIron()
-    {
+public class BlockInfusedIron extends Block {
+    public BlockInfusedIron() {
         super(Material.iron);
         setHardness(7.5F);
         setResistance(5.0F);
@@ -15,8 +13,7 @@ public class BlockInfusedIron extends Block
     }
 
     @Override
-    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
-    {
+    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ) {
         return true;
     }
 }

@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import com.arc.bloodarsenal.common.BloodArsenal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,12 +18,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import java.util.List;
-
-public class InfusedDiamondSword extends ItemSword implements IBindable
-{
-    public InfusedDiamondSword()
-    {
+public class InfusedDiamondSword extends ItemSword implements IBindable {
+    public InfusedDiamondSword() {
         super(BloodArsenal.infusedDiamond);
         setMaxStackSize(1);
         setUnlocalizedName("blood_infused_sword_diamond");
@@ -33,27 +30,19 @@ public class InfusedDiamondSword extends ItemSword implements IBindable
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer , List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.tool.blood_infused_diamond_sword"));
 
-        if (par1ItemStack.getItemDamage() == 0)
-        {
+        if (par1ItemStack.getItemDamage() == 0) {
             par3List.add("Normal Mode");
-        }
-        else if (par1ItemStack.getItemDamage() == 1)
-        {
+        } else if (par1ItemStack.getItemDamage() == 1) {
             par3List.add("Area Mode");
-        }
-        else if (par1ItemStack.getItemDamage() == 2)
-        {
+        } else if (par1ItemStack.getItemDamage() == 2) {
             par3List.add("Fire Mode");
         }
 
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
-            {
+        if (!(par1ItemStack.stackTagCompound == null)) {
+            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals("")) {
                 par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
             }
         }
@@ -62,45 +51,46 @@ public class InfusedDiamondSword extends ItemSword implements IBindable
     boolean ignoreLeftClick = false;
 
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
-    {
-        if (!ignoreLeftClick && entity instanceof EntityLivingBase && ((EntityLivingBase) entity).hurtTime == 0 && !((EntityLivingBase) entity).isDead)
-        {
-            switch (ToolCapabilities.getMode(stack))
-            {
-                case 0:
-                {
-                    if (!player.capabilities.isCreativeMode)
-                    {
+    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+        if (!ignoreLeftClick
+                && entity instanceof EntityLivingBase
+                && ((EntityLivingBase) entity).hurtTime == 0
+                && !((EntityLivingBase) entity).isDead) {
+            switch (ToolCapabilities.getMode(stack)) {
+                case 0: {
+                    if (!player.capabilities.isCreativeMode) {
                         EnergyItems.syphonBatteries(stack, player, 100);
                     }
                     break;
                 }
-                case 1:
-                {
+                case 1: {
                     int range = 3;
-                    List<Entity> entities = player.worldObj.getEntitiesWithinAABB(entity.getClass(), AxisAlignedBB.getBoundingBox(entity.posX - range, entity.posY - range, entity.posZ - range, entity.posX + range, entity.posY + range, entity.posZ + range));
+                    List<Entity> entities = player.worldObj.getEntitiesWithinAABB(
+                            entity.getClass(),
+                            AxisAlignedBB.getBoundingBox(
+                                    entity.posX - range,
+                                    entity.posY - range,
+                                    entity.posZ - range,
+                                    entity.posX + range,
+                                    entity.posY + range,
+                                    entity.posZ + range));
                     ignoreLeftClick = true;
 
-                    for (Entity entity_ : entities)
-                    {
+                    for (Entity entity_ : entities) {
                         player.attackTargetEntityWithCurrentItem(entity_);
 
-                        if (!player.capabilities.isCreativeMode)
-                        {
+                        if (!player.capabilities.isCreativeMode) {
                             EnergyItems.syphonBatteries(stack, player, 3000);
                         }
                     }
                     ignoreLeftClick = false;
                     break;
                 }
-                case 2:
-                {
+                case 2: {
                     EntityLivingBase living = (EntityLivingBase) entity;
                     living.setFire(3);
 
-                    if (!player.capabilities.isCreativeMode)
-                    {
+                    if (!player.capabilities.isCreativeMode) {
                         EnergyItems.syphonBatteries(stack, player, 300);
                     }
                     break;
@@ -112,10 +102,9 @@ public class InfusedDiamondSword extends ItemSword implements IBindable
     }
 
     @Override
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
-    {
-        if (par3EntityLivingBase instanceof EntityPlayer)
-        {
+    public boolean hitEntity(
+            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+        if (par3EntityLivingBase instanceof EntityPlayer) {
             EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase);
         }
         par2EntityLivingBase.addPotionEffect(new PotionEffect(Potion.weakness.id, 60, 2));
@@ -123,12 +112,10 @@ public class InfusedDiamondSword extends ItemSword implements IBindable
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
-        if (par3EntityPlayer.isSneaking())
-        {
+        if (par3EntityPlayer.isSneaking()) {
             ToolCapabilities.changeMode(par1ItemStack);
         }
 
@@ -138,23 +125,19 @@ public class InfusedDiamondSword extends ItemSword implements IBindable
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean isFull3D()
-    {
+    public boolean isFull3D() {
         return true;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack, int pass)
-    {
+    public boolean hasEffect(ItemStack par1ItemStack, int pass) {
         return true;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack par1ItemStack)
-    {
+    public EnumRarity getRarity(ItemStack par1ItemStack) {
         return EnumRarity.rare;
     }
 }
-

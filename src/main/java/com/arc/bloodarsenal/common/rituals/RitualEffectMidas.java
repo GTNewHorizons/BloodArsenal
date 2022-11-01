@@ -6,6 +6,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
@@ -14,23 +17,16 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-public class RitualEffectMidas extends RitualEffect
-{
+public class RitualEffectMidas extends RitualEffect {
     private static double rand;
 
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
         LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
+        if (data == null) {
             data = new LifeEssenceNetwork(owner);
             worldSave.setItemData(owner, data);
         }
@@ -41,32 +37,28 @@ public class RitualEffectMidas extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < getCostPerRefresh())
-        {
+        if (currentEssence < getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        }
-        else
-        {
-            if (ritualStone.getVar1() == 0)
-            {
+        } else {
+            if (ritualStone.getVar1() == 0) {
                 int d0 = 0;
-                AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
+                AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
+                                (double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double)
+                                        (z + 1))
+                        .expand(d0, d0, d0);
                 List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
                 Iterator iterator = list.iterator();
                 EntityItem item;
 
-                while (iterator.hasNext())
-                {
+                while (iterator.hasNext()) {
                     item = (EntityItem) iterator.next();
                     ItemStack itemStack = item.getEntityItem();
 
-                    if (itemStack == null)
-                    {
+                    if (itemStack == null) {
                         continue;
                     }
 
-                    if (itemStack.getItem() == Items.iron_ingot)
-                    {
+                    if (itemStack.getItem() == Items.iron_ingot) {
                         item.setDead();
                         ritualStone.setVar1(+1);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
@@ -74,24 +66,20 @@ public class RitualEffectMidas extends RitualEffect
                         break;
                     }
 
-                    if (world.rand.nextInt(10) == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
+                    if (world.rand.nextInt(10) == 0) {
+                        SpellHelper.sendIndexedParticleToAllAround(
+                                world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
                     }
                 }
                 data.currentEssence = currentEssence - getCostPerRefresh();
                 data.markDirty();
-            }
-            else
-            {
+            } else {
                 ritualStone.setCooldown(ritualStone.getCooldown() - 1);
 
-                if (world.rand.nextInt(20) == 0)
-                {
+                if (world.rand.nextInt(20) == 0) {
                     int lightningPoint = world.rand.nextInt(4);
 
-                    switch (lightningPoint)
-                    {
+                    switch (lightningPoint) {
                         case 0:
                             world.addWeatherEffect(new EntityLightningBolt(world, x + 3, y + 6, z + 3));
                             break;
@@ -110,15 +98,12 @@ public class RitualEffectMidas extends RitualEffect
                     }
                 }
 
-                if (ritualStone.getCooldown() <= 0)
-                {
+                if (ritualStone.getCooldown() <= 0) {
                     ItemStack spawnedItem = new ItemStack(Items.gold_ingot);
                     rand = Math.random();
 
-                    if (rand + 0.5F > 0.6F)
-                    {
-                        if (spawnedItem != null)
-                        {
+                    if (rand + 0.5F > 0.6F) {
+                        if (spawnedItem != null) {
                             EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem.copy());
                             world.spawnEntityInWorld(newItem);
                         }
@@ -130,20 +115,17 @@ public class RitualEffectMidas extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return 0;
     }
 
     @Override
-    public int getInitialCooldown()
-    {
+    public int getInitialCooldown() {
         return 100;
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> midasRitual = new ArrayList<RitualComponent>();
         midasRitual.add(new RitualComponent(1, 0, 0, RitualComponent.EARTH));
         midasRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.EARTH));

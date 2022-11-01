@@ -17,10 +17,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 
-public class SigilUtils
-{
-    public static MovingObjectPosition getTargetBlock(World world, double x, double y, double z, float yaw, float pitch, boolean par3, double range)
-    {
+public class SigilUtils {
+    public static MovingObjectPosition getTargetBlock(
+            World world, double x, double y, double z, float yaw, float pitch, boolean par3, double range) {
         Vec3 var13 = Vec3.createVectorHelper(x, y, z);
         float var14 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
         float var15 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);
@@ -35,20 +34,16 @@ public class SigilUtils
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onMouseEvent(MouseEvent event)
-    {
+    public void onMouseEvent(MouseEvent event) {
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 
-        if (event.dwheel != 0 && player != null && player.isSneaking())
-        {
+        if (event.dwheel != 0 && player != null && player.isSneaking()) {
             ItemStack stack = player.getCurrentEquippedItem();
 
-            if (stack != null)
-            {
+            if (stack != null) {
                 Item item = stack.getItem();
 
-                if (item instanceof SigilAugmentedHolding)
-                {
+                if (item instanceof SigilAugmentedHolding) {
                     cycleSigil(stack, player, event.dwheel);
                     event.setCanceled(true);
                 }
@@ -56,8 +51,7 @@ public class SigilUtils
         }
     }
 
-    private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel)
-    {
+    private void cycleSigil(ItemStack stack, EntityPlayer player, int dWheel) {
         int mode = SigilAugmentedHolding.getCurrentItem(stack);
         mode = dWheel < 0 ? SigilAugmentedHolding.next(mode) : SigilAugmentedHolding.prev(mode);
         SigilAugmentedHolding.cycleSigil(stack, mode);

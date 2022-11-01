@@ -10,25 +10,25 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RenderTileLifeInfuser implements IItemRenderer
-{
+public class RenderTileLifeInfuser implements IItemRenderer {
     private ModelLifeInfuser modelLifeInfuser = new ModelLifeInfuser();
+
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type){
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 
         return true;
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper){
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 
         return true;
     }
 
     @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data){
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-        switch(type){
+        switch (type) {
             case ENTITY: {
                 render(0.0F, 0.0F, 1.0F, 1.0F);
                 return;
@@ -50,7 +50,7 @@ public class RenderTileLifeInfuser implements IItemRenderer
         }
     }
 
-    private void render(float x, float y, float z, float scale){
+    private void render(float x, float y, float z, float scale) {
 
         GL11.glPushMatrix();
         GL11.glRotatef(-90F, 1F, 0, 0);

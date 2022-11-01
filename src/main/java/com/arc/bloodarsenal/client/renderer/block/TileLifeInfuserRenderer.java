@@ -15,18 +15,14 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer
-{
+public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer {
     private ModelLifeInfuser modelLifeInfuser = new ModelLifeInfuser();
     RenderItem customRenderItem;
 
-    public TileLifeInfuserRenderer()
-    {
-        customRenderItem = new RenderItem()
-        {
+    public TileLifeInfuserRenderer() {
+        customRenderItem = new RenderItem() {
             @Override
-            public boolean shouldBob()
-            {
+            public boolean shouldBob() {
                 return false;
             }
         };
@@ -34,10 +30,8 @@ public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
-    {
-        if (tileEntity instanceof TileLifeInfuser)
-        {
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f) {
+        if (tileEntity instanceof TileLifeInfuser) {
             ResourceLocation test = new ResourceLocation("bloodarsenal:textures/models/LifeInfuser.png");
 
             TileLifeInfuser tile = (TileLifeInfuser) tileEntity;
@@ -51,21 +45,19 @@ public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer
             GL11.glPopMatrix();
             GL11.glPushMatrix();
 
-            if (tile.getStackInSlot(0) != null)
-            {
+            if (tile.getStackInSlot(0) != null) {
                 float scaleFactor = getGhostItemScaleFactor(tile.getStackInSlot(0));
-                float rotationAngle = Minecraft.getMinecraft().gameSettings.fancyGraphics ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
+                float rotationAngle = Minecraft.getMinecraft().gameSettings.fancyGraphics
+                        ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL)
+                        : 0;
                 EntityItem ghostEntityItem = new EntityItem(tile.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tile.getStackInSlot(0));
                 float displacement = 0.3F;
 
-                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
-                {
+                if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock) {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.25F, (float) d2 + 0.5F);
-                }
-                else
-                {
+                } else {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.25F, (float) d2 + 0.5F);
                 }
 
@@ -91,16 +83,12 @@ public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    private float getGhostItemScaleFactor(ItemStack itemStack)
-    {
+    private float getGhostItemScaleFactor(ItemStack itemStack) {
         float scaleFactor = 5F;
 
-        if (itemStack != null)
-        {
-            if (itemStack.getItem() instanceof ItemBlock)
-            {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
+        if (itemStack != null) {
+            if (itemStack.getItem() instanceof ItemBlock) {
+                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1)) {
                     case 1:
                         return 1.20F;
 
@@ -119,11 +107,8 @@ public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer
                     default:
                         return 1.20F;
                 }
-            } 
-            else
-            {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
+            } else {
+                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1)) {
                     case 1:
                         return 0.95F;
 

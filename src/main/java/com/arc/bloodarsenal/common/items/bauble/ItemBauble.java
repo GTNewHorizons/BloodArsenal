@@ -11,42 +11,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles")
-public abstract class ItemBauble extends Item implements IBauble
-{
-    public ItemBauble()
-    {
+public abstract class ItemBauble extends Item implements IBauble {
+    public ItemBauble() {
         super();
         setMaxStackSize(1);
         setMaxDamage(0);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(par3EntityPlayer);
 
-        for (int i = 0; i < baubles.getSizeInventory(); i++)
-        {
-            if (baubles.isItemValidForSlot(i, par1ItemStack))
-            {
+        for (int i = 0; i < baubles.getSizeInventory(); i++) {
+            if (baubles.isItemValidForSlot(i, par1ItemStack)) {
                 ItemStack stackInSlot = baubles.getStackInSlot(i);
 
-                if (stackInSlot == null || ((IBauble) stackInSlot.getItem()).canUnequip(stackInSlot, par3EntityPlayer))
-                {
-                    if (!par2World.isRemote)
-                    {
+                if (stackInSlot == null
+                        || ((IBauble) stackInSlot.getItem()).canUnequip(stackInSlot, par3EntityPlayer)) {
+                    if (!par2World.isRemote) {
                         baubles.setInventorySlotContents(i, par1ItemStack.copy());
 
-                        if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            par3EntityPlayer.inventory.setInventorySlotContents(par3EntityPlayer.inventory.currentItem, null);
+                        if (!par3EntityPlayer.capabilities.isCreativeMode) {
+                            par3EntityPlayer.inventory.setInventorySlotContents(
+                                    par3EntityPlayer.inventory.currentItem, null);
                         }
                     }
 
                     onEquipped(par1ItemStack, par3EntityPlayer);
 
-                    if (stackInSlot != null)
-                    {
+                    if (stackInSlot != null) {
                         ((IBauble) stackInSlot.getItem()).onUnequipped(stackInSlot, par3EntityPlayer);
                         return stackInSlot.copy();
                     }
@@ -59,47 +52,40 @@ public abstract class ItemBauble extends Item implements IBauble
     }
 
     @Override
-    public boolean canEquip(ItemStack stack, EntityLivingBase player)
-    {
+    public boolean canEquip(ItemStack stack, EntityLivingBase player) {
         return true;
     }
 
     @Override
-    public boolean canUnequip(ItemStack stack, EntityLivingBase player)
-    {
+    public boolean canUnequip(ItemStack stack, EntityLivingBase player) {
         return true;
     }
 
     @Override
     public void onWornTick(ItemStack stack, EntityLivingBase player) {}
+
     @Override
-    public void onEquipped(ItemStack stack, EntityLivingBase player)
-    {
+    public void onEquipped(ItemStack stack, EntityLivingBase player) {
         onEquippedOrLoadedIntoWorld(stack, player);
     }
 
-    public void onEquippedOrLoadedIntoWorld(ItemStack stack, EntityLivingBase player)
-    {
-    }
+    public void onEquippedOrLoadedIntoWorld(ItemStack stack, EntityLivingBase player) {}
 
     @Override
     public void onUnequipped(ItemStack stack, EntityLivingBase player) {}
 
     @Override
-    public boolean hasContainerItem(ItemStack stack)
-    {
+    public boolean hasContainerItem(ItemStack stack) {
         return getContainerItem(stack) != null;
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
+    public ItemStack getContainerItem(ItemStack itemStack) {
         return itemStack;
     }
 
     @Override
-    public boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_)
-    {
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_) {
         return false;
     }
 }

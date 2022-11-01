@@ -12,24 +12,22 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 
-public class ModelPortableBloodAltar extends ModelBase
-{
-    private static final ResourceLocation altar_texture = new ResourceLocation("bloodarsenal:textures/models/altar.png");
+public class ModelPortableBloodAltar extends ModelBase {
+    private static final ResourceLocation altar_texture =
+            new ResourceLocation("bloodarsenal:textures/models/altar.png");
 
     private IModelCustom modelBloodAltar;
 
-    public ModelPortableBloodAltar()
-    {
-        modelBloodAltar = AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
+    public ModelPortableBloodAltar() {
+        modelBloodAltar =
+                AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
     }
 
-    public void renderBloodAltar()
-    {
+    public void renderBloodAltar() {
         modelBloodAltar.renderAll();
     }
 
-    public void renderBloodAltar(TilePortableAltar altar, double x, double y, double z)
-    {
+    public void renderBloodAltar(TilePortableAltar altar, double x, double y, double z) {
         float scale = 0.1f;
         // Push a blank matrix onto the stack
         GL11.glPushMatrix();
@@ -45,18 +43,16 @@ public class ModelPortableBloodAltar extends ModelBase
         GL11.glPopMatrix();
     }
 
-    public void renderBloodLevel(TilePortableAltar altar, double x, double y, double z)
-    {
+    public void renderBloodLevel(TilePortableAltar altar, double x, double y, double z) {
         GL11.glPushMatrix();
         float level = altar.getFluidAmount();
-        GL11.glTranslatef((float) x , (float) y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float) z);
+        GL11.glTranslatef((float) x, (float) y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float) z);
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         renderBloodLevel(AlchemicalWizardry.lifeEssenceFluid.getStillIcon());
         GL11.glPopMatrix();
     }
 
-    public void renderBloodLevel(IIcon icon)
-    {
+    public void renderBloodLevel(IIcon icon) {
         Tessellator tessellator = Tessellator.instance;
 
         double minU = (double) icon.getInterpolatedU(0);

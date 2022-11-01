@@ -7,6 +7,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -17,21 +20,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.FishingHooks;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class RitualEffectFishing extends RitualEffect
-{
+public class RitualEffectFishing extends RitualEffect {
     @Override
-    public void performEffect(IMasterRitualStone ritualStone)
-    {
+    public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
         LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
+        if (data == null) {
             data = new LifeEssenceNetwork(owner);
             worldSave.setItemData(owner, data);
         }
@@ -43,8 +39,7 @@ public class RitualEffectFishing extends RitualEffect
         final int orbisTerraeDrain = 20;
         final int potentiaDrain = 20;
 
-        if (world.getWorldTime() % 10 != 5)
-        {
+        if (world.getWorldTime() % 10 != 5) {
             return;
         }
 
@@ -54,65 +49,51 @@ public class RitualEffectFishing extends RitualEffect
         TileEntity tile = world.getTileEntity(x, y + 1, z);
         IInventory tileEntity;
 
-        if (tile instanceof IInventory)
-        {
+        if (tile instanceof IInventory) {
             tileEntity = (IInventory) tile;
-        }
-        else
-        {
+        } else {
             return;
         }
 
-        if (tileEntity.getSizeInventory() <= 0)
-        {
+        if (tileEntity.getSizeInventory() <= 0) {
             return;
         }
 
         boolean hasRoom = false;
-        for (int i=0; i<tileEntity.getSizeInventory(); i++)
-        {
-            if (tileEntity.getStackInSlot(i) == null)
-            {
+        for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+            if (tileEntity.getStackInSlot(i) == null) {
                 hasRoom = true;
                 break;
             }
         }
 
-        if (!hasRoom)
-        {
+        if (!hasRoom) {
             return;
         }
 
-        if (currentEssence < getCostPerRefresh())
-        {
+        if (currentEssence < getCostPerRefresh()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
-        }
-        else
-        {
+        } else {
             boolean hasTerrae = canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
-            boolean hasOrbisTerrae = canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+            boolean hasOrbisTerrae =
+                    canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
             boolean hasPotentia = canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
 
             int i = hasTerrae ? -5 : -1;
             int j = i;
 
-            for (; hasTerrae ? i <= 5 : i <= 1; i++)
-            {
-                for (; j <= 1; j++)
-                {
-                    for (int k = 1; k <= 5; k++)
-                    {
+            for (; hasTerrae ? i <= 5 : i <= 1; i++) {
+                for (; j <= 1; j++) {
+                    for (int k = 1; k <= 5; k++) {
                         Block block = world.getBlock(x + i, y - k, z + j);
                         Random rand = new Random();
                         float chance = hasOrbisTerrae ? 0.8F : rand.nextInt(2);
 
-                        if (block.isAssociatedBlock(Blocks.water) || block.isAssociatedBlock(Blocks.flowing_water))
-                        {
-                            if (rand.nextInt(9) >= (hasPotentia ? 6 : 8))
-                            {
-                                ItemStack fishStack = FishingHooks.getRandomFishable(rand, chance, hasOrbisTerrae ? rand.nextInt(90) : -1, hasPotentia ? 2 : -1);
-                                if (fishStack != null)
-                                {
+                        if (block.isAssociatedBlock(Blocks.water) || block.isAssociatedBlock(Blocks.flowing_water)) {
+                            if (rand.nextInt(9) >= (hasPotentia ? 6 : 8)) {
+                                ItemStack fishStack = FishingHooks.getRandomFishable(
+                                        rand, chance, hasOrbisTerrae ? rand.nextInt(90) : -1, hasPotentia ? 2 : -1);
+                                if (fishStack != null) {
                                     SpellHelper.insertStackIntoInventory(fishStack, tileEntity, ForgeDirection.DOWN);
                                     SoulNetworkHandler.syphonFromNetwork(owner, 500);
                                 }
@@ -125,14 +106,12 @@ public class RitualEffectFishing extends RitualEffect
     }
 
     @Override
-    public int getCostPerRefresh()
-    {
+    public int getCostPerRefresh() {
         return 1000;
     }
 
     @Override
-    public List<RitualComponent> getRitualComponentList()
-    {
+    public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> fishingRitual = new ArrayList<RitualComponent>();
         fishingRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
         fishingRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));

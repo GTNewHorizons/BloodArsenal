@@ -11,6 +11,7 @@ import com.arc.bloodarsenal.common.items.ModItems;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,51 +28,47 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
-import java.util.List;
-
-public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator, IBauble
-{
-    public SelfSacrificeAmulet()
-    {
+public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator, IBauble {
+    public SelfSacrificeAmulet() {
         super();
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
-    public void selfSacrificeHandler(LivingAttackEvent event)
-    {
+    public void selfSacrificeHandler(LivingAttackEvent event) {
         EntityLivingBase entityAttacked = event.entityLiving;
 
-        if (entityAttacked != null && entityAttacked instanceof EntityPlayerMP && BloodArsenalConfig.baublesIntegration)
-        {
+        if (entityAttacked != null
+                && entityAttacked instanceof EntityPlayerMP
+                && BloodArsenalConfig.baublesIntegration) {
             float damageDone = event.ammount;
 
             EntityPlayer player = (EntityPlayer) entityAttacked;
             InventoryBaubles inv = PlayerHandler.getPlayerBaubles(player);
 
-            for (int i = 0; i < inv.getSizeInventory(); i++)
-            {
+            for (int i = 0; i < inv.getSizeInventory(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);
 
-                if (stack != null)
-                {
-                    if (stack.getItem() == ModItems.self_sacrifice_amulet)
-                    {
+                if (stack != null) {
+                    if (stack.getItem() == ModItems.self_sacrifice_amulet) {
                         SelfSacrificeAmulet selfSacrificeAmulet = (SelfSacrificeAmulet) ModItems.self_sacrifice_amulet;
                         int lpReceived = (int) damageDone;
                         boolean shouldExecute = selfSacrificeAmulet.getStoredLP(stack) < 10000;
 
-                        if (shouldExecute)
-                        {
+                        if (shouldExecute) {
                             PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
 
-                            if (regenEffect != null && regenEffect.getAmplifier() >= 2)
-                            {
-                                selfSacrificeAmulet.setStoredLP(stack, Math.min(selfSacrificeAmulet.getStoredLP(stack) + (lpReceived * 2) / (regenEffect.getAmplifier() + 1), 10000));
-                            }
-                            else
-                            {
-                                selfSacrificeAmulet.setStoredLP(stack, Math.min(selfSacrificeAmulet.getStoredLP(stack) + (lpReceived * 2), 10000));
+                            if (regenEffect != null && regenEffect.getAmplifier() >= 2) {
+                                selfSacrificeAmulet.setStoredLP(
+                                        stack,
+                                        Math.min(
+                                                selfSacrificeAmulet.getStoredLP(stack)
+                                                        + (lpReceived * 2) / (regenEffect.getAmplifier() + 1),
+                                                10000));
+                            } else {
+                                selfSacrificeAmulet.setStoredLP(
+                                        stack,
+                                        Math.min(selfSacrificeAmulet.getStoredLP(stack) + (lpReceived * 2), 10000));
                             }
                         }
                     }
@@ -81,64 +78,51 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.bauble.self_sacrifice"));
 
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
+        if (!(par1ItemStack.stackTagCompound == null)) {
             par3List.add("Stored LP: " + EnumChatFormatting.RED + this.getStoredLP(par1ItemStack));
         }
     }
 
     @Override
-    public void onWornTick(ItemStack par1ItemStack, EntityLivingBase player)
-    {
+    public void onWornTick(ItemStack par1ItemStack, EntityLivingBase player) {
         super.onWornTick(par1ItemStack, player);
     }
 
     @Override
-    public BaubleType getBaubleType(ItemStack par1ItemStack)
-    {
+    public BaubleType getBaubleType(ItemStack par1ItemStack) {
         return BaubleType.AMULET;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    {
-        if (world.isRemote)
-        {
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+        if (world.isRemote) {
             return itemStack;
         }
 
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
 
-        if (movingobjectposition == null)
-        {
+        if (movingobjectposition == null) {
             return super.onItemRightClick(itemStack, world, player);
-        }
-        else
-        {
-            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
+        } else {
+            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 int x = movingobjectposition.blockX;
                 int y = movingobjectposition.blockY;
                 int z = movingobjectposition.blockZ;
 
                 TileEntity tile = world.getTileEntity(x, y, z);
 
-                if (!(tile instanceof TEAltar))
-                {
+                if (!(tile instanceof TEAltar)) {
                     return super.onItemRightClick(itemStack, world, player);
                 }
 
-                TEAltar altar = (TEAltar)tile;
+                TEAltar altar = (TEAltar) tile;
 
-                if (!altar.isActive())
-                {
+                if (!altar.isActive()) {
                     int amount = this.getStoredLP(itemStack);
-                    if (amount > 0)
-                    {
+                    if (amount > 0) {
                         int filledAmount = altar.fillMainTank(amount);
                         amount -= filledAmount;
                         this.setStoredLP(itemStack, amount);
@@ -154,15 +138,12 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
+    public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = iconRegister.registerIcon("BloodArsenal:self_sacrifice_amulet");
     }
 
-    public void setStoredLP(ItemStack itemStack, int lp)
-    {
-        if (!itemStack.hasTagCompound())
-        {
+    public void setStoredLP(ItemStack itemStack, int lp) {
+        if (!itemStack.hasTagCompound()) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
@@ -171,10 +152,8 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
         tag.setInteger("storedLP", lp);
     }
 
-    public int getStoredLP(ItemStack itemStack)
-    {
-        if (!itemStack.hasTagCompound())
-        {
+    public int getStoredLP(ItemStack itemStack) {
+        if (!itemStack.hasTagCompound()) {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 

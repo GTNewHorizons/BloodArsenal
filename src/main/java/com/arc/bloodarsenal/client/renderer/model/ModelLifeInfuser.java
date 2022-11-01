@@ -12,9 +12,9 @@ import org.lwjgl.opengl.GL11;
  * LifeInfuser - Arcaratus
  * Created using Tabula 4.0.2
  */
-public class ModelLifeInfuser extends ModelBase
-{
-    private static final ResourceLocation texture = new ResourceLocation("bloodarsenal:textures/models/LifeInfuser.png");
+public class ModelLifeInfuser extends ModelBase {
+    private static final ResourceLocation texture =
+            new ResourceLocation("bloodarsenal:textures/models/LifeInfuser.png");
     private IModelCustom modelLifeInfuser;
 
     public ModelRenderer Base;
@@ -25,8 +25,7 @@ public class ModelLifeInfuser extends ModelBase
     public ModelRenderer Plate1;
     public ModelRenderer Plate2;
 
-    public ModelLifeInfuser()
-    {
+    public ModelLifeInfuser() {
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.Pillar2 = new ModelRenderer(this, 0, 0);
@@ -54,8 +53,7 @@ public class ModelLifeInfuser extends ModelBase
         this.Pillar1.addBox(0.0F, 0.0F, 0.0F, 2, 12, 2);
     }
 
-    public void render()
-    {
+    public void render() {
         float f = 1F / 16F;
         this.Pillar2.render(f);
         this.Pillar3.render(f);
@@ -66,13 +64,11 @@ public class ModelLifeInfuser extends ModelBase
         this.Pillar1.render(f);
     }
 
-    public void renderLifeInfuser()
-    {
+    public void renderLifeInfuser() {
         modelLifeInfuser.renderAll();
     }
 
-    public void renderLifeInfuser(TileLifeInfuser lifeInfuser, double x, double y, double z)
-    {
+    public void renderLifeInfuser(TileLifeInfuser lifeInfuser, double x, double y, double z) {
         float scale = 0.1f;
         // Push a blank matrix onto the stack
         GL11.glPushMatrix();
@@ -87,5 +83,4 @@ public class ModelLifeInfuser extends ModelBase
         // Pop this matrix from the stack.
         GL11.glPopMatrix();
     }
-
 }

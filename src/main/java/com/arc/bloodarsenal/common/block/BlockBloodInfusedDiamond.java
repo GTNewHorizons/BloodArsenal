@@ -4,10 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockBloodInfusedDiamond extends Block
-{
-    public BlockBloodInfusedDiamond()
-    {
+public class BlockBloodInfusedDiamond extends Block {
+    public BlockBloodInfusedDiamond() {
         super(Material.iron);
         setHardness(10.0F);
         setResistance(12.0F);
@@ -15,8 +13,7 @@ public class BlockBloodInfusedDiamond extends Block
     }
 
     @Override
-    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
-    {
+    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ) {
         return true;
     }
 }

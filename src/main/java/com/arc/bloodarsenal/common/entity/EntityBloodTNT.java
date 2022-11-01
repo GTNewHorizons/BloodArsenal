@@ -7,27 +7,25 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class EntityBloodTNT extends Entity
-{
+public class EntityBloodTNT extends Entity {
     public int fuse;
     private EntityLivingBase tntPlacedBy;
-    
-    public EntityBloodTNT(World par1World)
-    {
+
+    public EntityBloodTNT(World par1World) {
         super(par1World);
         preventEntitySpawning = true;
         setSize(0.98F, 0.98F);
         yOffset = height / 2.0F;
     }
 
-    public EntityBloodTNT(World par1World, double par2, double par4, double par6, EntityLivingBase par8EntityLivingBase)
-    {
+    public EntityBloodTNT(
+            World par1World, double par2, double par4, double par6, EntityLivingBase par8EntityLivingBase) {
         this(par1World);
         setPosition(par2, par4, par6);
-        float f = (float)(Math.random() * Math.PI * 2.0D);
-        motionX = (double)(-((float)Math.sin((double)f)) * 0.02F);
+        float f = (float) (Math.random() * Math.PI * 2.0D);
+        motionX = (double) (-((float) Math.sin((double) f)) * 0.02F);
         motionY = 0.20000000298023224D;
-        motionZ = (double)(-((float)Math.cos((double)f)) * 0.02F);
+        motionZ = (double) (-((float) Math.cos((double) f)) * 0.02F);
         fuse = 60;
         prevPosX = par2;
         prevPosY = par4;
@@ -39,20 +37,17 @@ public class EntityBloodTNT extends Entity
     public void entityInit() {}
 
     @Override
-    public boolean canTriggerWalking()
-    {
+    public boolean canTriggerWalking() {
         return false;
     }
 
     @Override
-    public boolean canBeCollidedWith()
-    {
+    public boolean canBeCollidedWith() {
         return !isDead;
     }
 
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate() {
         prevPosX = posX;
         prevPosY = posY;
         prevPosZ = posZ;
@@ -62,53 +57,43 @@ public class EntityBloodTNT extends Entity
         motionY *= 0.9800000190734863D;
         motionZ *= 0.9800000190734863D;
 
-        if (onGround)
-        {
+        if (onGround) {
             motionY *= -0.5D;
         }
 
-        if (fuse-- <= 0)
-        {
+        if (fuse-- <= 0) {
             setDead();
 
-            if (!worldObj.isRemote)
-            {
+            if (!worldObj.isRemote) {
                 explode();
             }
-        }
-        else
-        {
+        } else {
             worldObj.spawnParticle("smoke", posX, posY + 0.5D, posZ, 0.0D, 0.0D, 0.0D);
         }
     }
 
-    private void explode()
-    {
+    private void explode() {
         float f = 6.0F;
         worldObj.createExplosion(this, posX, posY, posZ, f, true);
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound par1)
-    {
+    protected void writeEntityToNBT(NBTTagCompound par1) {
         par1.setByte("Fuse", (byte) fuse);
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound par1)
-    {
+    protected void readEntityFromNBT(NBTTagCompound par1) {
         fuse = par1.getByte("Fuse");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public float getShadowSize()
-    {
+    public float getShadowSize() {
         return 0.0F;
     }
 
-    public EntityLivingBase getTntPlacedBy()
-    {
+    public EntityLivingBase getTntPlacedBy() {
         return tntPlacedBy;
     }
 }

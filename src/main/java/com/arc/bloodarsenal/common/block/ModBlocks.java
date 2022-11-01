@@ -7,13 +7,11 @@ import com.arc.bloodarsenal.common.items.block.CompactedMRSBlock;
 import com.arc.bloodarsenal.common.items.block.PortableAltarBlock;
 import com.arc.bloodarsenal.common.tileentity.*;
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 
-import java.util.ArrayList;
-
-public class ModBlocks
-{
+public class ModBlocks {
     public static Block blood_stone;
     public static Block blood_tnt;
     public static Block blood_stained_glass;
@@ -36,8 +34,7 @@ public class ModBlocks
 
     public static ArrayList<String> blocksNotToBeRegistered = new ArrayList<String>();
 
-    public static void init()
-    {
+    public static void init() {
         blood_stone = registerBlock(new BlockBloodStone(), BloodStoneBlock.class, "blood_stone");
         blood_tnt = registerBlock(new BlockBloodTNT(), "blood_tnt");
         blood_stained_glass = registerBlock(new BlockBloodStainedGlass(), "blood_stained_glass");
@@ -51,7 +48,8 @@ public class ModBlocks
         blood_infused_glowstone = registerBlock(new BlockBloodInfusedGlowstone(), "blood_infused_glowstone");
         blood_lamp = registerBlock(new BlockBloodLamp(), "blood_lamp");
         blood_infused_diamond_block = registerBlock(new BlockBloodInfusedDiamond(), "blood_infused_diamond_block");
-        portable_altar = (BlockPortableAltar) registerBlock(new BlockPortableAltar(), PortableAltarBlock.class, "portable_altar");
+        portable_altar = (BlockPortableAltar)
+                registerBlock(new BlockPortableAltar(), PortableAltarBlock.class, "portable_altar");
         life_infuser = registerBlock(new BlockLifeInfuser(), "life_infuser");
         compacter = registerBlock(new BlockCompacter(), "compacter");
         lp_materializer = registerBlock(new BlockLPMaterializer(), "lp_materializer");
@@ -59,8 +57,7 @@ public class ModBlocks
         block_burned_string = registerBlock(new BlockBurnedString(), "block_burned_string");
     }
 
-    public static void registerTileEntities()
-    {
+    public static void registerTileEntities() {
         GameRegistry.registerTileEntity(TilePortableAltar.class, "portable_altar");
         GameRegistry.registerTileEntity(TileLifeInfuser.class, "life_infuser");
         GameRegistry.registerTileEntity(TileCompacter.class, "compacter");
@@ -68,59 +65,48 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileCompactedMRS.class, "compacted_mrs");
     }
 
-    public static Block registerBlock(Block block, String unlocalizedName)
-    {
+    public static Block registerBlock(Block block, String unlocalizedName) {
         block.setBlockName(unlocalizedName);
         block.setBlockTextureName(BloodArsenal.MODID + ":" + unlocalizedName);
 
-        if (!(block instanceof BlockBloodCake || block instanceof BlockBurnedString))
-        {
+        if (!(block instanceof BlockBloodCake || block instanceof BlockBurnedString)) {
             block.setCreativeTab(BloodArsenal.BA_TAB);
         }
 
         blocksNotToBeRegistered.clear();
-        for (String unlocName : BloodArsenalConfig.blocksToBeDisabled)
-        {
-            if (unlocName.equals(unlocalizedName))
-            {
+        for (String unlocName : BloodArsenalConfig.blocksToBeDisabled) {
+            if (unlocName.equals(unlocalizedName)) {
                 blocksNotToBeRegistered.add(unlocName);
             }
         }
-        if (!blocksNotToBeRegistered.contains(unlocalizedName))
-        {
+        if (!blocksNotToBeRegistered.contains(unlocalizedName)) {
             GameRegistry.registerBlock(block, unlocalizedName);
         }
 
         return block;
     }
 
-    public static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlockClass, String unlocalizedName)
-    {
+    public static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlockClass, String unlocalizedName) {
         block.setCreativeTab(BloodArsenal.BA_TAB);
 
-        for (String unlocName : BloodArsenalConfig.blocksToBeDisabled)
-        {
+        for (String unlocName : BloodArsenalConfig.blocksToBeDisabled) {
             System.out.println(unlocName);
-            if (unlocName.equals(unlocalizedName))
-            {
+            if (unlocName.equals(unlocalizedName)) {
                 blocksNotToBeRegistered.add(unlocName);
             }
         }
-        if (!blocksNotToBeRegistered.contains(unlocalizedName))
-        {
+        if (!blocksNotToBeRegistered.contains(unlocalizedName)) {
             GameRegistry.registerBlock(block, itemBlockClass, unlocalizedName);
         }
 
         return block;
     }
 
-    public static void registerMultiparts()
-    {
-        try
-        {
+    public static void registerMultiparts() {
+        try {
             Class clazz = Class.forName("com.arc.bloodarsenal.common.block.MultipartHandler");
             clazz.newInstance();
+        } catch (Throwable e) {
         }
-        catch(Throwable e) {}
     }
 }
