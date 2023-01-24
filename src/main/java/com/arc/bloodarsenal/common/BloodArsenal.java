@@ -101,16 +101,18 @@ public class BloodArsenal {
 
             try {
                 if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
-                    Field modfield = Field.class.getDeclaredField("modifiers");
-                    modfield.setAccessible(true);
-                    modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
                     potionTypes = (Potion[]) f.get(null);
-                    final Potion[] newPotionTypes = new Potion[256];
-                    System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
-                    f.set(null, newPotionTypes);
+                    if (potionTypes.length < 256) {
+                        Field modfield = Field.class.getDeclaredField("modifiers");
+                        modfield.setAccessible(true);
+                        modfield.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+                        final Potion[] newPotionTypes = new Potion[256];
+                        System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
+                        f.set(null, newPotionTypes);
+                    }
                 }
             } catch (Exception e) {
-                logger.error("ポケモン！");
+                logger.error("Could not resize potions array!");
                 logger.error(e);
             }
         }
