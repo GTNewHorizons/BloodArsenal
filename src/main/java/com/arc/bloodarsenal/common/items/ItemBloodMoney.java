@@ -1,12 +1,7 @@
 package com.arc.bloodarsenal.common.items;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +13,18 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemBloodMoney extends Item {
-    private final int[] MONEY_MULTIPLIER = new int[] {1, 4, 16, 64};
+
+    private final int[] MONEY_MULTIPLIER = new int[] { 1, 4, 16, 64 };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;

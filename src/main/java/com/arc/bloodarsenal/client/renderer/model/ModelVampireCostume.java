@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelVampireCostume extends ModelBiped {
+
     ModelRenderer Cape;
     ModelRenderer CowlL1;
     ModelRenderer CowlR1;
@@ -64,21 +65,13 @@ public class ModelVampireCostume extends ModelBiped {
         CowlB.mirror = true;
         setRotation(CowlB, -0.5235988F, 0F, 0F);
 
-        /*        CowlL2 = new ModelRenderer(this, 16, 4);
-                CowlL2.mirror = true;
-                CowlL2.addBox(0F, 0F, 0F, 0, 4, 3);
-                CowlL2.setRotationPoint(4F, -3F, 6F);//4F, -3F, 6F
-                CowlL2.setTextureSize(64, 32);
-                CowlL2.mirror = true;
-                setRotation(CowlL2, 0F, 2.356194F, 0.35F);
-
-                CowlR2 = new ModelRenderer(this, 16, 4);
-                CowlR2.addBox(0F, 0F, 0F, 0, 4, 3);
-                CowlR2.setRotationPoint(-6F, -3F, 4F);//-6F, -3F, 4F
-                CowlR2.setTextureSize(64, 32);
-                CowlR2.mirror = true;
-                setRotation(CowlR2, 0F, 0.7853982F, -0.3490659F);
-        */
+        /*
+         * CowlL2 = new ModelRenderer(this, 16, 4); CowlL2.mirror = true; CowlL2.addBox(0F, 0F, 0F, 0, 4, 3);
+         * CowlL2.setRotationPoint(4F, -3F, 6F);//4F, -3F, 6F CowlL2.setTextureSize(64, 32); CowlL2.mirror = true;
+         * setRotation(CowlL2, 0F, 2.356194F, 0.35F); CowlR2 = new ModelRenderer(this, 16, 4); CowlR2.addBox(0F, 0F, 0F,
+         * 0, 4, 3); CowlR2.setRotationPoint(-6F, -3F, 4F);//-6F, -3F, 4F CowlR2.setTextureSize(64, 32); CowlR2.mirror =
+         * true; setRotation(CowlR2, 0F, 0.7853982F, -0.3490659F);
+         */
         GreaveR = new ModelRenderer(this, 0, 25);
         GreaveR.addBox(0F, 0F, 0F, 4, 6, 1);
         GreaveR.setRotationPoint(-2F, 3F, -3F); // -4F, 14F, -3F
@@ -216,14 +209,10 @@ public class ModelVampireCostume extends ModelBiped {
 
         this.bipedHead.cubeList.clear();
         this.bipedHeadwear.cubeList.clear();
-        /*        if (addChest)
-                {
-                    this.bipedHead.addChild(this.CowlL1);
-                    this.bipedHead.addChild(this.CowlL2);
-                    this.bipedHead.addChild(this.CowlR1);
-                    this.bipedHead.addChild(this.CowlR2);
-                }
-        */
+        /*
+         * if (addChest) { this.bipedHead.addChild(this.CowlL1); this.bipedHead.addChild(this.CowlL2);
+         * this.bipedHead.addChild(this.CowlR1); this.bipedHead.addChild(this.CowlR2); }
+         */
         this.bipedBody.cubeList.clear();
         this.bipedRightArm.cubeList.clear();
         this.bipedLeftArm.cubeList.clear();
@@ -240,9 +229,9 @@ public class ModelVampireCostume extends ModelBiped {
 
             this.bipedBody.addChild(this.CowlB);
             this.bipedBody.addChild(this.CowlL1);
-            //            this.bipedBody.addChild(this.CowlL2);
+            // this.bipedBody.addChild(this.CowlL2);
             this.bipedBody.addChild(this.CowlR1);
-            //            this.bipedBody.addChild(this.CowlR2);
+            // this.bipedBody.addChild(this.CowlR2);
         }
 
         this.bipedLeftLeg.cubeList.clear();

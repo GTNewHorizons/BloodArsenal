@@ -1,5 +1,11 @@
 package com.arc.bloodarsenal.client;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+
 import com.arc.bloodarsenal.client.renderer.block.*;
 import com.arc.bloodarsenal.client.renderer.block.TilePortableAltarRenderer;
 import com.arc.bloodarsenal.client.renderer.block.item.TilePortableAltarItemRenderer;
@@ -12,16 +18,13 @@ import com.arc.bloodarsenal.common.items.sigil.SigilUtils;
 import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
 import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 import com.arc.bloodarsenal.common.tinkers.IClientCode;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
+
     @Override
     public void init() {
         registerRenders();
@@ -35,11 +38,11 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(ModItems.bound_bow, new RenderBow());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodTNT.class, new RenderBloodTNTPrimed());
-        //        RenderingRegistry.registerEntityRenderingHandler(EntityBloodHound.class, new
+        // RenderingRegistry.registerEntityRenderingHandler(EntityBloodHound.class, new
         // RenderEntityBloodHound(new ModelWolf(), new ModelWolf(), 0.5F));
 
-        MinecraftForgeClient.registerItemRenderer(
-                Item.getItemFromBlock(ModBlocks.life_infuser), new RenderTileLifeInfuser());
+        MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(ModBlocks.life_infuser), new RenderTileLifeInfuser());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TilePortableAltar.class, new TilePortableAltarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileLifeInfuser.class, new TileLifeInfuserRenderer());
@@ -58,7 +61,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void initRendering() {
         MinecraftForgeClient.registerItemRenderer(
-                ItemBlock.getItemFromBlock(ModBlocks.portable_altar), new TilePortableAltarItemRenderer());
+                ItemBlock.getItemFromBlock(ModBlocks.portable_altar),
+                new TilePortableAltarItemRenderer());
     }
 
     @Override

@@ -1,25 +1,29 @@
 /**
- *  Taken from SpitefulFox's ForbiddenMagic
- *  https://github.com/SpitefulFox/ForbiddenMagic
+ * Taken from SpitefulFox's ForbiddenMagic https://github.com/SpitefulFox/ForbiddenMagic
  */
 package com.arc.bloodarsenal.common.thaumcraft;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemWandCores extends Item {
-    public final String[] types = new String[] {"blood_wood", "blood_wood_staff"};
+
+    public final String[] types = new String[] { "blood_wood", "blood_wood_staff" };
     public IIcon[] icon;
 
     public ItemWandCores() {

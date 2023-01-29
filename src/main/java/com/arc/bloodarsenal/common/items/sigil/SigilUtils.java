@@ -1,11 +1,5 @@
 package com.arc.bloodarsenal.common.items.sigil;
 
-import com.arc.bloodarsenal.common.items.sigil.holding.AHPacketHandler;
-import com.arc.bloodarsenal.common.items.sigil.holding.AHPacketProcessor;
-import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +11,18 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 
+import com.arc.bloodarsenal.common.items.sigil.holding.AHPacketHandler;
+import com.arc.bloodarsenal.common.items.sigil.holding.AHPacketProcessor;
+import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SigilUtils {
-    public static MovingObjectPosition getTargetBlock(
-            World world, double x, double y, double z, float yaw, float pitch, boolean par3, double range) {
+
+    public static MovingObjectPosition getTargetBlock(World world, double x, double y, double z, float yaw, float pitch,
+            boolean par3, double range) {
         Vec3 var13 = Vec3.createVectorHelper(x, y, z);
         float var14 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
         float var15 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);

@@ -1,12 +1,7 @@
 package com.arc.bloodarsenal.common.block;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -23,7 +18,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
+
+import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockLPMaterializer extends BlockContainer {
+
     @SideOnly(Side.CLIENT)
     private IIcon output;
 
@@ -68,8 +73,8 @@ public class BlockLPMaterializer extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         TileLPMaterializer tileEntity = (TileLPMaterializer) world.getTileEntity(x, y, z);
 
         if (tileEntity == null) {
@@ -157,8 +162,7 @@ public class BlockLPMaterializer extends BlockContainer {
                         new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound()) {
-                    entityItem.getEntityItem().setTagCompound((NBTTagCompound)
-                            item.getTagCompound().copy());
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
                 }
 
                 float factor = 0.05F;

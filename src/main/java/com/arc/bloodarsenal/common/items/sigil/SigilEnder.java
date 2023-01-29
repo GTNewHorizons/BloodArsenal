@@ -1,11 +1,7 @@
 package com.arc.bloodarsenal.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +10,15 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 public class SigilEnder extends EnergyItems implements IBindable, ISigil {
+
     public SigilEnder() {
         super();
         setMaxStackSize(1);
@@ -79,9 +83,8 @@ public class SigilEnder extends EnergyItems implements IBindable, ISigil {
                 Vec3 vec3 = Vec3.createVectorHelper(ex, wy, zee);
                 double distance = playerPrevPos.distanceTo(vec3);
 
-                if (SoulNetworkHandler.getCurrentEssence(
-                                        itemStack.getTagCompound().getString("ownerName"))
-                                >= distance * BloodArsenalConfig.enderSigilTeleportMultiplier
+                if (SoulNetworkHandler.getCurrentEssence(itemStack.getTagCompound().getString("ownerName"))
+                        >= distance * BloodArsenalConfig.enderSigilTeleportMultiplier
                         || player.capabilities.isCreativeMode) {
                     for (int k = 0; k < 8; ++k) {
                         world.spawnParticle(
@@ -104,7 +107,9 @@ public class SigilEnder extends EnergyItems implements IBindable, ISigil {
 
                     player.setPositionAndUpdate(ex, wy, zee);
                     EnergyItems.syphonBatteries(
-                            itemStack, player, (int) distance * BloodArsenalConfig.enderSigilTeleportMultiplier);
+                            itemStack,
+                            player,
+                            (int) distance * BloodArsenalConfig.enderSigilTeleportMultiplier);
                     world.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
                     player.swingItem();
                     player.setVelocity(0.0D, 0.0D, 0.0D);

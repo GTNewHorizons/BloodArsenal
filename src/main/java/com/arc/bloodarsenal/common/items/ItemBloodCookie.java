@@ -1,7 +1,7 @@
 package com.arc.bloodarsenal.common.items;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+
 public class ItemBloodCookie extends ItemFood {
+
     public ItemBloodCookie() {
         super(2, 0.3F, false);
         setUnlocalizedName("blood_cookie");

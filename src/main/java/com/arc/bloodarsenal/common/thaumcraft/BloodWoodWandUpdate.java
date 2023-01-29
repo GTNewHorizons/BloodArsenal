@@ -1,17 +1,18 @@
 /**
- *  Taken from SpitefulFox's ForbiddenMagic
- *  https://github.com/SpitefulFox/ForbiddenMagic
+ * Taken from SpitefulFox's ForbiddenMagic https://github.com/SpitefulFox/ForbiddenMagic
  */
 package com.arc.bloodarsenal.common.thaumcraft;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class BloodWoodWandUpdate implements IWandRodOnUpdate {
+
     Aspect[] primals = (Aspect[]) Aspect.getPrimalAspects().toArray(new Aspect[0]);
 
     public BloodWoodWandUpdate() {}
@@ -21,15 +22,9 @@ public class BloodWoodWandUpdate implements IWandRodOnUpdate {
             try {
                 SoulNetworkHandler.checkAndSetItemOwner(itemstack, player);
                 byte e;
-                if (((ItemWandCasting) itemstack.getItem())
-                        .getCap(itemstack)
-                        .getTag()
-                        .equals("alchemical")) {
+                if (((ItemWandCasting) itemstack.getItem()).getCap(itemstack).getTag().equals("alchemical")) {
                     e = 12;
-                } else if (((ItemWandCasting) itemstack.getItem())
-                        .getCap(itemstack)
-                        .getTag()
-                        .equals("blood_iron")) {
+                } else if (((ItemWandCasting) itemstack.getItem()).getCap(itemstack).getTag().equals("blood_iron")) {
                     e = 10;
                 } else {
                     e = 13;

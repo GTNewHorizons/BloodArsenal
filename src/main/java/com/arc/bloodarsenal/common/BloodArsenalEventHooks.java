@@ -1,12 +1,7 @@
 package com.arc.bloodarsenal.common;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import com.arc.bloodarsenal.common.items.ModItems;
-import com.arc.bloodarsenal.common.items.armor.GlassArmor;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
@@ -24,7 +19,17 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
+import com.arc.bloodarsenal.common.items.ModItems;
+import com.arc.bloodarsenal.common.items.armor.GlassArmor;
+
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class BloodArsenalEventHooks {
+
     private Random rand = new Random();
 
     @SubscribeEvent
@@ -61,8 +66,8 @@ public class BloodArsenalEventHooks {
 
                             if (armorStack != null && armorStack.getItem() instanceof GlassArmor) {
                                 if (entityAttacking instanceof EntityLivingBase) {
-                                    ((EntityLivingBase) entityAttacking)
-                                            .addPotionEffect(new PotionEffect(
+                                    ((EntityLivingBase) entityAttacking).addPotionEffect(
+                                            new PotionEffect(
                                                     BloodArsenalConfig.bleedingID,
                                                     rand.nextInt(3) * 20,
                                                     rand.nextInt(1)));
@@ -83,12 +88,8 @@ public class BloodArsenalEventHooks {
             if (entityLiving instanceof FakePlayer) return;
 
             if (entityLiving.isPotionActive(BloodArsenal.bleeding)) {
-                int amplifier = entityLiving
-                        .getActivePotionEffect(BloodArsenal.bleeding)
-                        .getAmplifier();
-                int duration = entityLiving
-                        .getActivePotionEffect(BloodArsenal.bleeding)
-                        .getDuration();
+                int amplifier = entityLiving.getActivePotionEffect(BloodArsenal.bleeding).getAmplifier();
+                int duration = entityLiving.getActivePotionEffect(BloodArsenal.bleeding).getDuration();
                 int damage = (rand.nextInt(2) * (amplifier + 1) + rand.nextInt(2));
 
                 entityLiving.addPotionEffect(new PotionEffect(Potion.blindness.id, duration, 1));
@@ -100,16 +101,16 @@ public class BloodArsenalEventHooks {
             }
 
             if (entityLiving.isPotionActive(BloodArsenal.soulBurn)) {
-                int amplifier = entityLiving
-                        .getActivePotionEffect(BloodArsenal.soulBurn)
-                        .getAmplifier();
+                int amplifier = entityLiving.getActivePotionEffect(BloodArsenal.soulBurn).getAmplifier();
                 entityLiving.setFire(2);
 
                 if (entityLiving instanceof EntityPlayer && entityLiving.getHealth() > 0.0) {
                     if (entityLiving.worldObj.getWorldTime() % (10 / (amplifier + 1)) == 0) {
                         int lpToMinus = 1000 * (2 ^ (amplifier + 1));
                         SoulNetworkHandler.syphonAndDamageFromNetwork(
-                                entityLiving.getCommandSenderName(), (EntityPlayer) entityLiving, lpToMinus);
+                                entityLiving.getCommandSenderName(),
+                                (EntityPlayer) entityLiving,
+                                lpToMinus);
                     }
                 }
             }

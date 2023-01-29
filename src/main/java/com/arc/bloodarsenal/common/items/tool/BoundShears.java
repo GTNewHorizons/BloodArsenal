@@ -1,14 +1,9 @@
 package com.arc.bloodarsenal.common.items.tool;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.entity.mob.EntityBloodHound;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,7 +23,17 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.entity.mob.EntityBloodHound;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BoundShears extends ItemShears implements IBindable {
+
     private int energyUsed;
 
     @SideOnly(Side.CLIENT)
@@ -53,14 +58,8 @@ public class BoundShears extends ItemShears implements IBindable {
         return energyUsed;
     }
 
-    public boolean onBlockDestroyed(
-            ItemStack par1ItemStack,
-            World par2World,
-            Block par3Block,
-            int par4,
-            int par5,
-            int par6,
-            EntityLivingBase par7EntityLivingBase) {
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3Block, int par4, int par5,
+            int par6, EntityLivingBase par7EntityLivingBase) {
         if (!(par7EntityLivingBase instanceof EntityPlayer)) return false;
         EntityPlayer player = (EntityPlayer) par7EntityLivingBase;
 
@@ -68,8 +67,7 @@ public class BoundShears extends ItemShears implements IBindable {
             EnergyItems.syphonBatteries(par1ItemStack, player, 50);
         }
 
-        if (par3Block.getMaterial() != Material.leaves
-                && par3Block != Blocks.web
+        if (par3Block.getMaterial() != Material.leaves && par3Block != Blocks.web
                 && par3Block != Blocks.tallgrass
                 && par3Block != Blocks.vine
                 && par3Block != Blocks.tripwire
@@ -105,7 +103,11 @@ public class BoundShears extends ItemShears implements IBindable {
             if (entity instanceof IShearable) {
                 IShearable target = (IShearable) entity;
                 if (target.isShearable(
-                        itemstack, entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ)) {
+                        itemstack,
+                        entity.worldObj,
+                        (int) entity.posX,
+                        (int) entity.posY,
+                        (int) entity.posZ)) {
                     ArrayList<ItemStack> drops = target.onSheared(
                             itemstack,
                             entity.worldObj,
@@ -155,7 +157,11 @@ public class BoundShears extends ItemShears implements IBindable {
                         double d1 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
                         double d2 = (double) (rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
                         EntityItem entityitem = new EntityItem(
-                                player.worldObj, (double) x + d, (double) y + d1, (double) z + d2, stack);
+                                player.worldObj,
+                                (double) x + d,
+                                (double) y + d1,
+                                (double) z + d2,
+                                stack);
                         entityitem.delayBeforeCanPickup = 10;
                         player.worldObj.spawnEntityInWorld(entityitem);
                     }

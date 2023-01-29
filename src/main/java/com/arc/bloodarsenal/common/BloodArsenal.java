@@ -1,5 +1,21 @@
 package com.arc.bloodarsenal.common;
 
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Calendar;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.arc.bloodarsenal.common.block.ModBlocks;
 import com.arc.bloodarsenal.common.entity.ModLivingDropsEvent;
 import com.arc.bloodarsenal.common.gui.GuiHandler;
@@ -10,34 +26,22 @@ import com.arc.bloodarsenal.common.potion.PotionBloodArsenal;
 import com.arc.bloodarsenal.common.rituals.RitualRegistry;
 import com.arc.bloodarsenal.common.thaumcraft.BloodArsenalThaumcraft;
 import com.arc.bloodarsenal.common.tinkers.BloodArsenalTinkers;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Calendar;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(
         modid = BloodArsenal.MODID,
         version = BloodArsenal.VERSION,
         name = "GRADLETOKEN_MODNAME",
-        dependencies =
-                "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic",
+        dependencies = "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic",
         guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
 public class BloodArsenal {
+
     public static final String MODID = "GRADLETOKEN_MODID";
     public static final String VERSION = "GRADLETOKEN_VERSION";
 
@@ -57,20 +61,21 @@ public class BloodArsenal {
     public static Item.ToolMaterial infusedWood = EnumHelper.addToolMaterial("InfusedWood", 1, 0, 5.0F, 1.0F, 0);
     public static Item.ToolMaterial infusedIron = EnumHelper.addToolMaterial("InfusedIron", 3, 0, 11.0F, 4.0F, 0);
     public static Item.ToolMaterial infusedDiamond = EnumHelper.addToolMaterial("InfusedDiamond", 5, 0, 17.0F, 9.0F, 0);
-    public static Item.ToolMaterial infusedNetherium =
-            EnumHelper.addToolMaterial("InfusedNetherium", 8, 0, 31.0F, 18.0F, 0);
+    public static Item.ToolMaterial infusedNetherium = EnumHelper
+            .addToolMaterial("InfusedNetherium", 8, 0, 31.0F, 18.0F, 0);
 
-    public static ItemArmor.ArmorMaterial vampireArmor =
-            EnumHelper.addArmorMaterial("VampireArmor", 0, new int[] {2, 7, 4, 2}, 0);
-    public static ItemArmor.ArmorMaterial lifeImbuedArmor =
-            EnumHelper.addArmorMaterial("ImbuedArmor", 0, new int[] {4, 13, 9, 4}, 0);
-    public static ItemArmor.ArmorMaterial glassArmor =
-            EnumHelper.addArmorMaterial("GlassArmor", 0, new int[] {1, 4, 3, 1}, 4);
-    public static ItemArmor.ArmorMaterial elementalLifeImbuedArmor =
-            EnumHelper.addArmorMaterial("ElementalImbuedArmor", 0, new int[] {6, 16, 12, 6}, 0);
+    public static ItemArmor.ArmorMaterial vampireArmor = EnumHelper
+            .addArmorMaterial("VampireArmor", 0, new int[] { 2, 7, 4, 2 }, 0);
+    public static ItemArmor.ArmorMaterial lifeImbuedArmor = EnumHelper
+            .addArmorMaterial("ImbuedArmor", 0, new int[] { 4, 13, 9, 4 }, 0);
+    public static ItemArmor.ArmorMaterial glassArmor = EnumHelper
+            .addArmorMaterial("GlassArmor", 0, new int[] { 1, 4, 3, 1 }, 4);
+    public static ItemArmor.ArmorMaterial elementalLifeImbuedArmor = EnumHelper
+            .addArmorMaterial("ElementalImbuedArmor", 0, new int[] { 6, 16, 12, 6 }, 0);
 
     public static Logger logger = LogManager.getLogger(MODID);
     public static CreativeTabs BA_TAB = new CreativeTabs("BA_TAB") {
+
         @Override
         public Item getTabIconItem() {
             return ModItems.bound_bow;
@@ -142,17 +147,13 @@ public class BloodArsenal {
 
         FMLInterModComms.sendMessage("Waila", "register", "com.arc.bloodarsenal.common.misc.WAILAPlugin.registerAddon");
 
-        vampiricAura = new PotionBloodArsenal(BloodArsenalConfig.vampiricAuraID, false, 0)
-                .setIconIndex(0, 0)
+        vampiricAura = new PotionBloodArsenal(BloodArsenalConfig.vampiricAuraID, false, 0).setIconIndex(0, 0)
                 .setPotionName("Vampiric Aura");
-        bleeding = new PotionBloodArsenal(BloodArsenalConfig.bleedingID, true, 0)
-                .setIconIndex(1, 0)
+        bleeding = new PotionBloodArsenal(BloodArsenalConfig.bleedingID, true, 0).setIconIndex(1, 0)
                 .setPotionName("Bleeding");
-        swimming = new PotionBloodArsenal(BloodArsenalConfig.swimmingID, false, 0)
-                .setIconIndex(2, 0)
+        swimming = new PotionBloodArsenal(BloodArsenalConfig.swimmingID, false, 0).setIconIndex(2, 0)
                 .setPotionName("Swimming");
-        soulBurn = new PotionBloodArsenal(BloodArsenalConfig.soulBurnID, true, 0)
-                .setIconIndex(3, 0)
+        soulBurn = new PotionBloodArsenal(BloodArsenalConfig.soulBurnID, true, 0).setIconIndex(3, 0)
                 .setPotionName("Soul Burn");
     }
 

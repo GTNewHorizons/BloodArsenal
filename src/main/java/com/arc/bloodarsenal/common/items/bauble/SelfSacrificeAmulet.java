@@ -1,17 +1,7 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import baubles.common.container.InventoryBaubles;
-import baubles.common.lib.PlayerHandler;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +18,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
+import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import baubles.common.container.InventoryBaubles;
+import baubles.common.lib.PlayerHandler;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator, IBauble {
+
     public SelfSacrificeAmulet() {
         super();
         MinecraftForge.EVENT_BUS.register(this);
@@ -38,8 +43,7 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
     public void selfSacrificeHandler(LivingAttackEvent event) {
         EntityLivingBase entityAttacked = event.entityLiving;
 
-        if (entityAttacked != null
-                && entityAttacked instanceof EntityPlayerMP
+        if (entityAttacked != null && entityAttacked instanceof EntityPlayerMP
                 && BloodArsenalConfig.baublesIntegration) {
             float damageDone = event.ammount;
 

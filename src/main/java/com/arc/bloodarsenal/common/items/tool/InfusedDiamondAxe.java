@@ -1,12 +1,8 @@
 package com.arc.bloodarsenal.common.items.tool;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
@@ -21,7 +17,16 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class InfusedDiamondAxe extends ItemAxe implements IBindable {
+
     public static ArrayList<List> oreDictLogs = new ArrayList();
 
     public InfusedDiamondAxe() {
@@ -125,7 +130,8 @@ public class InfusedDiamondAxe extends ItemAxe implements IBindable {
                     }
 
                     List<EntityItem> items = world.getEntitiesWithinAABB(
-                            EntityItem.class, AxisAlignedBB.getBoundingBox(x - 5, y - 1, z - 5, x + 5, y + 64, z + 5));
+                            EntityItem.class,
+                            AxisAlignedBB.getBoundingBox(x - 5, y - 1, z - 5, x + 5, y + 64, z + 5));
                     for (EntityItem item : items) {
                         item.setPosition(x + 0.5, y + 0.5, z + 0.5);
                         item.ticksExisted += 20;

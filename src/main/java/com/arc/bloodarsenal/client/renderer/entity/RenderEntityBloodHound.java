@@ -1,22 +1,26 @@
 package com.arc.bloodarsenal.client.renderer.entity;
 
-import com.arc.bloodarsenal.common.entity.mob.EntityBloodHound;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import com.arc.bloodarsenal.common.entity.mob.EntityBloodHound;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityBloodHound extends RenderLiving {
+
     private static final ResourceLocation wolfTextures = new ResourceLocation("textures/entity/wolf/wolf.png");
-    private static final ResourceLocation tamedWolfTextures =
-            new ResourceLocation("textures/entity/wolf/wolf_tame.png");
-    private static final ResourceLocation anrgyWolfTextures =
-            new ResourceLocation("textures/entity/wolf/wolf_angry.png");
+    private static final ResourceLocation tamedWolfTextures = new ResourceLocation(
+            "textures/entity/wolf/wolf_tame.png");
+    private static final ResourceLocation anrgyWolfTextures = new ResourceLocation(
+            "textures/entity/wolf/wolf_angry.png");
 
     public RenderEntityBloodHound(ModelBase p_i1269_1_, ModelBase p_i1269_2_, float p_i1269_3_) {
         super(p_i1269_1_, p_i1269_3_);

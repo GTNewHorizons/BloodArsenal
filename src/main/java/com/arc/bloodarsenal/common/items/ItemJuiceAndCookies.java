@@ -1,7 +1,7 @@
 package com.arc.bloodarsenal.common.items;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+
 public class ItemJuiceAndCookies extends ItemFood {
+
     public ItemJuiceAndCookies() {
         super(6, 0.6F, false);
         setMaxStackSize(1);

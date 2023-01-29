@@ -1,11 +1,14 @@
 package com.arc.bloodarsenal.common.rituals;
 
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import net.minecraft.util.ResourceLocation;
 
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 public class RitualRegistry {
+
     public static void initRituals() {
         String resource = "alchemicalwizardry:textures/models/SimpleTransCircle.png";
 
@@ -16,7 +19,17 @@ public class RitualRegistry {
                 new RitualEffectWithering(),
                 "Ritual of Withering",
                 new AlchemyCircleRenderer(
-                        new ResourceLocation(resource), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
+                        new ResourceLocation(resource),
+                        0,
+                        0,
+                        0,
+                        255,
+                        0,
+                        0.501,
+                        0.501,
+                        0,
+                        1.5,
+                        false));
         Rituals.registerRitual(
                 "ARC002Midas",
                 1,
@@ -24,7 +37,17 @@ public class RitualRegistry {
                 new RitualEffectMidas(),
                 "Midas Touch",
                 new AlchemyCircleRenderer(
-                        new ResourceLocation(resource), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 2.5, false));
+                        new ResourceLocation(resource),
+                        0,
+                        0,
+                        0,
+                        255,
+                        0,
+                        0.501,
+                        0.501,
+                        0,
+                        2.5,
+                        false));
         Rituals.registerRitual(
                 "ARC003Enchant",
                 2,
@@ -32,7 +55,17 @@ public class RitualRegistry {
                 new RitualEffectEnchant(),
                 "The Enchantress's Spell",
                 new AlchemyCircleRenderer(
-                        new ResourceLocation(resource), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
+                        new ResourceLocation(resource),
+                        0,
+                        0,
+                        0,
+                        255,
+                        0,
+                        0.501,
+                        0.501,
+                        0,
+                        1.5,
+                        false));
         Rituals.registerRitual("ARC004MobDisable", 2, 25000, new RitualEffectMobDisable(), "Ritual of Mob Oppression");
         Rituals.registerRitual("ARC005Fisherman", 1, 10000, new RitualEffectFishing(), "Fisherman's Hymn");
 

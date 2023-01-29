@@ -1,20 +1,7 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import baubles.common.container.InventoryBaubles;
-import baubles.common.lib.PlayerHandler;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,7 +19,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import baubles.common.container.InventoryBaubles;
+import baubles.common.lib.PlayerHandler;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements IBauble, IBindable {
+
     public EmpoweredSelfSacrificeAmulet() {
         super();
         setHasSubtypes(true);
@@ -45,8 +50,7 @@ public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements
         EntityLivingBase entityAttacked = event.entityLiving;
         Entity entityAttacking = event.source.getSourceOfDamage();
 
-        if (entityAttacking != null
-                && entityAttacked != null
+        if (entityAttacking != null && entityAttacked != null
                 && entityAttacked instanceof EntityPlayerMP
                 && BloodArsenalConfig.baublesIntegration) {
             float damageDone = event.ammount;
@@ -59,8 +63,7 @@ public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements
 
                 if (stack != null) {
                     if (stack.getItem() == ModItems.empowered_self_sacrifice_amulet) {
-                        EmpoweredSelfSacrificeAmulet selfSacrificeAmulet =
-                                (EmpoweredSelfSacrificeAmulet) ModItems.empowered_self_sacrifice_amulet;
+                        EmpoweredSelfSacrificeAmulet selfSacrificeAmulet = (EmpoweredSelfSacrificeAmulet) ModItems.empowered_self_sacrifice_amulet;
                         int lpReceived = (int) damageDone;
                         boolean shouldExecute = selfSacrificeAmulet.getStoredLP(stack) < 50000;
 
@@ -114,15 +117,15 @@ public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements
                                     SoulNetworkHandler.addCurrentEssenceToMaximum(
                                             owner,
                                             50,
-                                            SoulNetworkHandler.getMaximumForOrbTier(
-                                                    SoulNetworkHandler.getCurrentMaxOrb(owner)));
+                                            SoulNetworkHandler
+                                                    .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(owner)));
                                     setStoredLP(par1ItemStack, getStoredLP(par1ItemStack) - 50);
                                 } else if (this.getStoredLP(par1ItemStack) > 0) {
                                     SoulNetworkHandler.addCurrentEssenceToMaximum(
                                             owner,
                                             this.getStoredLP(par1ItemStack),
-                                            SoulNetworkHandler.getMaximumForOrbTier(
-                                                    SoulNetworkHandler.getCurrentMaxOrb(owner)));
+                                            SoulNetworkHandler
+                                                    .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(owner)));
                                     setStoredLP(par1ItemStack, 0);
                                 }
                             }

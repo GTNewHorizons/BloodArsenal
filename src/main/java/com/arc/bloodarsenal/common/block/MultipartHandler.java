@@ -1,24 +1,25 @@
 /**
- * This class was created by <Vazkii>. It's distributed as
- * part of the Botania Mod. Get the Source Code in github:
+ * This class was created by <Vazkii>. It's distributed as part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
  *
- * Botania is Open Source and distributed under the
- * Botania License: http://botaniamod.net/license.php
+ * Botania is Open Source and distributed under the Botania License: http://botaniamod.net/license.php
  *
  * File Created @ [Sep 1, 2015, 5:32:15 PM (GMT)]
  */
 package com.arc.bloodarsenal.common.block;
 
-import codechicken.microblock.BlockMicroMaterial;
-import codechicken.microblock.MicroMaterialRegistry;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import codechicken.microblock.BlockMicroMaterial;
+import codechicken.microblock.MicroMaterialRegistry;
+
 public class MultipartHandler {
+
     public MultipartHandler() {
         registerAllMultiparts(ModBlocks.blood_stone);
         registerAllMultiparts(ModBlocks.blood_stained_glass);
@@ -52,6 +53,7 @@ public class MultipartHandler {
 
     private static void registerMultipart(Block block, int meta) {
         MicroMaterialRegistry.registerMaterial(
-                new BlockMicroMaterial(block, meta), block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
+                new BlockMicroMaterial(block, meta),
+                block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
     }
 }

@@ -1,18 +1,22 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class VampireRing extends ItemBauble implements IBauble {
+
     public VampireRing() {
         super();
         setMaxStackSize(1);

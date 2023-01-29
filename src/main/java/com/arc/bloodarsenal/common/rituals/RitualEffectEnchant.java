@@ -1,15 +1,8 @@
 package com.arc.bloodarsenal.common.rituals;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -24,8 +17,18 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+
 public class RitualEffectEnchant extends RitualEffect {
-    private static int[][] PEDESTAL_LOCATIONS = new int[][] {{3, 1, 0}, {-3, 1, 0}, {0, 1, 3}, {0, 1, -3}};
+
+    private static int[][] PEDESTAL_LOCATIONS = new int[][] { { 3, 1, 0 }, { -3, 1, 0 }, { 0, 1, 3 }, { 0, 1, -3 } };
 
     public int stage = 0;
     public int stageTicks = 0;
@@ -35,7 +38,7 @@ public class RitualEffectEnchant extends RitualEffect {
 
     public ItemStack enchantItem = null;
     public List<EnchantmentData> enchants = new ArrayList();
-    //    public List<ItemStack> itemList = new ArrayList();
+    // public List<ItemStack> itemList = new ArrayList();
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
@@ -137,8 +140,7 @@ public class RitualEffectEnchant extends RitualEffect {
 
                         for (EnchantmentData d : enchants) {
                             Enchantment ench = Enchantment.enchantmentsList[d.enchant];
-                            lpRequired += (int) (500F
-                                    * ((15 - Math.min(15, ench.getWeight())) * 1.05F)
+                            lpRequired += (int) (500F * ((15 - Math.min(15, ench.getWeight())) * 1.05F)
                                     * ((3F + d.level * d.level) * 0.25F)
                                     * (0.9F + enchants.size() * 0.05F));
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
@@ -391,6 +393,7 @@ public class RitualEffectEnchant extends RitualEffect {
     }
 
     private static class EnchantmentData {
+
         public int enchant, level;
 
         public EnchantmentData(int enchant, int level) {

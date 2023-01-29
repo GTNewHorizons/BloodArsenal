@@ -1,11 +1,7 @@
 package com.arc.bloodarsenal.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import java.util.List;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,7 +12,15 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 public class SigilLightning extends EnergyItems implements IBindable, ISigil {
+
     public SigilLightning() {
         super();
         setMaxStackSize(1);
@@ -94,7 +98,7 @@ public class SigilLightning extends EnergyItems implements IBindable, ISigil {
                 int cost = 0;
 
                 switch (mode) {
-                        // 8 per lightning bolt
+                    // 8 per lightning bolt
                     case 0:
                         cost = 8 * BloodArsenalConfig.lightningSigilMultiplier;
                         break;
@@ -112,9 +116,7 @@ public class SigilLightning extends EnergyItems implements IBindable, ISigil {
                         break;
                 }
 
-                if (SoulNetworkHandler.getCurrentEssence(
-                                        itemStack.getTagCompound().getString("ownerName"))
-                                >= cost
+                if (SoulNetworkHandler.getCurrentEssence(itemStack.getTagCompound().getString("ownerName")) >= cost
                         || player.capabilities.isCreativeMode) {
                     switch (mode) {
                         case 0:

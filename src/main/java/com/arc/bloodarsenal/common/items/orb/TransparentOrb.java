@@ -1,10 +1,7 @@
 package com.arc.bloodarsenal.common.items.orb;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +10,13 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class TransparentOrb extends EnergyBattery {
+
     IIcon icons[] = new IIcon[45];
 
     public TransparentOrb(int damage) {
@@ -26,10 +29,12 @@ public class TransparentOrb extends EnergyBattery {
         list.add(StatCollector.translateToLocal("tooltip.energybattery.desc"));
 
         if (itemStack.getTagCompound() != null) {
-            list.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
-                    + itemStack.getTagCompound().getString("ownerName"));
-            list.add(StatCollector.translateToLocal("tooltip.energybattery.currentLP") + " "
-                    + this.getCurrentEssence(itemStack));
+            list.add(
+                    StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
+                            + itemStack.getTagCompound().getString("ownerName"));
+            list.add(
+                    StatCollector.translateToLocal("tooltip.energybattery.currentLP") + " "
+                            + this.getCurrentEssence(itemStack));
         }
     }
 
@@ -39,8 +44,8 @@ public class TransparentOrb extends EnergyBattery {
             return;
         }
 
-        int maxEssence = SoulNetworkHandler.getMaximumForOrbTier(
-                SoulNetworkHandler.getCurrentMaxOrb(SoulNetworkHandler.getOwnerName(itemStack)));
+        int maxEssence = SoulNetworkHandler
+                .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(SoulNetworkHandler.getOwnerName(itemStack)));
         int section = maxEssence / 44;
         int currentEssence = SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getOwnerName(itemStack));
 

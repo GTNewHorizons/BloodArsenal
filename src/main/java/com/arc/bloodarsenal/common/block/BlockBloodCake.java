@@ -1,12 +1,7 @@
 package com.arc.bloodarsenal.common.block;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,12 +11,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import squeek.applecore.api.food.FoodValues;
 import squeek.applecore.api.food.IEdibleBlock;
 import squeek.applecore.api.food.ItemFoodProxy;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.Interface(iface = "squeek.applecore.api.food.IEdibleBlock", modid = "AppleCore")
 public class BlockBloodCake extends Block implements IEdibleBlock {
+
     private boolean isEdibleAtMaxHunger = false;
 
     @SideOnly(Side.CLIENT)
@@ -105,8 +110,8 @@ public class BlockBloodCake extends Block implements IEdibleBlock {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+            float hitY, float hitZ) {
         eatCake(player);
         return true;
     }

@@ -1,13 +1,15 @@
 package com.arc.bloodarsenal.common.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
 import com.arc.bloodarsenal.common.items.sigil.holding.ContainerAugmentedHolding;
 import com.arc.bloodarsenal.common.items.sigil.holding.GuiAugmentedHolding;
 import com.arc.bloodarsenal.common.items.sigil.holding.InventoryAugmentedHolding;
 import cpw.mods.fml.common.network.IGuiHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
+
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         switch (id) {

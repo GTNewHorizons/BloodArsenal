@@ -1,8 +1,7 @@
 package com.arc.bloodarsenal.common.items.armor;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.items.ModItems;
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
@@ -10,7 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.items.ModItems;
+
 public class GlassArmor extends ItemArmor {
+
     public GlassArmor(int armorType) {
         super(BloodArsenal.glassArmor, 1, armorType);
         setMaxDamage(42); // The answer to everything in the universe

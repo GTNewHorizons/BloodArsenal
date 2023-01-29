@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 
 public class AILeapAtTarget extends EntityAIBase {
+
     EntityLiving leaper;
     EntityLivingBase leapTarget;
     float leapMotionY;
@@ -24,10 +25,7 @@ public class AILeapAtTarget extends EntityAIBase {
             return false;
         } else {
             double d0 = this.leaper.getDistanceSqToEntity(this.leapTarget);
-            return d0 >= 4.0D
-                    && d0 <= 16.0D
-                    && this.leaper.onGround
-                    && this.leaper.getRNG().nextInt(5) == 0;
+            return d0 >= 4.0D && d0 <= 16.0D && this.leaper.onGround && this.leaper.getRNG().nextInt(5) == 0;
         }
     }
 

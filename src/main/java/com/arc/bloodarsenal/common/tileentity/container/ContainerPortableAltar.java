@@ -1,13 +1,15 @@
 package com.arc.bloodarsenal.common.tileentity.container;
 
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
 public class ContainerPortableAltar extends Container {
+
     protected TilePortableAltar tileEntity;
 
     public ContainerPortableAltar(InventoryPlayer inventoryPlayer, TilePortableAltar te) {

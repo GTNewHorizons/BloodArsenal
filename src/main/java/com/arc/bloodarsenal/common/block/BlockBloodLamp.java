@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockBloodLamp extends Block {
+
     public BlockBloodLamp() {
         super(Material.iron);
         setStepSound(soundTypePiston);

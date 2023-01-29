@@ -1,14 +1,16 @@
 package com.arc.bloodarsenal.common.items.sigil.holding;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import cpw.mods.fml.common.FMLCommonHandler;
+
 public class ContainerAugmentedHolding extends Container {
+
     protected final int PLAYER_INVENTORY_ROWS = 3;
     protected final int PLAYER_INVENTORY_COLUMNS = 9;
 
@@ -29,8 +31,12 @@ public class ContainerAugmentedHolding extends Container {
 
         for (int rowIndex = 0; rowIndex < PLAYER_INVENTORY_ROWS; ++rowIndex) {
             for (int columnIndex = 0; columnIndex < PLAYER_INVENTORY_COLUMNS; ++columnIndex) {
-                this.addSlotToContainer(new Slot(
-                        player.inventory, columnIndex + rowIndex * 9 + 9, 8 + columnIndex * 18, 39 + rowIndex * 18));
+                this.addSlotToContainer(
+                        new Slot(
+                                player.inventory,
+                                columnIndex + rowIndex * 9 + 9,
+                                8 + columnIndex * 18,
+                                39 + rowIndex * 18));
             }
         }
 
@@ -99,8 +105,8 @@ public class ContainerAugmentedHolding extends Container {
                         inventoryColumns,
                         inventoryColumns + (PLAYER_INVENTORY_ROWS * PLAYER_INVENTORY_COLUMNS),
                         false)) {
-                    return null;
-                }
+                            return null;
+                        }
             }
 
             if (stackInSlot.stackSize == 0) {
@@ -124,16 +130,12 @@ public class ContainerAugmentedHolding extends Container {
     }
 
     private class SlotHolding extends Slot {
+
         private final EntityPlayer player;
         private ContainerAugmentedHolding containerHolding;
 
-        public SlotHolding(
-                ContainerAugmentedHolding containerHolding,
-                IInventory inventory,
-                EntityPlayer player,
-                int slotIndex,
-                int x,
-                int y) {
+        public SlotHolding(ContainerAugmentedHolding containerHolding, IInventory inventory, EntityPlayer player,
+                int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
             this.player = player;
             this.containerHolding = containerHolding;
@@ -155,6 +157,7 @@ public class ContainerAugmentedHolding extends Container {
     }
 
     private class SlotDisabled extends Slot {
+
         public SlotDisabled(IInventory inventory, int slotIndex, int x, int y) {
             super(inventory, slotIndex, x, y);
         }

@@ -1,7 +1,5 @@
 package com.arc.bloodarsenal.client.renderer.block;
 
-import com.arc.bloodarsenal.client.renderer.model.ModelPortableBloodAltar;
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,14 +8,20 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
+import com.arc.bloodarsenal.client.renderer.model.ModelPortableBloodAltar;
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
 public class TilePortableAltarRenderer extends TileEntitySpecialRenderer {
+
     private ModelPortableBloodAltar modelBloodAltar = new ModelPortableBloodAltar();
     private final RenderItem customRenderItem;
 
     public TilePortableAltarRenderer() {
         customRenderItem = new RenderItem() {
+
             @Override
             public boolean shouldBob() {
                 return false;
@@ -104,8 +108,8 @@ public class TilePortableAltarRenderer extends TileEntitySpecialRenderer {
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(
-            ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection) {
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z,
+            ForgeDirection forgeDirection) {
         if (ghostItemStack != null) {
             if (ghostItemStack.getItem() instanceof ItemBlock) {
                 switch (forgeDirection) {

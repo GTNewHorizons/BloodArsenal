@@ -1,5 +1,16 @@
 package com.arc.bloodarsenal.common.items.book;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
+
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import amerifrance.guideapi.api.GuideRegistry;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
@@ -12,19 +23,12 @@ import amerifrance.guideapi.categories.CategoryItemStack;
 import amerifrance.guideapi.entries.EntryUniText;
 import amerifrance.guideapi.pages.PageIRecipe;
 import amerifrance.guideapi.pages.PageUnlocImage;
+
 import com.arc.bloodarsenal.common.items.ModItems;
 import cpw.mods.fml.common.registry.GameRegistry;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class BloodBurnedTome {
+
     public static Book burnedTome;
     public static List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
     private static final String R_LOC = "BloodArsenal:book/images/";
@@ -33,21 +37,21 @@ public class BloodBurnedTome {
         registerLifebringer();
 
         BookBuilder bookBuilder = new BookBuilder();
-        bookBuilder
-                .setCategories(categories)
-                .setUnlocBookTitle("guide.bloodarsenal.book.title")
+        bookBuilder.setCategories(categories).setUnlocBookTitle("guide.bloodarsenal.book.title")
                 .setUnlocWelcomeMessage("guide.bloodarsenal.book.welcomeMessage")
-                .setUnlocDisplayName("guide.bloodarsenal.book.name")
-                .setAuthor("-An Arc Mage")
+                .setUnlocDisplayName("guide.bloodarsenal.book.name").setAuthor("-An Arc Mage")
                 .setItemTexture("BloodArsenal:burned_tome");
         burnedTome = bookBuilder.build();
         GuideRegistry.registerBook(burnedTome);
-        GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(
-                GuideRegistry.getItemStackForBook(burnedTome),
-                ModItems.glass_shard,
-                Items.writable_book,
-                new ItemStack(
-                        WayofTime.alchemicalWizardry.ModItems.apprenticeBloodOrb, 1, OreDictionary.WILDCARD_VALUE)));
+        GameRegistry.addRecipe(
+                new ShapelessBloodOrbRecipe(
+                        GuideRegistry.getItemStackForBook(burnedTome),
+                        ModItems.glass_shard,
+                        Items.writable_book,
+                        new ItemStack(
+                                WayofTime.alchemicalWizardry.ModItems.apprenticeBloodOrb,
+                                1,
+                                OreDictionary.WILDCARD_VALUE)));
         RecipeHolder.init();
     }
 
@@ -66,13 +70,17 @@ public class BloodBurnedTome {
             makePage(lifeBringerEntries, glass, "glass");
         }
 
-        categories.add(new CategoryItemStack(
-                lifeBringerEntries, "guide.bloodarsenal.category.lifeBringer", new ItemStack(ModItems.bound_bow)));
+        categories.add(
+                new CategoryItemStack(
+                        lifeBringerEntries,
+                        "guide.bloodarsenal.category.lifeBringer",
+                        new ItemStack(ModItems.bound_bow)));
     }
 
     private static void makePage(List<EntryAbstract> entries, ArrayList<IPage> pages, String name, Object... others) {
-        pages.addAll(PageHelper.pagesForLongText(
-                replaceColors(StatCollector.translateToLocal("guide.bloodarsenal.entry." + name))));
+        pages.addAll(
+                PageHelper.pagesForLongText(
+                        replaceColors(StatCollector.translateToLocal("guide.bloodarsenal.entry." + name))));
 
         if (others != null) {
             for (Object code : others) {
@@ -93,7 +101,8 @@ public class BloodBurnedTome {
 
     private static Object[] s(String pageName) {
         if (pageName != null) {
-            return PageHelper.pagesForLongText(
+            return PageHelper
+                    .pagesForLongText(
                             replaceColors(StatCollector.translateToLocal("guide.bloodarsenal.entry." + pageName)))
                     .toArray();
         }
@@ -117,10 +126,11 @@ public class BloodBurnedTome {
         if (names != null) {
             ArrayList<PageUnlocImage> images = new ArrayList<PageUnlocImage>();
             for (String name : names) {
-                images.add(new PageUnlocImage(
-                        replaceColors(StatCollector.translateToLocal("guide.bloodarsenal.caption." + name)),
-                        new ResourceLocation(R_LOC + name + ".png"),
-                        true));
+                images.add(
+                        new PageUnlocImage(
+                                replaceColors(StatCollector.translateToLocal("guide.bloodarsenal.caption." + name)),
+                                new ResourceLocation(R_LOC + name + ".png"),
+                                true));
             }
 
             return images.toArray();

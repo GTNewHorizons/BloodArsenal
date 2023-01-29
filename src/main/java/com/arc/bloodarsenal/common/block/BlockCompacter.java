@@ -1,22 +1,7 @@
 package com.arc.bloodarsenal.common.block;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.block.BlockAltar;
-import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarComponent;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
-import com.arc.bloodarsenal.common.tileentity.TileCompacter;
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -32,7 +17,27 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.block.BlockAltar;
+import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarComponent;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+import com.arc.bloodarsenal.common.tileentity.TileCompacter;
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockCompacter extends BlockContainer {
+
     private String ritualName;
     private int direction;
 
@@ -72,8 +77,8 @@ public class BlockCompacter extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         world.markBlockForUpdate(x, y, z);
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
@@ -141,16 +146,18 @@ public class BlockCompacter extends BlockContainer {
                                 }
 
                                 int activationCost = Rituals.getCostForActivation(ritualName);
-                                int cost = (activationCost * (int) multiplier)
-                                        / 2; // Divided by 2 since this fires twice apparently and also because I'm nice
+                                int cost = (activationCost * (int) multiplier) / 2; // Divided by 2 since this fires
+                                                                                    // twice apparently and also because
+                                                                                    // I'm nice
 
                                 if (cost <= currentEssence) {
                                     compactRitual(tile);
                                     SoulNetworkHandler.syphonFromNetwork(owner, cost);
                                     --player.inventory.getCurrentItem().stackSize;
                                 } else {
-                                    player.addChatComponentMessage(new ChatComponentText(
-                                            StatCollector.translateToLocal("message.compacter.notEnoughLP")));
+                                    player.addChatComponentMessage(
+                                            new ChatComponentText(
+                                                    StatCollector.translateToLocal("message.compacter.notEnoughLP")));
                                     return true;
                                 }
                             }
@@ -165,13 +172,14 @@ public class BlockCompacter extends BlockContainer {
                             if (tier == 0) {
                                 return false;
                             } else if (altar.getStackInSlot(0) != null) {
-                                player.addChatComponentMessage(new ChatComponentText(
-                                        StatCollector.translateToLocal("message.compacter.itemInAltar")));
+                                player.addChatComponentMessage(
+                                        new ChatComponentText(
+                                                StatCollector.translateToLocal("message.compacter.itemInAltar")));
                             } else {
                                 float multiplier = 1;
 
-                                AltarUpgradeComponent upgradeComponent =
-                                        UpgradedAltars.getUpgrades(world, x, y + 1, z, tier);
+                                AltarUpgradeComponent upgradeComponent = UpgradedAltars
+                                        .getUpgrades(world, x, y + 1, z, tier);
 
                                 int speedUpgrades = upgradeComponent.getSpeedUpgrades();
                                 int efficiencyUpgrades = upgradeComponent.getEfficiencyUpgrades();
@@ -203,12 +211,15 @@ public class BlockCompacter extends BlockContainer {
                                         SoulNetworkHandler.syphonFromNetwork(owner, cost);
                                         --player.inventory.getCurrentItem().stackSize;
                                     } else {
-                                        player.addChatComponentMessage(new ChatComponentText(
-                                                StatCollector.translateToLocal("message.compacter.notEnoughLP")));
+                                        player.addChatComponentMessage(
+                                                new ChatComponentText(
+                                                        StatCollector
+                                                                .translateToLocal("message.compacter.notEnoughLP")));
                                     }
                                 } else {
-                                    player.addChatComponentMessage(new ChatComponentText(
-                                            StatCollector.translateToLocal("message.compacter.wrongOrbTier")));
+                                    player.addChatComponentMessage(
+                                            new ChatComponentText(
+                                                    StatCollector.translateToLocal("message.compacter.wrongOrbTier")));
                                 }
                             }
 
@@ -370,7 +381,9 @@ public class BlockCompacter extends BlockContainer {
                 world.setBlockToAir(x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
                 world.setBlockToAir(x, y, z);
                 world.markBlockForUpdate(
-                        x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
+                        x + altarComponent.getX(),
+                        y + altarComponent.getY(),
+                        z + altarComponent.getZ());
             }
         }
 

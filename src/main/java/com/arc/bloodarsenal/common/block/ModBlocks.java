@@ -1,5 +1,10 @@
 package com.arc.bloodarsenal.common.block;
 
+import java.util.ArrayList;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.items.block.BloodStoneBlock;
@@ -7,11 +12,9 @@ import com.arc.bloodarsenal.common.items.block.CompactedMRSBlock;
 import com.arc.bloodarsenal.common.items.block.PortableAltarBlock;
 import com.arc.bloodarsenal.common.tileentity.*;
 import cpw.mods.fml.common.registry.GameRegistry;
-import java.util.ArrayList;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
 
 public class ModBlocks {
+
     public static Block blood_stone;
     public static Block blood_tnt;
     public static Block blood_stained_glass;
@@ -48,8 +51,10 @@ public class ModBlocks {
         blood_infused_glowstone = registerBlock(new BlockBloodInfusedGlowstone(), "blood_infused_glowstone");
         blood_lamp = registerBlock(new BlockBloodLamp(), "blood_lamp");
         blood_infused_diamond_block = registerBlock(new BlockBloodInfusedDiamond(), "blood_infused_diamond_block");
-        portable_altar = (BlockPortableAltar)
-                registerBlock(new BlockPortableAltar(), PortableAltarBlock.class, "portable_altar");
+        portable_altar = (BlockPortableAltar) registerBlock(
+                new BlockPortableAltar(),
+                PortableAltarBlock.class,
+                "portable_altar");
         life_infuser = registerBlock(new BlockLifeInfuser(), "life_infuser");
         compacter = registerBlock(new BlockCompacter(), "compacter");
         lp_materializer = registerBlock(new BlockLPMaterializer(), "lp_materializer");
@@ -106,7 +111,6 @@ public class ModBlocks {
         try {
             Class clazz = Class.forName("com.arc.bloodarsenal.common.block.MultipartHandler");
             clazz.newInstance();
-        } catch (Throwable e) {
-        }
+        } catch (Throwable e) {}
     }
 }

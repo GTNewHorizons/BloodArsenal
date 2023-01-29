@@ -1,9 +1,11 @@
 package com.arc.bloodarsenal.common;
 
 import java.io.File;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class BloodArsenalConfig {
+
     public static Configuration config;
 
     // Config Categories
@@ -64,8 +66,8 @@ public class BloodArsenalConfig {
         try {
             syncConfig();
         } catch (Exception e) {
-            BloodArsenal.logger.error(
-                    "There has been an error loading the configurations, go report this on the forum.");
+            BloodArsenal.logger
+                    .error("There has been an error loading the configurations, go report this on the forum.");
         } finally {
             config.save();
         }
@@ -84,29 +86,29 @@ public class BloodArsenalConfig {
         swimmingID = config.get(potionId, "Swimming", 122).getInt(swimmingID);
         soulBurnID = config.get(potionId, "Soul Burn", 123).getInt(soulBurnID);
 
-        ritualDisabledWither =
-                config.get(ritualBlacklist, "Ritual of Withering", false).getBoolean(ritualDisabledWither);
+        ritualDisabledWither = config.get(ritualBlacklist, "Ritual of Withering", false)
+                .getBoolean(ritualDisabledWither);
         ritualDisabledMidas = config.get(ritualBlacklist, "Midas Touch", false).getBoolean(ritualDisabledMidas);
-        ritualDisabledEnchantment =
-                config.get(ritualBlacklist, "The Enchantress's Spell", false).getBoolean(ritualDisabledEnchantment);
-        ritualDisabledMobOppression =
-                config.get(ritualBlacklist, "Ritual of Mob Oppression", false).getBoolean(ritualDisabledMobOppression);
-        ritualDisabledFisherman =
-                config.get(ritualBlacklist, "Fisherman's Hymn", false).getBoolean(ritualDisabledFisherman);
+        ritualDisabledEnchantment = config.get(ritualBlacklist, "The Enchantress's Spell", false)
+                .getBoolean(ritualDisabledEnchantment);
+        ritualDisabledMobOppression = config.get(ritualBlacklist, "Ritual of Mob Oppression", false)
+                .getBoolean(ritualDisabledMobOppression);
+        ritualDisabledFisherman = config.get(ritualBlacklist, "Fisherman's Hymn", false)
+                .getBoolean(ritualDisabledFisherman);
 
         blocksToBeDisabled = config.getStringList(
                 "Disable blocks here",
                 blockSettings,
-                new String[] {""},
+                new String[] { "" },
                 "Type in the unlocalized name of the block you want disabled here (separate them using ENTER)");
         itemsToBeDisabled = config.getStringList(
                 "Disable items here",
                 itemSettings,
-                new String[] {""},
+                new String[] { "" },
                 "Type in the unlocalized name of the item you want disabled (separate them using ENTER)");
 
-        baublesIntegration =
-                config.get(modSettings, "Enable Baubles integration?", true).getBoolean(baublesIntegration);
+        baublesIntegration = config.get(modSettings, "Enable Baubles integration?", true)
+                .getBoolean(baublesIntegration);
         forgeMultipartIntegration = config.get(modSettings, "Enable Forge Multipart Integration?", true)
                 .getBoolean(forgeMultipartIntegration);
         guideAPIIntegration = config.get(modSettings, "Enable the Blood Burned Tome from Guide-API?", true)
@@ -117,11 +119,11 @@ public class BloodArsenalConfig {
                 .getBoolean(tinkersIntegration);
         researchTag = config.get(modSettings, "Add [BA] to all of Blood Arsenal's research?", true)
                 .getBoolean(researchTag);
-        bloodInfusedWoodID = config.get(
-                        modSettings, "[Tinker's Construct] Material ID for Blood Infused Wood; Default: 250", 250)
+        bloodInfusedWoodID = config
+                .get(modSettings, "[Tinker's Construct] Material ID for Blood Infused Wood; Default: 250", 250)
                 .getInt(bloodInfusedWoodID);
-        bloodInfusedIronID = config.get(
-                        modSettings, "[Tinker's Construct] Material ID for Blood Infused Iron; Default: 251", 251)
+        bloodInfusedIronID = config
+                .get(modSettings, "[Tinker's Construct] Material ID for Blood Infused Iron; Default: 251", 251)
                 .getInt(bloodInfusedIronID);
 
         sigilSwimmingCost = config.get(lpSettings, "Sigil of Swimming cost; Default: 250", 250)
@@ -130,25 +132,24 @@ public class BloodArsenalConfig {
                 .getInt(sigilDivinityCost);
         enderSigilOpenCost = config.get(lpSettings, "Ender Sigil cost (to open the Ender Chest); Default: 400", 400)
                 .getInt(enderSigilOpenCost);
-        enderSigilTeleportMultiplier = config.get(
-                        lpSettings, "Ender Sigil cost (to teleport (multiplier)); Default: 500", 500)
+        enderSigilTeleportMultiplier = config
+                .get(lpSettings, "Ender Sigil cost (to teleport (multiplier)); Default: 500", 500)
                 .getInt(enderSigilTeleportMultiplier);
         lightningSigilMultiplier = config.get(lpSettings, "Lightning Sigil cost (multiplier); Default: 1500", 1500)
                 .getInt(lightningSigilMultiplier);
-        lpMaterializerCost = config.get(
-                        lpSettings, "Converts this number to 100LE (from this (SN) to 100 (LE)); Default: 150", 150)
+        lpMaterializerCost = config
+                .get(lpSettings, "Converts this number to 100LE (from this (SN) to 100 (LE)); Default: 150", 150)
                 .getInt(lpMaterializerCost);
 
         isRedGood = config.get(
-                        misc,
-                        "Is RED > PURPLE?",
-                        false,
-                        "Purple is always better than Red. But I won't tell you how to live your life. Even if it is incorrect.")
+                misc,
+                "Is RED > PURPLE?",
+                false,
+                "Purple is always better than Red. But I won't tell you how to live your life. Even if it is incorrect.")
                 .getBoolean(isRedGood);
-        cakeIsLie = config.get(misc, "The cake is a lie", false, "The cake is a lie")
-                .getBoolean(cakeIsLie);
-        isGlassDangerous = config.get(
-                        misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
+        cakeIsLie = config.get(misc, "The cake is a lie", false, "The cake is a lie").getBoolean(cakeIsLie);
+        isGlassDangerous = config
+                .get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
                 .getBoolean(isGlassDangerous);
 
         config.save();

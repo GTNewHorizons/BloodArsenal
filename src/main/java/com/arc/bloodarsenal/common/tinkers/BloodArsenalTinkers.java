@@ -1,12 +1,5 @@
 package com.arc.bloodarsenal.common.tinkers;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.block.ModBlocks;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -14,12 +7,23 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.crafting.FluidType;
 import tconstruct.library.crafting.Smeltery;
 import tconstruct.smeltery.TinkerSmeltery;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.block.ModBlocks;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BloodArsenalTinkers {
+
     public static final BloodArsenalTinkers INSTANCE = new BloodArsenalTinkers();
 
     public static Fluid bloodInfusedIronFluid;
@@ -116,20 +120,18 @@ public class BloodArsenalTinkers {
                         850,
                         new FluidStack(bloodInfusedIronFluid, 144));
                 ItemStack ingotcast = new ItemStack(TinkerSmeltery.metalPattern, 1, 0);
-                TConstructRegistry.getBasinCasting()
-                        .addCastingRecipe(
-                                new ItemStack(ModBlocks.blood_infused_iron_block, 1),
-                                new FluidStack(bloodInfusedIronFluid, 1296),
-                                null,
-                                true,
-                                100);
-                TConstructRegistry.getTableCasting()
-                        .addCastingRecipe(
-                                new ItemStack(ModItems.blood_infused_iron, 1),
-                                new FluidStack(bloodInfusedIronFluid, 144),
-                                ingotcast,
-                                false,
-                                50);
+                TConstructRegistry.getBasinCasting().addCastingRecipe(
+                        new ItemStack(ModBlocks.blood_infused_iron_block, 1),
+                        new FluidStack(bloodInfusedIronFluid, 1296),
+                        null,
+                        true,
+                        100);
+                TConstructRegistry.getTableCasting().addCastingRecipe(
+                        new ItemStack(ModItems.blood_infused_iron, 1),
+                        new FluidStack(bloodInfusedIronFluid, 144),
+                        ingotcast,
+                        false,
+                        50);
                 tag = new NBTTagCompound();
                 tag.setString("FluidName", bloodInfusedIronFluid.getName());
                 tag.setInteger("MaterialId", id);
@@ -140,6 +142,7 @@ public class BloodArsenalTinkers {
                 tag.setInteger("Value", 2);
                 FMLInterModComms.sendMessage("TConstruct", "addMaterialItem", tag);
                 BloodArsenal.proxy.executeClientCode(new IClientCode() {
+
                     @SideOnly(Side.CLIENT)
                     public void executeClientCode() {
                         (new TextureResourcePackBloodInfusedIron("BloodInfusedIron")).register();
@@ -151,9 +154,7 @@ public class BloodArsenalTinkers {
 
     static {
         MinecraftForge.EVENT_BUS.register(new TConEvents());
-        bloodInfusedIronFluid = new Fluid("molten.blood_infused_iron")
-                .setDensity(3000)
-                .setViscosity(6000)
+        bloodInfusedIronFluid = new Fluid("molten.blood_infused_iron").setDensity(3000).setViscosity(6000)
                 .setTemperature(1400);
     }
 }

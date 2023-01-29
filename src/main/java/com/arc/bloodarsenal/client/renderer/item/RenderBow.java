@@ -1,17 +1,20 @@
 package com.arc.bloodarsenal.client.renderer.item;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
+
 public class RenderBow implements IItemRenderer {
-    public static final String[] ITEM_IN_USE = new String[] {"itemInUse", "field_71074_e", "f"};
-    public static final String[] ITEM_IN_USE_COUNT = new String[] {"itemInUseCount", "field_71072_f", "g"};
+
+    public static final String[] ITEM_IN_USE = new String[] { "itemInUse", "field_71074_e", "f" };
+    public static final String[] ITEM_IN_USE_COUNT = new String[] { "itemInUseCount", "field_71072_f", "g" };
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -76,8 +79,8 @@ public class RenderBow implements IItemRenderer {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1F, 1F, 1F, 1F);
-        ItemRenderer.renderItemIn2D(
-                Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), scale);
+        ItemRenderer
+                .renderItemIn2D(Tessellator.instance, f1, f2, f, f3, icon.getIconWidth(), icon.getIconHeight(), scale);
 
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();

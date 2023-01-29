@@ -8,6 +8,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class AIFollowOwner extends EntityAIBase {
+
     private EntityTameable thePet;
     private EntityLivingBase theOwner;
     World theWorld;
@@ -77,8 +78,8 @@ public class AIFollowOwner extends EntityAIBase {
      * Updates the task
      */
     public void updateTask() {
-        this.thePet.getLookHelper().setLookPositionWithEntity(this.theOwner, 10.0F, (float)
-                this.thePet.getVerticalFaceSpeed());
+        this.thePet.getLookHelper()
+                .setLookPositionWithEntity(this.theOwner, 10.0F, (float) this.thePet.getVerticalFaceSpeed());
 
         if (!this.thePet.isSitting()) {
             if (--this.field_75343_h <= 0) {
@@ -95,12 +96,8 @@ public class AIFollowOwner extends EntityAIBase {
                                 for (int i1 = 0; i1 <= 4; ++i1) {
                                     if ((l < 1 || i1 < 1 || l > 3 || i1 > 3)
                                             && World.doesBlockHaveSolidTopSurface(this.theWorld, i + l, k - 1, j + i1)
-                                            && !this.theWorld
-                                                    .getBlock(i + l, k, j + i1)
-                                                    .isNormalCube()
-                                            && !this.theWorld
-                                                    .getBlock(i + l, k + 1, j + i1)
-                                                    .isNormalCube()) {
+                                            && !this.theWorld.getBlock(i + l, k, j + i1).isNormalCube()
+                                            && !this.theWorld.getBlock(i + l, k + 1, j + i1).isNormalCube()) {
                                         this.thePet.setLocationAndAngles(
                                                 (double) ((float) (i + l) + 0.5F),
                                                 (double) k,

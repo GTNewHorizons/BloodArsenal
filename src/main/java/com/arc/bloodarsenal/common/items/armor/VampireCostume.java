@@ -1,10 +1,5 @@
 package com.arc.bloodarsenal.common.items.armor;
 
-import com.arc.bloodarsenal.client.renderer.model.ModelVampireCostume;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -19,7 +14,15 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.client.renderer.model.ModelVampireCostume;
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class VampireCostume extends ItemArmor {
+
     @SideOnly(Side.CLIENT)
     private IIcon chestIcon;
 
@@ -76,8 +79,7 @@ public class VampireCostume extends ItemArmor {
 
                 if (entityLiving instanceof EntityPlayer) {
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0) {
-                        EnumAction enumaction =
-                                ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
+                        EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
 
                         if (enumaction == EnumAction.block) {
                             this.model.heldItemRight = 3;

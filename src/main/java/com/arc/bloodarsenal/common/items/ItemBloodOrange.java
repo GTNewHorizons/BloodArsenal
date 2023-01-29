@@ -1,13 +1,16 @@
 package com.arc.bloodarsenal.common.items;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+
 public class ItemBloodOrange extends ItemFood {
+
     public ItemBloodOrange() {
         super(2, 0.2F, false);
         setUnlocalizedName("blood_orange");

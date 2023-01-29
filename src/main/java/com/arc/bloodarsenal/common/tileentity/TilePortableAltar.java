@@ -1,13 +1,7 @@
 package com.arc.bloodarsenal.common.tileentity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -25,7 +19,16 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
 public class TilePortableAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar {
+
     public static final int sizeInv = 1;
     private ItemStack[] inv;
     private int resultID;
@@ -91,10 +94,10 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
 
     /**
      *
-     * @return	Amount filled
+     * @return Amount filled
      */
     public int fillMainTank(int amount) // TODO
-            {
+    {
         int filledAmount = Math.min(capacity - fluid.amount, amount);
         fluid.amount += filledAmount;
 
@@ -193,15 +196,17 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
                 setMainFluid(fluid);
             }
 
-            FluidStack fluidOut =
-                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
+            FluidStack fluidOut = new FluidStack(
+                    AlchemicalWizardry.lifeEssenceFluid,
+                    par1NBTTagCompound.getInteger("outputAmount"));
 
             if (fluidOut != null) {
                 setOutputFluid(fluidOut);
             }
 
-            FluidStack fluidIn =
-                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("inputAmount"));
+            FluidStack fluidIn = new FluidStack(
+                    AlchemicalWizardry.lifeEssenceFluid,
+                    par1NBTTagCompound.getInteger("inputAmount"));
 
             if (fluidIn != null) {
                 setInputFluid(fluidIn);
@@ -483,16 +488,9 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         this.capacityMultiplier = capacityMultiplier;
     }
 
-    public void setUpgrades(
-            int speedUpgrades,
-            int efficiencyUpgrades,
-            int sacrificeUpgrades,
-            int selfSacrificeUpgrades,
-            int displacementUpgrades,
-            int altarCapacitiveUpgrades,
-            int orbCapacitiveUpgrades,
-            int betterCapacitiveUpgrades,
-            int accelerationUpgrades) {
+    public void setUpgrades(int speedUpgrades, int efficiencyUpgrades, int sacrificeUpgrades, int selfSacrificeUpgrades,
+            int displacementUpgrades, int altarCapacitiveUpgrades, int orbCapacitiveUpgrades,
+            int betterCapacitiveUpgrades, int accelerationUpgrades) {
         this.speedUpgrades = speedUpgrades;
         this.efficiencyUpgrades = efficiencyUpgrades;
         this.sacrificeUpgrades = sacrificeUpgrades;
@@ -518,9 +516,7 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         }
 
         if (resource.getFluid().getID()
-                != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1))
-                        .getFluid()
-                        .getID()) {
+                != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluid().getID()) {
             return 0;
         }
 
@@ -540,14 +536,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
 
             if (tile != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
-                        fluidInput,
-                        tile.getWorldObj(),
-                        tile.xCoord,
-                        tile.yCoord,
-                        tile.zCoord,
-                        this,
-                        fluidInput.amount));
+                FluidEvent.fireEvent(
+                        new FluidEvent.FluidFillingEvent(
+                                fluidInput,
+                                tile.getWorldObj(),
+                                tile.xCoord,
+                                tile.yCoord,
+                                tile.zCoord,
+                                this,
+                                fluidInput.amount));
             }
 
             return fluidInput.amount;
@@ -567,8 +564,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         }
 
         if (tile != null) {
-            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
-                    fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this, fluidInput.amount));
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidFillingEvent(
+                            fluidInput,
+                            tile.getWorldObj(),
+                            tile.xCoord,
+                            tile.yCoord,
+                            tile.zCoord,
+                            this,
+                            fluidInput.amount));
         }
 
         return filled;
@@ -596,8 +600,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             }
 
             if (this != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(
-                        fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, fluidOutput.amount));
+                FluidEvent.fireEvent(
+                        new FluidEvent.FluidDrainingEvent(
+                                fluidOutput,
+                                this.worldObj,
+                                this.xCoord,
+                                this.yCoord,
+                                this.zCoord,
+                                this,
+                                fluidOutput.amount));
             }
         }
 
@@ -619,7 +630,16 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
 
         if (this.hasDemonBlood() && !worldObj.isRemote) {
             SpellHelper.sendIndexedParticleToAllAround(
-                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    worldObj,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    20,
+                    worldObj.provider.dimensionId,
+                    1,
+                    xCoord,
+                    yCoord,
+                    zCoord);
         }
 
         if (this.lockdownDuration > 0) {
@@ -643,8 +663,8 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             }
 
             if (AlchemicalWizardry.lockdownAltar) {
-                List<EntityPlayer> list =
-                        SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+                List<EntityPlayer> list = SpellHelper
+                        .getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
                 for (EntityPlayer player : list) {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
                     if (regenEffect != null && regenEffect.getAmplifier() >= 2) {
@@ -654,8 +674,8 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             }
 
             if (AlchemicalWizardry.causeHungerWithRegen) {
-                List<EntityPlayer> list =
-                        SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+                List<EntityPlayer> list = SpellHelper
+                        .getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
                 for (EntityPlayer player : list) {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
                     if (regenEffect != null && regenEffect.getAmplifier() > 0) {
@@ -798,7 +818,9 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
                             fluid.amount);
 
                     int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(
-                            ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
+                            ownerName,
+                            liquidDrained,
+                            (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
 
                     fluid.amount = fluid.amount - drain;
 
@@ -857,8 +879,10 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;
@@ -998,7 +1022,7 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
-        return new FluidTankInfo[] {compositeTank.getInfo()};
+        return new FluidTankInfo[] { compositeTank.getInfo() };
     }
 
     public int[] buildFluidList() {
@@ -1032,28 +1056,42 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
     }
 
     public void sendChatInfoToPlayer(EntityPlayer player) {
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.altarCurrentTier") + " " + this.upgradeLevel));
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.capacity") + " " + this.getCapacity() + "LP"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.altarCurrentTier") + " " + this.upgradeLevel));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.capacity") + " " + this.getCapacity() + "LP"));
     }
 
     public void sendMoreChatInfoToPlayer(EntityPlayer player) {
         if (getStackInSlot(0) != null) {
             int stackSize = getStackInSlot(0).stackSize;
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altarProgress") + " "
-                    + progress + "LP/" + liquidRequired * stackSize + "LP"));
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.consumptionRate") + " "
-                    + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
+            player.addChatMessage(
+                    new ChatComponentText(
+                            StatCollector.translateToLocal("message.altarProgress") + " "
+                                    + progress
+                                    + "LP/"
+                                    + liquidRequired * stackSize
+                                    + "LP"));
+            player.addChatMessage(
+                    new ChatComponentText(
+                            StatCollector.translateToLocal("message.consumptionRate") + " "
+                                    + (int) (consumptionRate * (1 + consumptionMultiplier))
+                                    + "LP/t"));
         }
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.inputTank") + " " + this.fluidInput.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.outputTank") + " " + this.fluidOutput.amount + "LP"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.altarEssence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.inputTank") + " " + this.fluidInput.amount + "LP"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.outputTank") + " " + this.fluidOutput.amount + "LP"));
     }
 
     @Override

@@ -5,6 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockBloodInfusedDiamond extends Block {
+
     public BlockBloodInfusedDiamond() {
         super(Material.iron);
         setHardness(10.0F);

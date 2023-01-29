@@ -5,6 +5,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class FluidTankRestricted extends FluidTank {
+
     String[] name;
 
     public FluidTankRestricted(int capacity, String... name) {

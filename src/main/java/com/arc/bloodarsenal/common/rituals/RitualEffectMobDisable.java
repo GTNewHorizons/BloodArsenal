@@ -1,14 +1,9 @@
 package com.arc.bloodarsenal.common.rituals;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -18,7 +13,15 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+
 public class RitualEffectMobDisable extends RitualEffect {
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
         String owner = ritualStone.getOwner();
@@ -38,16 +41,19 @@ public class RitualEffectMobDisable extends RitualEffect {
         int d0 = 10;
         int vertRange = hasPotentia ? 20 : 10;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(
-                        (double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1))
-                .expand(d0, vertRange, d0);
+                (double) x,
+                (double) y,
+                (double) z,
+                (double) (x + 1),
+                (double) (y + 1),
+                (double) (z + 1)).expand(d0, vertRange, d0);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         if (currentEssence < this.getCostPerRefresh() * list.size()) {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else {
             for (EntityLivingBase livingEntity : list) {
-                if (!livingEntity.isEntityAlive()
-                        || livingEntity instanceof EntityPlayer
+                if (!livingEntity.isEntityAlive() || livingEntity instanceof EntityPlayer
                         || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass())) {
                     continue;
                 }

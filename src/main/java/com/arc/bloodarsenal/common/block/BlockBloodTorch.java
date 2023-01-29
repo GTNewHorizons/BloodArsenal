@@ -3,6 +3,7 @@ package com.arc.bloodarsenal.common.block;
 import net.minecraft.block.BlockTorch;
 
 public class BlockBloodTorch extends BlockTorch {
+
     public BlockBloodTorch() {
         super();
         setHardness(0.0F);

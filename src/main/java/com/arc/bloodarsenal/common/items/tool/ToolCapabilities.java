@@ -1,6 +1,7 @@
 package com.arc.bloodarsenal.common.items.tool;
 
 import java.util.Arrays;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -15,14 +16,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class ToolCapabilities {
-    public static Material[] materialsPick =
-            new Material[] {Material.rock, Material.iron, Material.ice, Material.glass, Material.piston, Material.anvil
-            };
-    public static Material[] materialsShovel = new Material[] {
-        Material.grass, Material.ground, Material.sand, Material.snow, Material.craftedSnow, Material.clay
-    };
-    public static Material[] materialsAxe =
-            new Material[] {Material.coral, Material.leaves, Material.plants, Material.wood};
+
+    public static Material[] materialsPick = new Material[] { Material.rock, Material.iron, Material.ice,
+            Material.glass, Material.piston, Material.anvil };
+    public static Material[] materialsShovel = new Material[] { Material.grass, Material.ground, Material.sand,
+            Material.snow, Material.craftedSnow, Material.clay };
+    public static Material[] materialsAxe = new Material[] { Material.coral, Material.leaves, Material.plants,
+            Material.wood };
 
     public static int getMode(ItemStack tool) {
         return tool.getItemDamage();
@@ -46,43 +46,31 @@ public final class ToolCapabilities {
         return false;
     }
 
-    public static void removeBlocksInIteration(
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int xs,
-            int ys,
-            int zs,
-            int xe,
-            int ye,
-            int ze,
-            Block block,
-            Material[] materialsListing) {
+    public static void removeBlocksInIteration(EntityPlayer player, World world, int x, int y, int z, int xs, int ys,
+            int zs, int xe, int ye, int ze, Block block, Material[] materialsListing) {
         float blockHardness = (block == null) ? 1.0f : block.getBlockHardness(world, x, y, z);
 
         for (int x1 = xs; x1 < xe; x1++) {
             for (int y1 = ys; y1 < ye; y1++) {
                 for (int z1 = zs; z1 < ze; z1++) {
                     ToolCapabilities.removeBlockWithDrops(
-                            player, world, x1 + x, y1 + y, z1 + z, x, y, z, block, materialsListing);
+                            player,
+                            world,
+                            x1 + x,
+                            y1 + y,
+                            z1 + z,
+                            x,
+                            y,
+                            z,
+                            block,
+                            materialsListing);
                 }
             }
         }
     }
 
-    public static void removeBlockWithDrops(
-            EntityPlayer player,
-            World world,
-            int x,
-            int y,
-            int z,
-            int bx,
-            int by,
-            int bz,
-            Block block,
-            Material[] materialsListing) {
+    public static void removeBlockWithDrops(EntityPlayer player, World world, int x, int y, int z, int bx, int by,
+            int bz, Block block, Material[] materialsListing) {
         if (!world.blockExists(x, y, z)) {
             return;
         }
@@ -96,8 +84,7 @@ public final class ToolCapabilities {
         int meta = world.getBlockMetadata(x, y, z);
         Material mat = world.getBlock(x, y, z).getMaterial();
 
-        if (blk != null
-                && !blk.isAir(world, x, y, z)
+        if (blk != null && !blk.isAir(world, x, y, z)
                 && ((blk.getPlayerRelativeBlockHardness(player, world, x, y, z) != 0))) {
             if (!blk.canHarvestBlock(player, meta) || !isRightMaterial(mat, materialsListing)) {
                 return;
@@ -135,7 +122,7 @@ public final class ToolCapabilities {
             return true;
         }
 
-        if (InfusedDiamondAxe.oreDictLogs.contains(Arrays.asList(new Object[] {blk, Integer.valueOf(metadata)}))) {
+        if (InfusedDiamondAxe.oreDictLogs.contains(Arrays.asList(new Object[] { blk, Integer.valueOf(metadata) }))) {
             return true;
         }
         return false;
@@ -252,7 +239,7 @@ public final class ToolCapabilities {
     }
 
     /*
-     *  @author mDiyo
+     * @author mDiyo
      */
 
     public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range) {

@@ -1,14 +1,8 @@
 package com.arc.bloodarsenal.common.items.tool;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.google.common.collect.Sets;
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,7 +19,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.google.common.collect.Sets;
+
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BoundSickle extends ItemTool implements IBindable {
+
     private int energyUsed;
 
     private int radiusLeaf = 3;
@@ -34,22 +39,10 @@ public class BoundSickle extends ItemTool implements IBindable {
     private static IIcon active;
     private static IIcon passive;
 
-    private static final Set toolBlocks = Sets.newHashSet(new Block[] {
-        Blocks.leaves,
-        Blocks.leaves2,
-        Blocks.wheat,
-        Blocks.potatoes,
-        Blocks.carrots,
-        Blocks.nether_wart,
-        Blocks.red_mushroom,
-        Blocks.brown_mushroom,
-        Blocks.reeds,
-        Blocks.tallgrass,
-        Blocks.vine,
-        Blocks.waterlily,
-        Blocks.red_flower,
-        Blocks.yellow_flower
-    });
+    private static final Set toolBlocks = Sets.newHashSet(
+            new Block[] { Blocks.leaves, Blocks.leaves2, Blocks.wheat, Blocks.potatoes, Blocks.carrots,
+                    Blocks.nether_wart, Blocks.red_mushroom, Blocks.brown_mushroom, Blocks.reeds, Blocks.tallgrass,
+                    Blocks.vine, Blocks.waterlily, Blocks.red_flower, Blocks.yellow_flower });
 
     public BoundSickle(ToolMaterial toolMaterial) {
         super(1.0F, toolMaterial, toolBlocks);
@@ -69,13 +62,7 @@ public class BoundSickle extends ItemTool implements IBindable {
         return energyUsed;
     }
 
-    public boolean onBlockDestroyed(
-            ItemStack par1ItemStack,
-            World par2World,
-            Block par3Block,
-            int x,
-            int y,
-            int z,
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3Block, int x, int y, int z,
             EntityLivingBase par7EntityLivingBase) {
         NBTTagCompound tag = par1ItemStack.stackTagCompound;
 
@@ -149,17 +136,8 @@ public class BoundSickle extends ItemTool implements IBindable {
         }
     }
 
-    public boolean onItemUse(
-            ItemStack par1ItemStack,
-            EntityPlayer par2EntityPlayer,
-            World par3World,
-            int x,
-            int y,
-            int z,
-            int par7,
-            float par8,
-            float par9,
-            float par10) {
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int x, int y,
+            int z, int par7, float par8, float par9, float par10) {
         NBTTagCompound tag = par1ItemStack.stackTagCompound;
 
         if (tag.getBoolean("isActive")) {
@@ -181,8 +159,7 @@ public class BoundSickle extends ItemTool implements IBindable {
 
                 Block block = par3World.getBlock(x, y, z);
 
-                if (par7 != 0
-                        && par3World.getBlock(x, y + 1, z).isAir(par3World, x, y + 1, z)
+                if (par7 != 0 && par3World.getBlock(x, y + 1, z).isAir(par3World, x, y + 1, z)
                         && (block == Blocks.grass || block == Blocks.dirt)) {
                     Block block1 = Blocks.farmland;
                     par3World.playSoundEffect(

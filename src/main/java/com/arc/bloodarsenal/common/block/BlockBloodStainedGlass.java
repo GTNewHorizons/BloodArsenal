@@ -1,13 +1,16 @@
 package com.arc.bloodarsenal.common.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockBloodStainedGlass extends BlockBreakable {
+
     public BlockBloodStainedGlass() {
         super("blood_stained_glass", Material.glass, false);
         setHardness(1.0F);

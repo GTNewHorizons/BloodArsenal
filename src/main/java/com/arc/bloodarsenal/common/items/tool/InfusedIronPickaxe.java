@@ -1,11 +1,7 @@
 package com.arc.bloodarsenal.common.items.tool;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +10,16 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class InfusedIronPickaxe extends ItemPickaxe implements IBindable {
+
     private int energyUsed;
 
     public InfusedIronPickaxe() {
@@ -52,14 +57,8 @@ public class InfusedIronPickaxe extends ItemPickaxe implements IBindable {
     }
 
     @Override
-    public boolean onBlockDestroyed(
-            ItemStack par1ItemStack,
-            World par2World,
-            Block par3Block,
-            int par4,
-            int par5,
-            int par6,
-            EntityLivingBase par7EntityLivingBase) {
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3Block, int par4, int par5,
+            int par6, EntityLivingBase par7EntityLivingBase) {
         if (par7EntityLivingBase instanceof EntityPlayer) {
             EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par7EntityLivingBase, getEnergyUsed());
         }

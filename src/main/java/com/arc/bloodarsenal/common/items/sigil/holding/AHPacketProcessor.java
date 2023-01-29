@@ -1,12 +1,14 @@
 package com.arc.bloodarsenal.common.items.sigil.holding;
 
+import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.item.ItemStack;
 
 public class AHPacketProcessor implements IMessage, IMessageHandler<AHPacketProcessor, IMessage> {
+
     private int slot;
     private int mode;
 

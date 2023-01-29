@@ -1,20 +1,7 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import baubles.common.container.InventoryBaubles;
-import baubles.common.lib.PlayerHandler;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +18,25 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import baubles.common.container.InventoryBaubles;
+import baubles.common.lib.PlayerHandler;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble, IBindable {
+
     public EmpoweredSacrificeAmulet() {
         super();
         setHasSubtypes(true);
@@ -43,8 +48,7 @@ public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble
     public void sacrificeHandler(LivingDeathEvent event) {
         Entity killer = event.source.getEntity();
 
-        if (killer != null
-                && killer instanceof EntityPlayerMP
+        if (killer != null && killer instanceof EntityPlayerMP
                 && !(killer instanceof FakePlayer)
                 && BloodArsenalConfig.baublesIntegration) {
             EntityLivingBase victim = event.entityLiving;
@@ -57,8 +61,7 @@ public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble
 
                 if (stack != null) {
                     if (stack.getItem() == ModItems.empowered_sacrifice_amulet) {
-                        EmpoweredSacrificeAmulet sacrificeAmulet =
-                                (EmpoweredSacrificeAmulet) ModItems.empowered_sacrifice_amulet;
+                        EmpoweredSacrificeAmulet sacrificeAmulet = (EmpoweredSacrificeAmulet) ModItems.empowered_sacrifice_amulet;
                         float victimHealth = victim.getMaxHealth();
                         boolean healthGood = victimHealth > 4.0F;
                         int lpReceived = healthGood ? 200 : 50;
@@ -66,7 +69,8 @@ public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble
 
                         if (shouldExecute) {
                             sacrificeAmulet.setStoredLP(
-                                    stack, Math.min(sacrificeAmulet.getStoredLP(stack) + (lpReceived * 5), 50000));
+                                    stack,
+                                    Math.min(sacrificeAmulet.getStoredLP(stack) + (lpReceived * 5), 50000));
                         }
                     }
                 }
@@ -102,15 +106,15 @@ public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble
                                     SoulNetworkHandler.addCurrentEssenceToMaximum(
                                             owner,
                                             50,
-                                            SoulNetworkHandler.getMaximumForOrbTier(
-                                                    SoulNetworkHandler.getCurrentMaxOrb(owner)));
+                                            SoulNetworkHandler
+                                                    .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(owner)));
                                     setStoredLP(par1ItemStack, getStoredLP(par1ItemStack) - 50);
                                 } else if (this.getStoredLP(par1ItemStack) > 0) {
                                     SoulNetworkHandler.addCurrentEssenceToMaximum(
                                             owner,
                                             this.getStoredLP(par1ItemStack),
-                                            SoulNetworkHandler.getMaximumForOrbTier(
-                                                    SoulNetworkHandler.getCurrentMaxOrb(owner)));
+                                            SoulNetworkHandler
+                                                    .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(owner)));
                                     setStoredLP(par1ItemStack, 0);
                                 }
                             }

@@ -1,18 +1,22 @@
 package com.arc.bloodarsenal.client.renderer.block;
 
-import com.arc.bloodarsenal.common.block.ModBlocks;
-import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import com.arc.bloodarsenal.common.block.ModBlocks;
+import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBloodTNTPrimed extends Render {
+
     private RenderBlocks blockRenderer = new RenderBlocks();
 
     public RenderBloodTNTPrimed() {
@@ -25,13 +29,8 @@ public class RenderBloodTNTPrimed extends Render {
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(
-            EntityBloodTNT p_76986_1_,
-            double p_76986_2_,
-            double p_76986_4_,
-            double p_76986_6_,
-            float p_76986_8_,
-            float p_76986_9_) {
+    public void doRender(EntityBloodTNT p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_,
+            float p_76986_8_, float p_76986_9_) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) p_76986_2_, (float) p_76986_4_, (float) p_76986_6_);
         float f2;
@@ -93,12 +92,7 @@ public class RenderBloodTNTPrimed extends Render {
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    public void doRender(
-            Entity p_76986_1_,
-            double p_76986_2_,
-            double p_76986_4_,
-            double p_76986_6_,
-            float p_76986_8_,
+    public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_,
             float p_76986_9_) {
         this.doRender((EntityBloodTNT) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
     }

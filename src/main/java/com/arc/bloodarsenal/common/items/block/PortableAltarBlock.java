@@ -1,8 +1,7 @@
 package com.arc.bloodarsenal.common.items.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +9,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class PortableAltarBlock extends ItemBlock {
+
     public PortableAltarBlock(Block block) {
         super(block);
         setMaxStackSize(1);
@@ -35,7 +38,8 @@ public class PortableAltarBlock extends ItemBlock {
 
         addStringToTooltip(StatCollector.translateToLocal("tooltip.altarTier") + " &c" + alterTier + "&7", par3List);
         addStringToTooltip(
-                StatCollector.translateToLocal("tooltip.currentEssence") + " &c" + currentEssence + "&7", par3List);
+                StatCollector.translateToLocal("tooltip.currentEssence") + " &c" + currentEssence + "&7",
+                par3List);
         addStringToTooltip(StatCollector.translateToLocal("tooltip.capacity") + " &c" + capacity + "&7", par3List);
     }
 

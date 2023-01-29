@@ -1,21 +1,24 @@
 /**
- *  Taken from SpitefulFox's ForbiddenMagic
- *  https://github.com/SpitefulFox/ForbiddenMagic
+ * Taken from SpitefulFox's ForbiddenMagic https://github.com/SpitefulFox/ForbiddenMagic
  */
 package com.arc.bloodarsenal.common.thaumcraft;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemWandCaps extends Item {
-    public final String[] types = new String[] {"blood_iron"};
+
+    public final String[] types = new String[] { "blood_iron" };
     public IIcon[] icon;
 
     public ItemWandCaps() {

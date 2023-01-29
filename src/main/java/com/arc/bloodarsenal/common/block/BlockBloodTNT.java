@@ -1,10 +1,7 @@
 package com.arc.bloodarsenal.common.block;
 
-import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +14,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockBloodTNT extends BlockTNT {
+
     @SideOnly(Side.CLIENT)
     private IIcon top;
 
@@ -78,8 +82,8 @@ public class BlockBloodTNT extends BlockTNT {
         spawnTNT(par1World, par2, par3, par4, par5, null);
     }
 
-    public void spawnTNT(
-            World par1World, int par2, int par3, int par4, int par5, EntityLivingBase par6EntityLivingBase) {
+    public void spawnTNT(World par1World, int par2, int par3, int par4, int par5,
+            EntityLivingBase par6EntityLivingBase) {
         if (!par1World.isRemote) {
             if ((par5 & 1) == 1) {
                 EntityBloodTNT entitytntprimed = new EntityBloodTNT(
@@ -95,19 +99,10 @@ public class BlockBloodTNT extends BlockTNT {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World par1World,
-            int par2,
-            int par3,
-            int par4,
-            EntityPlayer par5,
-            int par6,
-            float par7,
-            float par8,
-            float par9) {
-        if (par5.getCurrentEquippedItem() != null
-                && (par5.getCurrentEquippedItem().getItem() == Items.flint_and_steel
-                        || par5.getCurrentEquippedItem().getItem() == ModItems.bound_igniter)) {
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5, int par6,
+            float par7, float par8, float par9) {
+        if (par5.getCurrentEquippedItem() != null && (par5.getCurrentEquippedItem().getItem() == Items.flint_and_steel
+                || par5.getCurrentEquippedItem().getItem() == ModItems.bound_igniter)) {
             spawnTNT(par1World, par2, par3, par4, 1, par5);
             par1World.setBlockToAir(par2, par3, par4);
             par5.getCurrentEquippedItem().damageItem(1, par5);

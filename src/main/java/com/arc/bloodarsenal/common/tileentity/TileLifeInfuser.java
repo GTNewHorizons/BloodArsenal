@@ -1,8 +1,5 @@
 package com.arc.bloodarsenal.common.tileentity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import com.arc.bloodarsenal.common.items.tool.IFillable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -17,7 +14,13 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import com.arc.bloodarsenal.common.items.tool.IFillable;
+
 public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
+
     private ItemStack[] inv;
     public static final int sizeInv = 1;
     public int ticksExisted = 0;
@@ -32,7 +35,7 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
 
     private int bufferCapacity;
 
-    public FluidTank[] tanks = {new FluidTankRestricted(FluidContainerRegistry.BUCKET_VOLUME * 20, "Life Essence")};
+    public FluidTank[] tanks = { new FluidTankRestricted(FluidContainerRegistry.BUCKET_VOLUME * 20, "Life Essence") };
 
     public TileLifeInfuser() {
         this.inv = new ItemStack[1];
@@ -64,8 +67,9 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
                 setMainFluid(fluid);
             }
 
-            FluidStack fluidIn =
-                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("inputAmount"));
+            FluidStack fluidIn = new FluidStack(
+                    AlchemicalWizardry.lifeEssenceFluid,
+                    par1NBTTagCompound.getInteger("inputAmount"));
 
             if (fluidIn != null) {
                 setInputFluid(fluidIn);
@@ -223,8 +227,7 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
                                 yCoord,
                                 zCoord);
                     }
-                } else if (inputStack.getItem().isDamageable()
-                        && inputStack.getItem().isDamaged(inputStack)) {
+                } else if (inputStack.getItem().isDamageable() && inputStack.getItem().isDamaged(inputStack)) {
                     int lpCost = 300;
                     int damage = inputStack.getItemDamage();
 
@@ -280,8 +283,9 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
     }
 
     public void sendChatInfoToPlayer(EntityPlayer player) {
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
     }
 
     @Override
@@ -297,8 +301,10 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;
@@ -342,7 +348,7 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
     }
 
     public int fillMainTank(int amount) // TODO STUFFS
-            {
+    {
         int filledAmount = Math.min(capacity - fluid.amount, amount);
         fluid.amount += filledAmount;
 
@@ -393,14 +399,15 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
             fluidInput = new FluidStack(resource, resource.amount);
 
             if (tile != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
-                        fluidInput,
-                        tile.getWorldObj(),
-                        tile.xCoord,
-                        tile.yCoord,
-                        tile.zCoord,
-                        this,
-                        fluidInput.amount));
+                FluidEvent.fireEvent(
+                        new FluidEvent.FluidFillingEvent(
+                                fluidInput,
+                                tile.getWorldObj(),
+                                tile.xCoord,
+                                tile.yCoord,
+                                tile.zCoord,
+                                this,
+                                fluidInput.amount));
             }
 
             return fluidInput.amount;
@@ -420,8 +427,15 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
         }
 
         if (tile != null) {
-            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(
-                    fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this, fluidInput.amount));
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidFillingEvent(
+                            fluidInput,
+                            tile.getWorldObj(),
+                            tile.xCoord,
+                            tile.yCoord,
+                            tile.zCoord,
+                            this,
+                            fluidInput.amount));
         }
 
         return filled;
@@ -500,7 +514,7 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
-        return new FluidTankInfo[] {compositeTank.getInfo()};
+        return new FluidTankInfo[] { compositeTank.getInfo() };
     }
 
     public int[] buildFluidList() {

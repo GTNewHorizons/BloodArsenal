@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class BloodStoneBlock extends ItemBlock {
+
     public BloodStoneBlock(Block block) {
         super(block);
         setHasSubtypes(true);

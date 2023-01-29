@@ -1,14 +1,17 @@
 package com.arc.bloodarsenal.common.items.sigil.holding;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+
 public class InventoryAugmentedHolding implements IInventory {
+
     public ItemStack parentItemStack;
     protected ItemStack[] inventory;
 

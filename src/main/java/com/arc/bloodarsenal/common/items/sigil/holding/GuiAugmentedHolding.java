@@ -1,14 +1,17 @@
 package com.arc.bloodarsenal.common.items.sigil.holding;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiAugmentedHolding extends GuiContainer {
+
     public GuiAugmentedHolding(EntityPlayer player, InventoryAugmentedHolding inventoryHolding) {
         super(new ContainerAugmentedHolding(player, inventoryHolding));
         xSize = 176;

@@ -1,12 +1,15 @@
 package com.arc.bloodarsenal.common.block;
 
-import com.arc.bloodarsenal.common.items.ModItems;
 import java.util.Random;
+
 import net.minecraft.block.BlockGlowstone;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
+import com.arc.bloodarsenal.common.items.ModItems;
+
 public class BlockBloodInfusedGlowstone extends BlockGlowstone {
+
     public BlockBloodInfusedGlowstone() {
         super(Material.glass);
         setHardness(0.5F);

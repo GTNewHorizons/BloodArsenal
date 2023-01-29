@@ -1,11 +1,7 @@
 package com.arc.bloodarsenal.common.items.tool;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +14,16 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class InfusedDiamondSword extends ItemSword implements IBindable {
+
     public InfusedDiamondSword() {
         super(BloodArsenal.infusedDiamond);
         setMaxStackSize(1);
@@ -52,8 +57,7 @@ public class InfusedDiamondSword extends ItemSword implements IBindable {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        if (!ignoreLeftClick
-                && entity instanceof EntityLivingBase
+        if (!ignoreLeftClick && entity instanceof EntityLivingBase
                 && ((EntityLivingBase) entity).hurtTime == 0
                 && !((EntityLivingBase) entity).isDead) {
             switch (ToolCapabilities.getMode(stack)) {
@@ -102,8 +106,8 @@ public class InfusedDiamondSword extends ItemSword implements IBindable {
     }
 
     @Override
-    public boolean hitEntity(
-            ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase) {
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+            EntityLivingBase par3EntityLivingBase) {
         if (par3EntityLivingBase instanceof EntityPlayer) {
             EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase);
         }

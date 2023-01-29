@@ -1,14 +1,17 @@
 package com.arc.bloodarsenal.client.renderer.block.item;
 
-import com.arc.bloodarsenal.client.renderer.model.ModelPortableBloodAltar;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
+import com.arc.bloodarsenal.client.renderer.model.ModelPortableBloodAltar;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class TilePortableAltarItemRenderer implements IItemRenderer {
+
     private ModelPortableBloodAltar modelBloodAltar;
 
     public TilePortableAltarItemRenderer() {

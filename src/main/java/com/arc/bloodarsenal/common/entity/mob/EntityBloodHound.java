@@ -1,7 +1,5 @@
 package com.arc.bloodarsenal.common.entity.mob;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.entity.Entity;
@@ -25,7 +23,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EntityBloodHound extends EntityTameable {
+
     private float field_70926_e;
     private float field_70924_f;
     /** true is the wolf is wet else false */
@@ -121,11 +123,9 @@ public class EntityBloodHound extends EntityTameable {
      * Returns the sound this mob makes while it's alive.
      */
     protected String getLivingSound() {
-        return this.isAngry()
-                ? "mob.wolf.growl"
+        return this.isAngry() ? "mob.wolf.growl"
                 : (this.rand.nextInt(3) == 0
-                        ? (this.isTamed() && this.dataWatcher.getWatchableObjectFloat(18) < 10.0F
-                                ? "mob.wolf.whine"
+                        ? (this.isTamed() && this.dataWatcher.getWatchableObjectFloat(18) < 10.0F ? "mob.wolf.whine"
                                 : "mob.wolf.panting")
                         : "mob.wolf.bark");
     }
@@ -240,18 +240,15 @@ public class EntityBloodHound extends EntityTameable {
      */
     @SideOnly(Side.CLIENT)
     public float getShadingWhileShaking(float p_70915_1_) {
-        return 0.75F
-                + (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * p_70915_1_)
-                        / 2.0F
-                        * 0.25F;
+        return 0.75F + (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * p_70915_1_)
+                / 2.0F
+                * 0.25F;
     }
 
     @SideOnly(Side.CLIENT)
     public float getShakeAngle(float p_70923_1_, float p_70923_2_) {
-        float f2 = (this.prevTimeWolfIsShaking
-                        + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * p_70923_1_
-                        + p_70923_2_)
-                / 1.8F;
+        float f2 = (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * p_70923_1_
+                + p_70923_2_) / 1.8F;
 
         if (f2 < 0.0F) {
             f2 = 0.0F;
@@ -259,8 +256,7 @@ public class EntityBloodHound extends EntityTameable {
             f2 = 1.0F;
         }
 
-        return MathHelper.sin(f2 * (float) Math.PI)
-                * MathHelper.sin(f2 * (float) Math.PI * 11.0F)
+        return MathHelper.sin(f2 * (float) Math.PI) * MathHelper.sin(f2 * (float) Math.PI * 11.0F)
                 * 0.15F
                 * (float) Math.PI;
     }
@@ -383,8 +379,7 @@ public class EntityBloodHound extends EntityTameable {
 
     @SideOnly(Side.CLIENT)
     public float getTailRotation() {
-        return this.isAngry()
-                ? 1.5393804F
+        return this.isAngry() ? 1.5393804F
                 : (this.isTamed()
                         ? (0.55F - (20.0F - this.dataWatcher.getWatchableObjectFloat(18)) * 0.02F) * (float) Math.PI
                         : ((float) Math.PI / 5F));
@@ -438,11 +433,9 @@ public class EntityBloodHound extends EntityTameable {
                 }
             }
 
-            return p_142018_1_ instanceof EntityPlayer
-                            && p_142018_2_ instanceof EntityPlayer
-                            && !((EntityPlayer) p_142018_2_).canAttackPlayer((EntityPlayer) p_142018_1_)
-                    ? false
-                    : !(p_142018_1_ instanceof EntityHorse) || !((EntityHorse) p_142018_1_).isTame();
+            return p_142018_1_ instanceof EntityPlayer && p_142018_2_ instanceof EntityPlayer
+                    && !((EntityPlayer) p_142018_2_).canAttackPlayer((EntityPlayer) p_142018_1_) ? false
+                            : !(p_142018_1_ instanceof EntityHorse) || !((EntityHorse) p_142018_1_).isTame();
         } else {
             return false;
         }

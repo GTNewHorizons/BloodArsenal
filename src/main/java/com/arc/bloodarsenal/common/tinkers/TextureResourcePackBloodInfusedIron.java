@@ -1,10 +1,13 @@
 package com.arc.bloodarsenal.common.tinkers;
 
 import java.awt.image.BufferedImage;
+
 import net.minecraft.util.MathHelper;
 
 public class TextureResourcePackBloodInfusedIron extends TextureResourcePackBase {
-    static int[][] offsets = new int[][] {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
+
+    static int[][] offsets = new int[][] { { 0, 1 }, { 1, 1 }, { 1, 0 }, { 1, -1 }, { 0, -1 }, { -1, -1 }, { -1, 0 },
+            { -1, 1 } };
 
     public TextureResourcePackBloodInfusedIron(String name) {
         super(name);
@@ -51,8 +54,8 @@ public class TextureResourcePackBloodInfusedIron extends TextureResourcePackBase
         boolean[][] interior2 = this.contract(var28, 2 * var26);
         boolean[][] interior3 = this.contract(interior2, var26);
         boolean[][] interior4 = this.contract(interior3, var26);
-        boolean[][] interiorCorners =
-                this.multI(this.mult(this.expand(this.getCorners(interior2), var26), interior2), interior3);
+        boolean[][] interiorCorners = this
+                .multI(this.mult(this.expand(this.getCorners(interior2), var26), interior2), interior3);
         boolean[][] interiorCornersShift = this.orwise(
                 this.orwise(this.shift(interiorCorners, -1, 0), this.shift(interiorCorners, 0, -1)),
                 this.shift(interiorCorners, -1, -1));
@@ -143,8 +146,7 @@ public class TextureResourcePackBloodInfusedIron extends TextureResourcePackBase
     }
 
     public int multPixel(int col, int b) {
-        return -16777216
-                | this.clamp(rgb.getRed(col) * b / 255) << 16
+        return -16777216 | this.clamp(rgb.getRed(col) * b / 255) << 16
                 | this.clamp(rgb.getGreen(col) * b / 255) << 8
                 | this.clamp(rgb.getBlue(col) * b / 255);
     }

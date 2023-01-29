@@ -1,13 +1,8 @@
 package com.arc.bloodarsenal.common.block;
 
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
-import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,7 +16,17 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
+import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
+
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockCompactedMRS extends BlockMasterStone {
+
     public BlockCompactedMRS() {
         super();
         setBlockName("compacted_mrs");
@@ -124,8 +129,8 @@ public class BlockCompactedMRS extends BlockMasterStone {
     }
 
     @Override
-    public boolean onBlockActivated(
-            World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what,
+            float these, float are) {
         TileCompactedMRS tileEntity = (TileCompactedMRS) world.getTileEntity(x, y, z);
 
         if (tileEntity != null) {

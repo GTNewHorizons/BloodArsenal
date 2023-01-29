@@ -1,9 +1,8 @@
 package com.arc.bloodarsenal.common.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
@@ -18,7 +17,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockBloodStainedIce extends BlockBreakable {
+
     public BlockBloodStainedIce() {
         super("blood_stained_ice", Material.ice, false);
         slipperiness = 0.99F;
@@ -54,7 +57,17 @@ public class BlockBloodStainedIce extends BlockBreakable {
             if (itemstack != null) items.add(itemstack);
 
             ForgeEventFactory.fireBlockHarvesting(
-                    items, par1World, this, par3, par4, par5, par6, 0, 1.0f, true, par2EntityPlayer);
+                    items,
+                    par1World,
+                    this,
+                    par3,
+                    par4,
+                    par5,
+                    par6,
+                    0,
+                    1.0f,
+                    true,
+                    par2EntityPlayer);
             for (ItemStack is : items) dropBlockAsItem(par1World, par3, par4, par5, is);
         } else {
             if (par1World.provider.isHellWorld) {

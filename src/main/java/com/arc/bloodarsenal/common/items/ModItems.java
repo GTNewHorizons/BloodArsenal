@@ -1,6 +1,19 @@
 package com.arc.bloodarsenal.common.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemReed;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.wands.StaffRod;
+import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.block.ModBlocks;
@@ -13,20 +26,12 @@ import com.arc.bloodarsenal.common.items.sigil.*;
 import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
 import com.arc.bloodarsenal.common.items.tool.*;
 import com.arc.bloodarsenal.common.thaumcraft.*;
+
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.GameRegistry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemReed;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.wands.StaffRod;
-import thaumcraft.api.wands.WandCap;
-import thaumcraft.api.wands.WandRod;
 
 public class ModItems {
+
     public static Item bound_bow;
     public static Item blood_orange;
     public static Item blood_infused_pickaxe_wood;
@@ -167,8 +172,9 @@ public class ModItems {
         self_sacrifice_amulet = registerItem(new SelfSacrificeAmulet(), "self_sacrifice_amulet");
         sacrifice_amulet = registerItem(new SacrificeAmulet(), "sacrifice_amulet");
         empowered_sacrifice_amulet = registerItem(new EmpoweredSacrificeAmulet(), "empowered_sacrifice_amulet");
-        empowered_self_sacrifice_amulet =
-                registerItem(new EmpoweredSelfSacrificeAmulet(), "empowered_self_sacrifice_amulet");
+        empowered_self_sacrifice_amulet = registerItem(
+                new EmpoweredSelfSacrificeAmulet(),
+                "empowered_self_sacrifice_amulet");
     }
 
     @Optional.Method(modid = "Thaumcraft")
@@ -194,7 +200,7 @@ public class ModItems {
         WAND_CAP_BLOOD_INFUSED_IRON = new BloodyWandCap(
                 "blood_iron",
                 0.85F,
-                Arrays.asList(new Aspect[] {Aspect.WATER}),
+                Arrays.asList(new Aspect[] { Aspect.WATER }),
                 0.80F,
                 new ItemStack(wandCap, 1, 0),
                 5,

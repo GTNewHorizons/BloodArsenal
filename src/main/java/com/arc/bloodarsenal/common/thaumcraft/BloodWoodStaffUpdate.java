@@ -1,18 +1,19 @@
 /**
- *  Taken from SpitefulFox's ForbiddenMagic
- *  https://github.com/SpitefulFox/ForbiddenMagic
+ * Taken from SpitefulFox's ForbiddenMagic https://github.com/SpitefulFox/ForbiddenMagic
  */
 package com.arc.bloodarsenal.common.thaumcraft;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class BloodWoodStaffUpdate implements IWandRodOnUpdate {
+
     Aspect[] primals = (Aspect[]) Aspect.getPrimalAspects().toArray(new Aspect[0]);
 
     public BloodWoodStaffUpdate() {}
@@ -26,15 +27,9 @@ public class BloodWoodStaffUpdate implements IWandRodOnUpdate {
                 SoulNetworkHandler.checkAndSetItemOwner(itemstack, player);
 
                 int cost;
-                if (((ItemWandCasting) itemstack.getItem())
-                        .getCap(itemstack)
-                        .getTag()
-                        .equals("alchemical")) {
+                if (((ItemWandCasting) itemstack.getItem()).getCap(itemstack).getTag().equals("alchemical")) {
                     cost = 12;
-                } else if (((ItemWandCasting) itemstack.getItem())
-                        .getCap(itemstack)
-                        .getTag()
-                        .equals("blood_iron")) {
+                } else if (((ItemWandCasting) itemstack.getItem()).getCap(itemstack).getTag().equals("blood_iron")) {
                     cost = 10;
                 } else {
                     cost = 13;
@@ -59,8 +54,7 @@ public class BloodWoodStaffUpdate implements IWandRodOnUpdate {
                     }
                 }
 
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
         }
     }
 

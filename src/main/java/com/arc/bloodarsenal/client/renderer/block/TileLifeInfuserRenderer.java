@@ -1,8 +1,5 @@
 package com.arc.bloodarsenal.client.renderer.block;
 
-import com.arc.bloodarsenal.client.renderer.model.ModelLifeInfuser;
-import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -12,15 +9,22 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.arc.bloodarsenal.client.renderer.model.ModelLifeInfuser;
+import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer {
+
     private ModelLifeInfuser modelLifeInfuser = new ModelLifeInfuser();
     RenderItem customRenderItem;
 
     public TileLifeInfuserRenderer() {
         customRenderItem = new RenderItem() {
+
             @Override
             public boolean shouldBob() {
                 return false;

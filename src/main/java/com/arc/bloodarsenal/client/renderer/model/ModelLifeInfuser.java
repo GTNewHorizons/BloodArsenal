@@ -1,20 +1,22 @@
 package com.arc.bloodarsenal.client.renderer.model;
 
-import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModelCustom;
+
 import org.lwjgl.opengl.GL11;
 
+import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+import cpw.mods.fml.client.FMLClientHandler;
+
 /**
- * LifeInfuser - Arcaratus
- * Created using Tabula 4.0.2
+ * LifeInfuser - Arcaratus Created using Tabula 4.0.2
  */
 public class ModelLifeInfuser extends ModelBase {
-    private static final ResourceLocation texture =
-            new ResourceLocation("bloodarsenal:textures/models/LifeInfuser.png");
+
+    private static final ResourceLocation texture = new ResourceLocation(
+            "bloodarsenal:textures/models/LifeInfuser.png");
     private IModelCustom modelLifeInfuser;
 
     public ModelRenderer Base;

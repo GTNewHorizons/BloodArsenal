@@ -1,18 +1,8 @@
 package com.arc.bloodarsenal.common.tileentity;
 
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
-import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.common.eventhandler.Event;
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +18,20 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
+import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
+import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.eventhandler.Event;
+
 public class TileCompactedMRS extends TEMasterStone implements IMasterRitualStone {
+
     private boolean isActive;
     private String owner;
     private String varString1;
@@ -47,9 +50,8 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
     protected Map<Reagent, Integer> attunedTankMap;
 
     public TileCompactedMRS() {
-        tanks = new ReagentContainer[] {
-            new ReagentContainer(1000), new ReagentContainer(1000), new ReagentContainer(1000)
-        };
+        tanks = new ReagentContainer[] { new ReagentContainer(1000), new ReagentContainer(1000),
+                new ReagentContainer(1000) };
         this.attunedTankMap = new HashMap();
 
         isActive = false;
@@ -200,15 +202,20 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
     }
 
     @Override
-    public void activateRitual(
-            World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player, String crystalOwner) {
+    public void activateRitual(World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player,
+            String crystalOwner) {
         if (world.isRemote) {
             return;
         }
 
         // TODO
-        RitualActivatedEvent event =
-                new RitualActivatedEvent(this, crystalOwner, ritualName, player, activationCrystal, crystalLevel);
+        RitualActivatedEvent event = new RitualActivatedEvent(
+                this,
+                crystalOwner,
+                ritualName,
+                player,
+                activationCrystal,
+                crystalLevel);
 
         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
             player.addChatMessage(
@@ -246,8 +253,8 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
 
                 return;
             } else {
-                int drain =
-                        SoulNetworkHandler.syphonFromNetwork(eventOwnerKey, Rituals.getCostForActivation(ritualName));
+                int drain = SoulNetworkHandler
+                        .syphonFromNetwork(eventOwnerKey, Rituals.getCostForActivation(ritualName));
 
                 if (drain > 0) {
                     player.addChatMessage(
@@ -267,8 +274,9 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
                                 zCoord);
                     }
                 } else {
-                    player.addChatMessage(new ChatComponentText(
-                            StatCollector.translateToLocal("message.masterstone.somethingstoppedyou")));
+                    player.addChatMessage(
+                            new ChatComponentText(
+                                    StatCollector.translateToLocal("message.masterstone.somethingstoppedyou")));
 
                     return;
                 }
@@ -325,7 +333,16 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
 
         if (worldTime % 100 == 0) {
             SpellHelper.sendIndexedParticleToAllAround(
-                    worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    worldObj,
+                    xCoord,
+                    yCoord,
+                    zCoord,
+                    20,
+                    worldObj.provider.dimensionId,
+                    1,
+                    xCoord,
+                    yCoord,
+                    zCoord);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
@@ -463,8 +480,7 @@ public class TileCompactedMRS extends TEMasterStone implements IMasterRitualSton
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch = tanks[i].getReagent() == null
-                        ? false
+                boolean doesReagentMatch = tanks[i].getReagent() == null ? false
                         : tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch) {

@@ -1,9 +1,7 @@
 package com.arc.bloodarsenal.common.items.block;
 
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +9,12 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class CompactedMRSBlock extends ItemBlock {
+
     public CompactedMRSBlock(Block block) {
         super(block);
         setMaxStackSize(1);

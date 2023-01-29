@@ -1,23 +1,12 @@
 package com.arc.bloodarsenal.common.misc;
 
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-import com.arc.bloodarsenal.common.block.BlockCompactedMRS;
-import com.arc.bloodarsenal.common.block.BlockLPMaterializer;
-import com.arc.bloodarsenal.common.block.BlockLifeInfuser;
-import com.arc.bloodarsenal.common.block.BlockPortableAltar;
-import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
-import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
-import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
-import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 import java.util.List;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -27,21 +16,37 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
+
+import com.arc.bloodarsenal.common.block.BlockCompactedMRS;
+import com.arc.bloodarsenal.common.block.BlockLPMaterializer;
+import com.arc.bloodarsenal.common.block.BlockLifeInfuser;
+import com.arc.bloodarsenal.common.block.BlockPortableAltar;
+import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
+import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
 public class WAILAPlugin implements IWailaDataProvider {
+
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor data, IWailaConfigHandler cfg) {
         return data.getStack();
     }
 
     @Override
-    public List<String> getWailaHead(
-            ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
+    public List<String> getWailaHead(ItemStack stack, List<String> tip, IWailaDataAccessor data,
+            IWailaConfigHandler cfg) {
         return tip;
     }
 
     @Override
-    public List<String> getWailaBody(
-            ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
+    public List<String> getWailaBody(ItemStack stack, List<String> tip, IWailaDataAccessor data,
+            IWailaConfigHandler cfg) {
         if (data.getTileEntity() != null) {
             if (data.getTileEntity() instanceof TilePortableAltar) {
                 EntityPlayer player = data.getPlayer();
@@ -64,13 +69,13 @@ public class WAILAPlugin implements IWailaDataProvider {
                         addTonsOfInfo(player, altar, tip, cfg);
                     } else if (player.getCurrentEquippedItem().getItem() instanceof SigilOfHolding) {
                         if (SigilOfHolding.getCurrentSigil(player.getCurrentEquippedItem())
-                                                .getItem()
-                                        instanceof SigilDivination
+                                .getItem() instanceof SigilDivination
                                 || SigilOfHolding.getCurrentSigil(player.getCurrentEquippedItem())
-                                                .getItem()
-                                        instanceof SigilSeer) {
-                            tip.add(StatCollector.translateToLocal("tooltip.currentEssence") + " " + red
-                                    + currentEssence);
+                                        .getItem() instanceof SigilSeer) {
+                            tip.add(
+                                    StatCollector.translateToLocal("tooltip.currentEssence") + " "
+                                            + red
+                                            + currentEssence);
                             tip.add(StatCollector.translateToLocal("tooltip.altarTier") + " " + red + tier);
                             tip.add(StatCollector.translateToLocal("tooltip.capacity") + " " + red + capacity);
                         }
@@ -78,13 +83,13 @@ public class WAILAPlugin implements IWailaDataProvider {
                         addTonsOfInfo(player, altar, tip, cfg);
                     } else if (player.getCurrentEquippedItem().getItem() instanceof SigilAugmentedHolding) {
                         if (SigilAugmentedHolding.getCurrentSigil(player.getCurrentEquippedItem())
-                                                .getItem()
-                                        instanceof SigilDivination
+                                .getItem() instanceof SigilDivination
                                 || SigilAugmentedHolding.getCurrentSigil(player.getCurrentEquippedItem())
-                                                .getItem()
-                                        instanceof SigilSeer) {
-                            tip.add(StatCollector.translateToLocal("tooltip.currentEssence") + " " + red
-                                    + currentEssence);
+                                        .getItem() instanceof SigilSeer) {
+                            tip.add(
+                                    StatCollector.translateToLocal("tooltip.currentEssence") + " "
+                                            + red
+                                            + currentEssence);
                             tip.add(StatCollector.translateToLocal("tooltip.altarTier") + " " + red + tier);
                             tip.add(StatCollector.translateToLocal("tooltip.capacity") + " " + red + capacity);
                         }
@@ -102,20 +107,21 @@ public class WAILAPlugin implements IWailaDataProvider {
                 int direction = tagCompound.getInteger("direction");
 
                 tip.add(StatCollector.translateToLocal("tooltip.ritualName") + " " + red + ritualName);
-                tip.add(StatCollector.translateToLocal("tooltip.running") + " " + red
-                        + (isRunning
-                                ? StatCollector.translateToLocal("tooltip.yes")
-                                : StatCollector.translateToLocal("tooltip.no")));
+                tip.add(
+                        StatCollector.translateToLocal("tooltip.running") + " "
+                                + red
+                                + (isRunning ? StatCollector.translateToLocal("tooltip.yes")
+                                        : StatCollector.translateToLocal("tooltip.no")));
                 tip.add(StatCollector.translateToLocal("tooltip.direction") + " " + red + direction);
             } else if (data.getTileEntity() instanceof TileLifeInfuser) {
                 EnumChatFormatting red = EnumChatFormatting.RED;
-                //                NBTTagCompound tagCompound = data.getNBTData();
+                // NBTTagCompound tagCompound = data.getNBTData();
 
-                //                boolean isRunning = tagCompound.getBoolean("isRunning");
+                // boolean isRunning = tagCompound.getBoolean("isRunning");
                 int currentEssence = ((TileLifeInfuser) data.getTileEntity()).getFluidAmount();
 
                 tip.add(StatCollector.translateToLocal("message.tile.contains") + " " + red + currentEssence);
-                //                tip.add(StatCollector.translateToLocal("tooltip.running") + " " + red + (isRunning ?
+                // tip.add(StatCollector.translateToLocal("tooltip.running") + " " + red + (isRunning ?
                 // StatCollector.translateToLocal("tooltip.yes") : StatCollector.translateToLocal("tooltip.no")));
             } else if (data.getTileEntity() instanceof TileLPMaterializer) {
                 EnumChatFormatting red = EnumChatFormatting.RED;
@@ -129,8 +135,8 @@ public class WAILAPlugin implements IWailaDataProvider {
         return tip;
     }
 
-    protected void addTonsOfInfo(
-            EntityPlayer player, TilePortableAltar altar, List<String> tip, IWailaConfigHandler cfg) {
+    protected void addTonsOfInfo(EntityPlayer player, TilePortableAltar altar, List<String> tip,
+            IWailaConfigHandler cfg) {
         int speedUpgrades = altar.speedUpgrades;
         int efficiencyUpgrades = altar.efficiencyUpgrades;
         int sacrificeUpgrades = altar.sacrificeUpgrades;
@@ -149,21 +155,22 @@ public class WAILAPlugin implements IWailaDataProvider {
             tip.add(StatCollector.translateToLocal("tooltip.displacementUpgrades") + " " + displacementUpgrades);
             tip.add(StatCollector.translateToLocal("tooltip.altarCapacitiveUpgrades") + " " + altarCapacitiveUpgrades);
             tip.add(StatCollector.translateToLocal("tooltip.orbCapacitiveUpgrades") + " " + orbCapacitiveUpgrades);
-            tip.add(StatCollector.translateToLocal("tooltip.betterCapacitiveUpgrades") + " "
-                    + betterCapacitiveUpgrades);
+            tip.add(
+                    StatCollector.translateToLocal("tooltip.betterCapacitiveUpgrades") + " "
+                            + betterCapacitiveUpgrades);
             tip.add(StatCollector.translateToLocal("tooltip.accelerationUpgrades") + " " + accelerationUpgrades);
         }
     }
 
     @Override
-    public List<String> getWailaTail(
-            ItemStack stack, List<String> tip, IWailaDataAccessor data, IWailaConfigHandler cfg) {
+    public List<String> getWailaTail(ItemStack stack, List<String> tip, IWailaDataAccessor data,
+            IWailaConfigHandler cfg) {
         return tip;
     }
 
     @Override
-    public NBTTagCompound getNBTData(
-            EntityPlayerMP player, TileEntity tileEntity, NBTTagCompound tag, World world, int x, int y, int z) {
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity tileEntity, NBTTagCompound tag, World world,
+            int x, int y, int z) {
         if (tileEntity != null) {
             tileEntity.writeToNBT(tag);
         }

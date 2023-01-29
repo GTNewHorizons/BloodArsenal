@@ -1,11 +1,8 @@
 package com.arc.bloodarsenal.common.items.armor;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.items.ModItems;
-import com.arc.bloodarsenal.common.items.tool.IFillable;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,7 +21,14 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.items.ModItems;
+import com.arc.bloodarsenal.common.items.tool.IFillable;
+
 public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillable {
+
     private int maxLP = 100000;
     private String LP_STORED = "LPStored";
     public double absorbRatio = 0.5;
@@ -57,8 +61,10 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         par3List.add(StatCollector.translateToLocal("tooltip.armor.lifeImbuedArmor"));
-        par3List.add(StatCollector.translateToLocal("tooltip.fillable.currentAmount") + " " + EnumChatFormatting.RED
-                + par1ItemStack.getTagCompound().getInteger(LP_STORED));
+        par3List.add(
+                StatCollector.translateToLocal("tooltip.fillable.currentAmount") + " "
+                        + EnumChatFormatting.RED
+                        + par1ItemStack.getTagCompound().getInteger(LP_STORED));
     }
 
     @Override
@@ -157,17 +163,21 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     @Override
-    public ArmorProperties getProperties(
-            EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+    public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage,
+            int slot) {
         if (source.isUnblockable()) {
             int absorbMax = getLPPerDamage(armor) > 0 ? 25 * getLPStored(armor) / getLPPerDamage(armor) : 0;
             return new ArmorProperties(
-                    0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025, absorbMax);
+                    0,
+                    absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.025,
+                    absorbMax);
         }
 
         int absorbMax = getLPPerDamage(armor) > 0 ? 25 * getLPStored(armor) / getLPPerDamage(armor) : 0;
         return new ArmorProperties(
-                0, absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05, absorbMax);
+                0,
+                absorbRatio * getArmorMaterial().getDamageReductionAmount(armorType) * 0.05,
+                absorbMax);
     }
 
     @Override
@@ -176,8 +186,8 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
     }
 
     protected int getLPPerDamage(ItemStack stack) {
-        int unbreakingLevel = MathHelper.clamp_int(
-                EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
+        int unbreakingLevel = MathHelper
+                .clamp_int(EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack), 0, 4);
         return 100 * (5 - unbreakingLevel) / 5;
     }
 
@@ -199,8 +209,7 @@ public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillab
 
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack armor) {
-        if (hasArmorSetItem(player, 0)
-                && hasArmorSetItem(player, 1)
+        if (hasArmorSetItem(player, 0) && hasArmorSetItem(player, 1)
                 && hasArmorSetItem(player, 2)
                 && hasArmorSetItem(player, 3)) {
             if (player.getHealth() < player.getMaxHealth()

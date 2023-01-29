@@ -1,17 +1,19 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import baubles.api.IBauble;
-import baubles.common.container.InventoryBaubles;
-import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.common.Optional;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import baubles.api.IBauble;
+import baubles.common.container.InventoryBaubles;
+import baubles.common.lib.PlayerHandler;
+import cpw.mods.fml.common.Optional;
+
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles")
 public abstract class ItemBauble extends Item implements IBauble {
+
     public ItemBauble() {
         super();
         setMaxStackSize(1);
@@ -32,8 +34,8 @@ public abstract class ItemBauble extends Item implements IBauble {
                         baubles.setInventorySlotContents(i, par1ItemStack.copy());
 
                         if (!par3EntityPlayer.capabilities.isCreativeMode) {
-                            par3EntityPlayer.inventory.setInventorySlotContents(
-                                    par3EntityPlayer.inventory.currentItem, null);
+                            par3EntityPlayer.inventory
+                                    .setInventorySlotContents(par3EntityPlayer.inventory.currentItem, null);
                         }
                     }
 

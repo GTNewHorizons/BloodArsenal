@@ -1,10 +1,7 @@
 package com.arc.bloodarsenal.common.entity;
 
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import java.util.Random;
+
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
@@ -13,7 +10,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class ModLivingDropsEvent {
+
     @SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
         Random random = new Random();

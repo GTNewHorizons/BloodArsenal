@@ -1,8 +1,5 @@
 package com.arc.bloodarsenal.client.renderer.model;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -10,17 +7,24 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
+
 import org.lwjgl.opengl.GL11;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+import cpw.mods.fml.client.FMLClientHandler;
+
 public class ModelPortableBloodAltar extends ModelBase {
-    private static final ResourceLocation altar_texture =
-            new ResourceLocation("bloodarsenal:textures/models/altar.png");
+
+    private static final ResourceLocation altar_texture = new ResourceLocation(
+            "bloodarsenal:textures/models/altar.png");
 
     private IModelCustom modelBloodAltar;
 
     public ModelPortableBloodAltar() {
-        modelBloodAltar =
-                AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
+        modelBloodAltar = AdvancedModelLoader
+                .loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
     }
 
     public void renderBloodAltar() {

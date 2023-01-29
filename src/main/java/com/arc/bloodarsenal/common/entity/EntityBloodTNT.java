@@ -1,13 +1,15 @@
 package com.arc.bloodarsenal.common.entity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EntityBloodTNT extends Entity {
+
     public int fuse;
     private EntityLivingBase tntPlacedBy;
 
@@ -18,8 +20,8 @@ public class EntityBloodTNT extends Entity {
         yOffset = height / 2.0F;
     }
 
-    public EntityBloodTNT(
-            World par1World, double par2, double par4, double par6, EntityLivingBase par8EntityLivingBase) {
+    public EntityBloodTNT(World par1World, double par2, double par4, double par6,
+            EntityLivingBase par8EntityLivingBase) {
         this(par1World);
         setPosition(par2, par4, par6);
         float f = (float) (Math.random() * Math.PI * 2.0D);

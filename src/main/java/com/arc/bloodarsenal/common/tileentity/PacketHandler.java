@@ -1,6 +1,14 @@
 package com.arc.bloodarsenal.common.tileentity;
 
+import java.util.EnumMap;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.Packet;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
 import com.arc.bloodarsenal.common.BloodArsenal;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
@@ -12,13 +20,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.util.EnumMap;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public enum PacketHandler {
+
     INSTANCE;
 
     private EnumMap<Side, FMLEmbeddedChannel> channels;
@@ -41,6 +45,7 @@ public enum PacketHandler {
     }
 
     private static class TilePortableAltarMessageHandler extends SimpleChannelInboundHandler<TilePortableAltarMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TilePortableAltarMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
@@ -55,6 +60,7 @@ public enum PacketHandler {
     }
 
     private static class TileLifeInfuserMessageHandler extends SimpleChannelInboundHandler<TileLifeInfuserMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TileLifeInfuserMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
@@ -70,6 +76,7 @@ public enum PacketHandler {
 
     private static class TileLPMaterializerMessageHandler
             extends SimpleChannelInboundHandler<TileLPMaterializerMessage> {
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, TileLPMaterializerMessage msg) throws Exception {
             World world = BloodArsenal.proxy.getClientWorld();
@@ -84,10 +91,12 @@ public enum PacketHandler {
     }
 
     public static class BAMessage {
+
         int index;
     }
 
     public static class TilePortableAltarMessage extends BAMessage {
+
         int x;
         int y;
         int z;
@@ -98,6 +107,7 @@ public enum PacketHandler {
     }
 
     public static class TileLifeInfuserMessage extends BAMessage {
+
         int x;
         int y;
         int z;
@@ -108,6 +118,7 @@ public enum PacketHandler {
     }
 
     public static class TileLPMaterializerMessage extends BAMessage {
+
         int x;
         int y;
         int z;
@@ -118,6 +129,7 @@ public enum PacketHandler {
     }
 
     private class ClientToServerCodec extends FMLIndexedMessageToMessageCodec<BAMessage> {
+
         public ClientToServerCodec() {}
 
         @Override
@@ -127,13 +139,14 @@ public enum PacketHandler {
 
         @Override
         public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, BAMessage msg) {
-            //            int index = source.readInt();
+            // int index = source.readInt();
 
             System.out.println("Packet is recieved and being decoded");
         }
     }
 
     private class BATileCodec extends FMLIndexedMessageToMessageCodec<BAMessage> {
+
         public BATileCodec() {
             addDiscriminator(0, TilePortableAltarMessage.class);
             addDiscriminator(1, TileLifeInfuserMessage.class);
@@ -375,45 +388,29 @@ public enum PacketHandler {
     }
 
     public void sendTo(Packet message, EntityPlayerMP player) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(player);
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToAll(Packet message) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALL);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToAllAround(Packet message, NetworkRegistry.TargetPoint point) {
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-        this.channels
-                .get(Side.SERVER)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(point);
+        this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
         this.channels.get(Side.SERVER).writeAndFlush(message);
     }
 
     public void sendToServer(Packet message) {
-        this.channels
-                .get(Side.CLIENT)
-                .attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        this.channels
-                .get(Side.CLIENT)
-                .writeAndFlush(message)
+        this.channels.get(Side.CLIENT).writeAndFlush(message)
                 .addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

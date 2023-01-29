@@ -1,11 +1,9 @@
 package com.arc.bloodarsenal.common.block;
 
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -18,7 +16,13 @@ import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class BlockBurnedString extends Block {
+
     public BlockBurnedString() {
         super(Material.circuits);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.15625F, 1.0F);
@@ -31,8 +35,8 @@ public class BlockBurnedString extends Block {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(
-            World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_,
+            int p_149668_4_) {
         return null;
     }
 
@@ -63,8 +67,8 @@ public class BlockBurnedString extends Block {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(
-            IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_) {
+    public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_,
+            int p_149719_4_) {
         int l = p_149719_1_.getBlockMetadata(p_149719_2_, p_149719_3_, p_149719_4_);
         boolean flag = (l & 4) == 4;
         boolean flag1 = (l & 2) == 2;
@@ -92,18 +96,13 @@ public class BlockBurnedString extends Block {
     }
 
     @Override
-    public void breakBlock(
-            World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_) {
+    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_,
+            int p_149749_6_) {
         this.func_150138_a(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_6_ | 1);
     }
 
     @Override
-    public void onBlockHarvested(
-            World p_149681_1_,
-            int p_149681_2_,
-            int p_149681_3_,
-            int p_149681_4_,
-            int p_149681_5_,
+    public void onBlockHarvested(World p_149681_1_, int p_149681_2_, int p_149681_3_, int p_149681_4_, int p_149681_5_,
             EntityPlayer p_149681_6_) {
         if (!p_149681_1_.isRemote) {
             if (p_149681_6_.getCurrentEquippedItem() != null
@@ -153,8 +152,8 @@ public class BlockBurnedString extends Block {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(
-            World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity p_149670_5_) {
+    public void onEntityCollidedWithBlock(World p_149670_1_, int p_149670_2_, int p_149670_3_, int p_149670_4_,
+            Entity p_149670_5_) {
         if (!p_149670_1_.isRemote) {
             if ((p_149670_1_.getBlockMetadata(p_149670_2_, p_149670_3_, p_149670_4_) & 1) != 1) {
                 this.func_150140_e(p_149670_1_, p_149670_2_, p_149670_3_, p_149670_4_);
@@ -218,13 +217,8 @@ public class BlockBurnedString extends Block {
     }
 
     @SideOnly(Side.CLIENT)
-    public static boolean func_150139_a(
-            IBlockAccess p_150139_0_,
-            int p_150139_1_,
-            int p_150139_2_,
-            int p_150139_3_,
-            int p_150139_4_,
-            int p_150139_5_) {
+    public static boolean func_150139_a(IBlockAccess p_150139_0_, int p_150139_1_, int p_150139_2_, int p_150139_3_,
+            int p_150139_4_, int p_150139_5_) {
         int j1 = p_150139_1_ + Direction.offsetX[p_150139_5_];
         int k1 = p_150139_3_ + Direction.offsetZ[p_150139_5_];
         Block block = p_150139_0_.getBlock(j1, p_150139_2_, k1);

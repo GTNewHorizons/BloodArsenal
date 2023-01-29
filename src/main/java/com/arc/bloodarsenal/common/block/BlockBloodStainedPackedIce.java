@@ -1,10 +1,12 @@
 package com.arc.bloodarsenal.common.block;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockBloodStainedPackedIce extends Block {
+
     public BlockBloodStainedPackedIce() {
         super(Material.packedIce);
         slipperiness = 0.99F;

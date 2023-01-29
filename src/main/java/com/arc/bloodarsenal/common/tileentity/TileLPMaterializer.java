@@ -1,9 +1,5 @@
 package com.arc.bloodarsenal.common.tileentity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -18,7 +14,14 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 public class TileLPMaterializer extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
+
     private ItemStack[] inv;
 
     protected FluidStack fluid;
@@ -58,8 +61,9 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
                 setMainFluid(fluid);
             }
 
-            FluidStack fluidOut =
-                    new FluidStack(AlchemicalWizardry.lifeEssenceFluid, par1NBTTagCompound.getInteger("outputAmount"));
+            FluidStack fluidOut = new FluidStack(
+                    AlchemicalWizardry.lifeEssenceFluid,
+                    par1NBTTagCompound.getInteger("outputAmount"));
 
             if (fluidOut != null) {
                 setOutputFluid(fluidOut);
@@ -208,8 +212,9 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     }
 
     public void sendChatInfoToPlayer(EntityPlayer player) {
-        player.addChatMessage(new ChatComponentText(
-                StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
+        player.addChatMessage(
+                new ChatComponentText(
+                        StatCollector.translateToLocal("message.tile.contains") + " " + this.getFluidAmount() + "LE"));
     }
 
     @Override
@@ -225,8 +230,10 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
         if (intData.length == 3) {
             for (int i = 0; i < 1; i++) {
                 if (intData[i * 3 + 2] != 0) {
-                    ItemStack is =
-                            new ItemStack(Item.getItemById(intData[i * 3]), intData[i * 3 + 2], intData[i * 3 + 1]);
+                    ItemStack is = new ItemStack(
+                            Item.getItemById(intData[i * 3]),
+                            intData[i * 3 + 2],
+                            intData[i * 3 + 1]);
                     inv[i] = is;
                 } else {
                     inv[i] = null;
@@ -327,7 +334,16 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
 
             if (worldObj.getWorldTime() % 4 == 0) {
                 SpellHelper.sendIndexedParticleToAllAround(
-                        worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                        worldObj,
+                        xCoord,
+                        yCoord,
+                        zCoord,
+                        20,
+                        worldObj.provider.dimensionId,
+                        1,
+                        xCoord,
+                        yCoord,
+                        zCoord);
             }
 
             fluid.amount += 100;
@@ -336,16 +352,16 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
 
     private IFluidHandler getTankAbove() {
         return worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) != null
-                        && worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof IFluidHandler
-                ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)
-                : null;
+                && worldObj.getTileEntity(xCoord, yCoord + 1, zCoord) instanceof IFluidHandler
+                        ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord)
+                        : null;
     }
 
     private IFluidHandler getTankBelow() {
         return worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) != null
-                        && worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof IFluidHandler
-                ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord)
-                : null;
+                && worldObj.getTileEntity(xCoord, yCoord - 1, zCoord) instanceof IFluidHandler
+                        ? (IFluidHandler) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord)
+                        : null;
     }
 
     // Fluid Stuffs
@@ -394,8 +410,15 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
             }
 
             if (this != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(
-                        fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this, 1000));
+                FluidEvent.fireEvent(
+                        new FluidEvent.FluidDrainingEvent(
+                                fluidOutput,
+                                this.worldObj,
+                                this.xCoord,
+                                this.yCoord,
+                                this.zCoord,
+                                this,
+                                1000));
             }
         }
 
@@ -461,7 +484,7 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
-        return new FluidTankInfo[] {compositeTank.getInfo()};
+        return new FluidTankInfo[] { compositeTank.getInfo() };
     }
 
     public int[] buildFluidList() {

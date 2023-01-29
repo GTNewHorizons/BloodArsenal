@@ -1,17 +1,7 @@
 package com.arc.bloodarsenal.common.items.bauble;
 
-import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import baubles.common.container.InventoryBaubles;
-import baubles.common.lib.PlayerHandler;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.items.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +18,22 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
+import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import baubles.common.container.InventoryBaubles;
+import baubles.common.lib.PlayerHandler;
+
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.items.ModItems;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IBauble {
+
     public SacrificeAmulet() {
         super();
         MinecraftForge.EVENT_BUS.register(this);
@@ -38,8 +43,7 @@ public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IB
     public void sacrificeHandler(LivingDeathEvent event) {
         Entity killer = event.source.getEntity();
 
-        if (killer != null
-                && killer instanceof EntityPlayerMP
+        if (killer != null && killer instanceof EntityPlayerMP
                 && !(killer instanceof FakePlayer)
                 && BloodArsenalConfig.baublesIntegration) {
             EntityLivingBase victim = event.entityLiving;
@@ -60,7 +64,8 @@ public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IB
 
                         if (shouldExecute) {
                             sacrificeAmulet.setStoredLP(
-                                    stack, Math.min(sacrificeAmulet.getStoredLP(stack) + (lpReceived * 2), 10000));
+                                    stack,
+                                    Math.min(sacrificeAmulet.getStoredLP(stack) + (lpReceived * 2), 10000));
                         }
                     }
                 }

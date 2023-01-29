@@ -1,8 +1,7 @@
 package com.arc.bloodarsenal.common.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,8 +11,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemBoundDiamondShards extends Item {
-    private final String[] shardTypes = new String[] {"", "air", "earth", "fire", "water", "dusk", "dawn"};
+
+    private final String[] shardTypes = new String[] { "", "air", "earth", "fire", "water", "dusk", "dawn" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
