@@ -695,7 +695,7 @@ public class BloodArsenalRecipes {
                 new ItemStack(WayofTime.alchemicalWizardry.ModItems.demonicSlate, 9),
                 new ItemStack(ModBlocks.blood_stone, 1, 3));
         addShapelessOreDictRecipe(
-                new ItemStack(WayofTime.alchemicalWizardry.ModItems.baseAlchemyItems, 9, 27),
+                new ItemStack(WayofTime.alchemicalWizardry.ModItems.baseItems, 9, 27),
                 new ItemStack(ModBlocks.blood_stone, 1, 4));
         // This is a long one
         addShapelessOreDictRecipe(
