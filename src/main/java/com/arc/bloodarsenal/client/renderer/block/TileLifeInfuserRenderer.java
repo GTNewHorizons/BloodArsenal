@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.arc.bloodarsenal.client.renderer.model.ModelLifeInfuser;
 import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TileLifeInfuserRenderer extends TileEntitySpecialRenderer {

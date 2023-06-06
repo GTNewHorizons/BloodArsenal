@@ -14,10 +14,10 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import com.arc.bloodarsenal.common.items.tool.IFillable;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-
-import com.arc.bloodarsenal.common.items.tool.IFillable;
 
 public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
 

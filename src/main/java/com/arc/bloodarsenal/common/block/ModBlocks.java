@@ -11,6 +11,7 @@ import com.arc.bloodarsenal.common.items.block.BloodStoneBlock;
 import com.arc.bloodarsenal.common.items.block.CompactedMRSBlock;
 import com.arc.bloodarsenal.common.items.block.PortableAltarBlock;
 import com.arc.bloodarsenal.common.tileentity.*;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModBlocks {

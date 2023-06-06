@@ -18,12 +18,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
+
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-
-import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

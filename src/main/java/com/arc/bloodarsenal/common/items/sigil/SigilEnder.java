@@ -10,12 +10,12 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 
 public class SigilEnder extends EnergyItems implements IBindable, ISigil {
 

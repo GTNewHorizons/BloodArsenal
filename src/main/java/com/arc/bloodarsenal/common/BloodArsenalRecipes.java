@@ -8,12 +8,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.arc.bloodarsenal.common.block.ModBlocks;
+import com.arc.bloodarsenal.common.items.ModItems;
+
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
-
-import com.arc.bloodarsenal.common.block.ModBlocks;
-import com.arc.bloodarsenal.common.items.ModItems;
 
 public class BloodArsenalRecipes {
 

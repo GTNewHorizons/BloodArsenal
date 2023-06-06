@@ -18,16 +18,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.arc.bloodarsenal.common.items.ModItems;
+
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
-
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.arc.bloodarsenal.common.items.ModItems;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

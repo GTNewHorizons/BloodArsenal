@@ -2,10 +2,10 @@ package com.arc.bloodarsenal.common.rituals;
 
 import net.minecraft.util.ResourceLocation;
 
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
-
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 
 public class RitualRegistry {
 

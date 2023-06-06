@@ -21,11 +21,11 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.items.ModItems;
 import com.arc.bloodarsenal.common.items.tool.IFillable;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
 public class LifeImbuedArmor extends ItemArmor implements ISpecialArmor, IFillable {
 

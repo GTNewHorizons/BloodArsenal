@@ -12,17 +12,16 @@ import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import squeek.applecore.api.food.FoodValues;
-import squeek.applecore.api.food.IEdibleBlock;
-import squeek.applecore.api.food.ItemFoodProxy;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import squeek.applecore.api.food.FoodValues;
+import squeek.applecore.api.food.IEdibleBlock;
+import squeek.applecore.api.food.ItemFoodProxy;
 
 @Optional.Interface(iface = "squeek.applecore.api.food.IEdibleBlock", modid = "AppleCore")
 public class BlockBloodCake extends Block implements IEdibleBlock {
