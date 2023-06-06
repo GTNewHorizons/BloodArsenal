@@ -38,7 +38,9 @@ public class CompactedMRSBlock extends ItemBlock {
             if (tag.hasKey("ritualName")) {
                 String ritualName = Rituals.getNameOfRitual(tag.getString("ritualName"));
 
-                addStringToTooltip(StatCollector.translateToLocal("tooltip.ritualName") + " &c" + ritualName + "&7", par3List);
+                addStringToTooltip(
+                        StatCollector.translateToLocal("tooltip.ritualName") + " &c" + ritualName + "&7",
+                        par3List);
             }
         }
     }

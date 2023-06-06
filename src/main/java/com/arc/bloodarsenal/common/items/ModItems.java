@@ -8,12 +8,6 @@ import net.minecraft.item.ItemReed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.wands.StaffRod;
-import thaumcraft.api.wands.WandCap;
-import thaumcraft.api.wands.WandRod;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.block.ModBlocks;
@@ -27,8 +21,13 @@ import com.arc.bloodarsenal.common.items.sigil.holding.SigilAugmentedHolding;
 import com.arc.bloodarsenal.common.items.tool.*;
 import com.arc.bloodarsenal.common.thaumcraft.*;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.GameRegistry;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.wands.StaffRod;
+import thaumcraft.api.wands.WandCap;
+import thaumcraft.api.wands.WandRod;
 
 public class ModItems {
 

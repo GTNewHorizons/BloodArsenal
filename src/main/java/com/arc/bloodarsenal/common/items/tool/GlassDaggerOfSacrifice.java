@@ -21,15 +21,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.BloodArsenal;
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+import com.google.common.collect.Multimap;
+
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-
-import com.arc.bloodarsenal.common.BloodArsenal;
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
-import com.google.common.collect.Multimap;
 
 public class GlassDaggerOfSacrifice extends EnergyItems {
 

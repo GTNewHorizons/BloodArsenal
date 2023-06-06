@@ -14,11 +14,11 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
+import com.arc.bloodarsenal.common.BloodArsenalConfig;
+
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-
-import com.arc.bloodarsenal.common.BloodArsenalConfig;
 
 public class TileLPMaterializer extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
 

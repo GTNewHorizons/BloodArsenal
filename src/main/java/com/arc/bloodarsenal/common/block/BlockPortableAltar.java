@@ -19,13 +19,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

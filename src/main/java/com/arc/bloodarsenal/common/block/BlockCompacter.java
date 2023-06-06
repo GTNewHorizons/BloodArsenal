@@ -17,6 +17,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+import com.arc.bloodarsenal.common.tileentity.TileCompacter;
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
@@ -28,11 +32,6 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeCompone
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-
-import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
-import com.arc.bloodarsenal.common.tileentity.TileCompacter;
-import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

@@ -7,10 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.wands.IWandRodOnUpdate;
 import thaumcraft.common.items.wands.ItemWandCasting;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class BloodWoodStaffUpdate implements IWandRodOnUpdate {
 

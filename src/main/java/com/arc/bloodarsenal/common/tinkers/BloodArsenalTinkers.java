@@ -8,11 +8,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.crafting.FluidType;
-import tconstruct.library.crafting.Smeltery;
-import tconstruct.smeltery.TinkerSmeltery;
-
 import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.block.ModBlocks;
@@ -21,6 +16,10 @@ import com.arc.bloodarsenal.common.items.ModItems;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.crafting.FluidType;
+import tconstruct.library.crafting.Smeltery;
+import tconstruct.smeltery.TinkerSmeltery;
 
 public class BloodArsenalTinkers {
 

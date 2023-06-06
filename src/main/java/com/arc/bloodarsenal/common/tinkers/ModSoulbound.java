@@ -4,10 +4,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 
-import tconstruct.library.modifier.IModifyable;
-import tconstruct.modifiers.tools.ModBoolean;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import tconstruct.library.modifier.IModifyable;
+import tconstruct.modifiers.tools.ModBoolean;
 
 public class ModSoulbound extends ModBoolean {
 

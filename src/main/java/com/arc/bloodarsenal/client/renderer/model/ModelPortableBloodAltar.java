@@ -10,9 +10,9 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-
 import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class ModelPortableBloodAltar extends ModelBase {
