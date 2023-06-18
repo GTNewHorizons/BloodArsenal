@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
+import com.arc.bloodarsenal.common.items.ModItems;
+
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import amerifrance.guideapi.api.GuideRegistry;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
@@ -23,8 +25,6 @@ import amerifrance.guideapi.categories.CategoryItemStack;
 import amerifrance.guideapi.entries.EntryUniText;
 import amerifrance.guideapi.pages.PageIRecipe;
 import amerifrance.guideapi.pages.PageUnlocImage;
-
-import com.arc.bloodarsenal.common.items.ModItems;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BloodBurnedTome {

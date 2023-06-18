@@ -10,6 +10,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 
 import com.arc.bloodarsenal.common.BloodArsenal;
+
 import cpw.mods.fml.client.config.*;
 
 public class ConfigGui extends GuiConfig {

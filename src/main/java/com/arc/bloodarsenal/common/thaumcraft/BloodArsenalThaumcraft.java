@@ -5,6 +5,9 @@ package com.arc.bloodarsenal.common.thaumcraft;
 
 import net.minecraft.item.ItemStack;
 
+import com.arc.bloodarsenal.common.block.ModBlocks;
+import com.arc.bloodarsenal.common.items.ModItems;
+
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -13,9 +16,6 @@ import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.StaffRod;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
-
-import com.arc.bloodarsenal.common.block.ModBlocks;
-import com.arc.bloodarsenal.common.items.ModItems;
 
 public class BloodArsenalThaumcraft {
 

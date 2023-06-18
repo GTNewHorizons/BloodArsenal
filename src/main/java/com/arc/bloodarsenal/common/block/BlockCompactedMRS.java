@@ -16,12 +16,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
 import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-
-import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

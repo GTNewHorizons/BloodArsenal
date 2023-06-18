@@ -8,6 +8,7 @@ import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 
 import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+
 import cpw.mods.fml.client.FMLClientHandler;
 
 /**

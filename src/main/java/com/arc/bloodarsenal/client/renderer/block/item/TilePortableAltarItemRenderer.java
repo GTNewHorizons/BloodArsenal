@@ -8,6 +8,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import com.arc.bloodarsenal.client.renderer.model.ModelPortableBloodAltar;
+
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TilePortableAltarItemRenderer implements IItemRenderer {

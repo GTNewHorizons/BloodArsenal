@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import com.arc.bloodarsenal.common.items.sigil.holding.ContainerAugmentedHolding;
 import com.arc.bloodarsenal.common.items.sigil.holding.GuiAugmentedHolding;
 import com.arc.bloodarsenal.common.items.sigil.holding.InventoryAugmentedHolding;
+
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {

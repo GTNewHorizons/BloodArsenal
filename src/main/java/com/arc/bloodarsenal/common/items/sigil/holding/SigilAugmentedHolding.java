@@ -12,9 +12,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-
 import com.arc.bloodarsenal.common.BloodArsenal;
+
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
 public class SigilAugmentedHolding extends EnergyItems {
 

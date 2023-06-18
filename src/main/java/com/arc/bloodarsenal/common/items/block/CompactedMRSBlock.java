@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
@@ -31,10 +32,17 @@ public class CompactedMRSBlock extends ItemBlock {
     }
 
     public void addHiddenTooltip(ItemStack par1ItemStack, List par3List) {
-        String ritualID = par1ItemStack.getTagCompound().getString("ritualName");
-        String ritualName = Rituals.getNameOfRitual(ritualID);
+        if (par1ItemStack.hasTagCompound()) {
+            NBTTagCompound tag = par1ItemStack.getTagCompound();
 
-        addStringToTooltip(StatCollector.translateToLocal("tooltip.ritualName") + " &c" + ritualName + "&7", par3List);
+            if (tag.hasKey("ritualName")) {
+                String ritualName = Rituals.getNameOfRitual(tag.getString("ritualName"));
+
+                addStringToTooltip(
+                        StatCollector.translateToLocal("tooltip.ritualName") + " &c" + ritualName + "&7",
+                        par3List);
+            }
+        }
     }
 
     public void addStringToTooltip(String s, List<String> tooltip) {

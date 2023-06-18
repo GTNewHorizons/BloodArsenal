@@ -15,10 +15,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
+import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-
-import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
 
 public class BlockLifeInfuser extends BlockContainer {
 

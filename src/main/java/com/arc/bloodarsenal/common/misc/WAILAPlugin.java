@@ -2,11 +2,6 @@ package com.arc.bloodarsenal.common.misc;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.IWailaRegistrar;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -15,11 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 
 import com.arc.bloodarsenal.common.block.BlockCompactedMRS;
 import com.arc.bloodarsenal.common.block.BlockLPMaterializer;
@@ -30,6 +20,15 @@ import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
 import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
 import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
 import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
+
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class WAILAPlugin implements IWailaDataProvider {
 
