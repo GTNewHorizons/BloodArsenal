@@ -106,10 +106,13 @@ public class GlassSacrificialDagger extends Item {
             return stack;
         }
 
+        int lifeEssence = 500;
+        if (world.rand.nextInt(9) <= 1) lifeEssence *= 2;
+
         if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray)) {
-            findAndFillAltar(world, player, 50);
+            findAndFillAltar(world, player, lifeEssence / 10);
         } else {
-            findAndFillAltar(world, player, 500);
+            findAndFillAltar(world, player, lifeEssence);
         }
 
         if (player.getHealth() <= 0.001f) {
