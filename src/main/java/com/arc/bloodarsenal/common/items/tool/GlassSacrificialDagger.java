@@ -1,7 +1,6 @@
 package com.arc.bloodarsenal.common.items.tool;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -119,9 +118,8 @@ public class GlassSacrificialDagger extends Item {
             player.onDeath(BloodArsenal.deathFromBlood);
         }
 
-        Random random = new Random();
-        if (random.nextInt(4) < 1) {
-            player.addPotionEffect(new PotionEffect(BloodArsenalConfig.bleedingID, random.nextInt(5) * 20, 0));
+        if (world.rand.nextInt(4) < 1) {
+            player.addPotionEffect(new PotionEffect(BloodArsenalConfig.bleedingID, world.rand.nextInt(5) * 20, 0));
         }
         return stack;
     }
