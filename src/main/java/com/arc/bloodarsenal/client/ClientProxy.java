@@ -6,7 +6,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.arc.bloodarsenal.client.renderer.block.*;
+import com.arc.bloodarsenal.client.renderer.block.RenderBloodTNTPrimed;
+import com.arc.bloodarsenal.client.renderer.block.RenderTileLifeInfuser;
+import com.arc.bloodarsenal.client.renderer.block.TileLifeInfuserRenderer;
 import com.arc.bloodarsenal.client.renderer.block.TilePortableAltarRenderer;
 import com.arc.bloodarsenal.client.renderer.block.item.TilePortableAltarItemRenderer;
 import com.arc.bloodarsenal.client.renderer.item.RenderBow;
