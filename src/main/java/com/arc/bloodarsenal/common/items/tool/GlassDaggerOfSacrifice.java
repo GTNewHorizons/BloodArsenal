@@ -1,7 +1,6 @@
 package com.arc.bloodarsenal.common.items.tool;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,9 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.IBossDisplayData;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -25,6 +21,7 @@ import com.arc.bloodarsenal.common.BloodArsenal;
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.google.common.collect.Multimap;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
@@ -74,14 +71,18 @@ public class GlassDaggerOfSacrifice extends EnergyItems {
             this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }
 
-        int lifeEssence = 500;
-        Random random = new Random();
+        int lifeEssence = AlchemicalWizardry.lpPerSactificeCustom.containsKey(par2EntityLivingBase.getClass())
+                ? AlchemicalWizardry.lpPerSactificeCustom.get(par2EntityLivingBase.getClass())
+                : AlchemicalWizardry.lpPerSacrificeBase;
 
-        if (random.nextInt(3) == 2) lifeEssence = 100;
-        else if (par2EntityLivingBase instanceof EntityVillager) lifeEssence = 2500;
-        else if (par2EntityLivingBase instanceof EntitySlime) lifeEssence = 200;
-        else if (par2EntityLivingBase instanceof EntityEnderman) lifeEssence = 300;
-        else if (par2EntityLivingBase instanceof EntityAnimal) lifeEssence = 350;
+        if (par2EntityLivingBase instanceof EntityVillager) {
+            lifeEssence += 500;
+        } else {
+            lifeEssence += 100;
+        }
+
+        int criticalHit = world.rand.nextInt(9);
+        if ((par2EntityLivingBase instanceof EntityVillager && criticalHit <= 2) || criticalHit <= 1) lifeEssence *= 5;
 
         if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence)) {
             double posX = par2EntityLivingBase.posX;

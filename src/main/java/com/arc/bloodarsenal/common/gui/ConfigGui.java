@@ -11,7 +11,8 @@ import net.minecraftforge.common.config.ConfigElement;
 
 import com.arc.bloodarsenal.common.BloodArsenal;
 
-import cpw.mods.fml.client.config.*;
+import cpw.mods.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.IConfigElement;
 
 public class ConfigGui extends GuiConfig {
 

@@ -10,7 +10,11 @@ import com.arc.bloodarsenal.common.BloodArsenalConfig;
 import com.arc.bloodarsenal.common.items.block.BloodStoneBlock;
 import com.arc.bloodarsenal.common.items.block.CompactedMRSBlock;
 import com.arc.bloodarsenal.common.items.block.PortableAltarBlock;
-import com.arc.bloodarsenal.common.tileentity.*;
+import com.arc.bloodarsenal.common.tileentity.TileCompactedMRS;
+import com.arc.bloodarsenal.common.tileentity.TileCompacter;
+import com.arc.bloodarsenal.common.tileentity.TileLPMaterializer;
+import com.arc.bloodarsenal.common.tileentity.TileLifeInfuser;
+import com.arc.bloodarsenal.common.tileentity.TilePortableAltar;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
