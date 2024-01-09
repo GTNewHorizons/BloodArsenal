@@ -2,9 +2,9 @@
 
 dependencies {
     api 'com.github.GTNewHorizons:Baubles:1.0.3:dev'
-    api 'com.github.GTNewHorizons:Mantle:1.7.10-0.3.4:dev'
+    api 'com.github.GTNewHorizons:Mantle:0.4.0:dev'
     api 'com.github.GTNewHorizons:BloodMagic:1.4.3:dev'
-    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.11.3-GTNH:dev')
+    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.11.5-GTNH:dev')
     compileOnly('com.github.GTNewHorizons:AppleCore:3.2.12:dev')
     compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.0.2:dev'
     compileOnlyApi 'com.github.GTNewHorizons:ForgeMultipart:1.4.6:dev'
