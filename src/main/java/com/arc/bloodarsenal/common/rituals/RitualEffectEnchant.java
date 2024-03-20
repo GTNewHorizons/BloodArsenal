@@ -366,6 +366,7 @@ public class RitualEffectEnchant extends RitualEffect {
     }
 
     private static void sendPlayerInformation(EntityPlayer player, int number) {
+        if (player == null) return;
         switch (number) {
             case 1:
                 player.addChatComponentMessage(
