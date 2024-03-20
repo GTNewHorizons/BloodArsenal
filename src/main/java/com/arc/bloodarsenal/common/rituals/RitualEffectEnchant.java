@@ -368,28 +368,40 @@ public class RitualEffectEnchant extends RitualEffect {
     private static void sendPlayerInformation(EntityPlayer player, int number) {
         switch (number) {
             case 1:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.noAltar")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.noAltar")));
+                }
                 break;
             case 2:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.noPedestals")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.noPedestals")));
+                }
                 break;
             case 3:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.noEnchantItem")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.noEnchantItem")));
+                }
                 break;
             case 4:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.noEnchantments")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.noEnchantments")));
+                }
                 break;
             case 5:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.notEnoughLP")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.notEnoughLP")));
+                }
                 break;
             case 6:
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.enchant.enchantIsNotValid")));
+                if (player != null) {
+                    player.addChatComponentMessage(
+                            new ChatComponentText(StatCollector.translateToLocal("message.enchant.enchantIsNotValid")));
+                }
                 break;
         }
     }
