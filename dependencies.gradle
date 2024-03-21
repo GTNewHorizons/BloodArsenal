@@ -1,16 +1,16 @@
 // Add your dependencies here
 
 dependencies {
-    api 'com.github.GTNewHorizons:Baubles:1.0.3:dev'
-    api 'com.github.GTNewHorizons:Mantle:0.4.0:dev'
-    api 'com.github.GTNewHorizons:BloodMagic:1.4.3:dev'
-    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.11.5-GTNH:dev')
-    compileOnly('com.github.GTNewHorizons:AppleCore:3.2.12:dev')
-    compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.0.2:dev'
-    compileOnlyApi 'com.github.GTNewHorizons:ForgeMultipart:1.4.6:dev'
-    compileOnlyApi 'com.github.GTNewHorizons:waila:1.6.5:api'
+    api 'com.github.GTNewHorizons:Baubles:1.0.4:dev'
+    api 'com.github.GTNewHorizons:Mantle:0.4.1:dev'
+    api 'com.github.GTNewHorizons:BloodMagic:1.5.1:dev'
+    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.11.12-GTNH:dev')
+    compileOnly('com.github.GTNewHorizons:AppleCore:3.3.0:dev')
+    compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.1.0:dev'
+    compileOnlyApi 'com.github.GTNewHorizons:ForgeMultipart:1.4.8:dev'
+    compileOnlyApi 'com.github.GTNewHorizons:waila:1.7.1:api'
 
     devOnlyNonPublishable 'thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev'
 
-    runtimeOnlyNonPublishable 'com.github.GTNewHorizons:NotEnoughItems:2.5.3-GTNH:dev'
+    runtimeOnlyNonPublishable 'com.github.GTNewHorizons:NotEnoughItems:2.5.24-GTNH:dev'
 }
