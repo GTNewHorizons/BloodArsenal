@@ -32,9 +32,11 @@ public class TransparentOrb extends EnergyBattery {
             list.add(
                     StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
                             + itemStack.getTagCompound().getString("ownerName"));
+            if (MinecraftServer.getServer() != null) {
             list.add(
                     StatCollector.translateToLocal("tooltip.energybattery.currentLP") + " "
                             + this.getCurrentEssence(itemStack));
+            }
         }
     }
 
@@ -43,7 +45,9 @@ public class TransparentOrb extends EnergyBattery {
         if (itemStack.getTagCompound() == null) {
             return;
         }
-
+        if (world.isRemote) {
+            return;//changes of metadata will be synced to client, no need to proceed on client
+        }
         int maxEssence = SoulNetworkHandler
                 .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(SoulNetworkHandler.getOwnerName(itemStack)));
         int section = maxEssence / 44;
