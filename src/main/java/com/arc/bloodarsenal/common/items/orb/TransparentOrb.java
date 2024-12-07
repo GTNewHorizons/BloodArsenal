@@ -32,9 +32,11 @@ public class TransparentOrb extends EnergyBattery {
             list.add(
                     StatCollector.translateToLocal("tooltip.owner.currentowner") + " "
                             + itemStack.getTagCompound().getString("ownerName"));
+
             list.add(
                     StatCollector.translateToLocal("tooltip.energybattery.currentLP") + " "
-                            + this.getCurrentEssence(itemStack));
+                            + itemStack.getTagCompound().getInteger("essenceAmount"));
+
         }
     }
 
@@ -42,6 +44,13 @@ public class TransparentOrb extends EnergyBattery {
     public void onUpdate(ItemStack itemStack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
         if (itemStack.getTagCompound() == null) {
             return;
+        }
+        if (world.isRemote) {
+            return;// changes of metadata and NBT will be synced to client, no need to proceed on client
+        }
+
+        if (itemStack.getTagCompound().hasKey("ownerName")) {
+            itemStack.getTagCompound().setInteger("essenceAmount", this.getCurrentEssence(itemStack));
         }
 
         int maxEssence = SoulNetworkHandler
@@ -51,6 +60,9 @@ public class TransparentOrb extends EnergyBattery {
 
         if (currentEssence > 0) {
             int metaToBe = (currentEssence / section);
+            if (metaToBe >= 44) {
+                metaToBe = 44;
+            }
             itemStack.setItemDamage(metaToBe);
         } else {
             itemStack.setItemDamage(0);
