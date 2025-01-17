@@ -143,12 +143,12 @@ public class RitualEffectEnchant extends RitualEffect {
                             lpRequired += (int) (500F * ((15 - Math.min(15, ench.getWeight())) * 1.05F)
                                     * ((3F + d.level * d.level) * 0.25F)
                                     * (0.9F + enchants.size() * 0.05F));
-                            if (player != null)
-                                player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
-
-                            SoulNetworkHandler.syphonFromNetwork(owner, lpRequired);
                         }
-                    } else if (SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
+                        if (player != null)
+                            player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
+                    }
+                    if (SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
+                        SoulNetworkHandler.syphonFromNetwork(owner, lpRequired);
                         lpRequired = 0;
                         advanceStage();
                         world.markBlockForUpdate(x, y, z);
