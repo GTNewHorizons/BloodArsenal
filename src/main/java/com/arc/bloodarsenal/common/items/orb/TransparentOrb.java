@@ -98,7 +98,6 @@ public class TransparentOrb extends EnergyBattery {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon("BloodArsenal:orb/orb_0");
-        icons[0] = iconRegister.registerIcon("BloodArsenal:orb/orb_0");
 
         for (int i = 0; i < icons.length; i++) {
             icons[i] = iconRegister.registerIcon("BloodArsenal:orb/orb_" + i);
