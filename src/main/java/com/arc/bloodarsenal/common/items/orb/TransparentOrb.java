@@ -64,6 +64,7 @@ public class TransparentOrb extends EnergyBattery {
             }
         }
 
+        // For save conversion - old versions tracked using metadata instead of NBT
         if (!itemTag.hasKey("fillLevel") && itemStack.getItemDamage() > 0) {
             itemStack.setItemDamage(0);
         }
