@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -42,15 +43,12 @@ public class TransparentOrb extends EnergyBattery {
 
     @Override
     public void onUpdate(ItemStack itemStack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        if (itemStack.getTagCompound() == null) {
+        NBTTagCompound itemTag = itemStack.getTagCompound();
+        if (itemTag == null) {
             return;
         }
         if (world.isRemote) {
             return;// changes of metadata and NBT will be synced to client, no need to proceed on client
-        }
-
-        if (itemStack.getTagCompound().hasKey("ownerName")) {
-            itemStack.getTagCompound().setInteger("essenceAmount", this.getCurrentEssence(itemStack));
         }
 
         int maxEssence = SoulNetworkHandler
@@ -58,14 +56,22 @@ public class TransparentOrb extends EnergyBattery {
         int section = maxEssence / 44;
         int currentEssence = SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getOwnerName(itemStack));
 
+        int fillLevel = 0;
         if (currentEssence > 0) {
-            int metaToBe = (currentEssence / section);
-            if (metaToBe >= 44) {
-                metaToBe = 44;
+            fillLevel = (currentEssence / section);
+            if (fillLevel >= 44) {
+                fillLevel = 44;
             }
-            itemStack.setItemDamage(metaToBe);
-        } else {
+        }
+
+        // For save conversion - old versions tracked using metadata instead of NBT
+        if (!itemTag.hasKey("fillLevel") && itemStack.getItemDamage() > 0) {
             itemStack.setItemDamage(0);
+        }
+
+        if (itemTag.hasKey("ownerName")) {
+            itemTag.setInteger("essenceAmount", currentEssence);
+            itemTag.setInteger("fillLevel", fillLevel);
         }
     }
 
@@ -76,24 +82,22 @@ public class TransparentOrb extends EnergyBattery {
     }
 
     @Override
-    public IIcon getIcon(ItemStack stack, int pass) {
-        int i = stack.getItemDamage() + 1;
-
-        if (i != stack.getItemDamage() && i < icons.length) {
-            i = stack.getItemDamage() + 1;
-            return icons[i - 1];
-        } else if (i <= icons.length) {
-            return icons[icons.length - 1];
-        } else {
+    public IIcon getIcon(ItemStack itemStack, int pass) {
+        NBTTagCompound itemTag = itemStack.getTagCompound();
+        if (itemTag == null) {
             return itemIcon;
         }
+        int i = itemStack.getTagCompound().getInteger("fillLevel");
+        if (i < 0 || i >= icons.length) {
+            return itemIcon;
+        }
+        return icons[i];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon("BloodArsenal:orb/orb_0");
-        icons[0] = iconRegister.registerIcon("BloodArsenal:orb/orb_0");
 
         for (int i = 0; i < icons.length; i++) {
             icons[i] = iconRegister.registerIcon("BloodArsenal:orb/orb_" + i);
