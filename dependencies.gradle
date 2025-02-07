@@ -3,8 +3,8 @@
 dependencies {
     api 'com.github.GTNewHorizons:Baubles:1.0.4:dev'
     api 'com.github.GTNewHorizons:Mantle:0.5.0:dev'
-    api 'com.github.GTNewHorizons:BloodMagic:1.7.1:dev'
-    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.13.4-GTNH:dev')
+    api 'com.github.GTNewHorizons:BloodMagic:1.7.5:dev'
+    compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.13.8-GTNH:dev')
     compileOnly('com.github.GTNewHorizons:AppleCore:3.3.4:dev')
     compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.1.0:dev'
     compileOnlyApi 'com.github.GTNewHorizons:ForgeMultipart:1.6.2:dev'
@@ -12,5 +12,5 @@ dependencies {
 
     devOnlyNonPublishable 'thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev'
 
-    runtimeOnlyNonPublishable 'com.github.GTNewHorizons:NotEnoughItems:2.7.22-GTNH:dev'
+    runtimeOnlyNonPublishable 'com.github.GTNewHorizons:NotEnoughItems:2.7.28-GTNH:dev'
 }
