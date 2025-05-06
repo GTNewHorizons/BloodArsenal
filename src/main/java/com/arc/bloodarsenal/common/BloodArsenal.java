@@ -40,13 +40,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 @Mod(
         modid = BloodArsenal.MODID,
         version = BloodArsenal.VERSION,
-        name = "GRADLETOKEN_MODNAME",
+        name = "Blood Arsenal",
         dependencies = "required-after:AWWayofTime;after:NotEnoughItems;after:Baubles;after:guideapi;after:TConstruct;after:Waila;after:ForbiddenMagic",
         guiFactory = "com.arc.bloodarsenal.common.gui.ConfigGuiFactory")
 public class BloodArsenal {
 
-    public static final String MODID = "GRADLETOKEN_MODID";
-    public static final String VERSION = "GRADLETOKEN_VERSION";
+    public static final String MODID = "BloodArsenal";
+    public static final String VERSION = BATags.VERSION;
 
     @SidedProxy(
             clientSide = "com.arc.bloodarsenal.client.ClientProxy",
