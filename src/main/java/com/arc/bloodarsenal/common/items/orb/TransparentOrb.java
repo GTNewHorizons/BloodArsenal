@@ -58,10 +58,7 @@ public class TransparentOrb extends EnergyBattery {
 
         int fillLevel = 0;
         if (currentEssence > 0) {
-            fillLevel = (currentEssence / section);
-            if (fillLevel >= 44) {
-                fillLevel = 44;
-            }
+            if (section > 0) fillLevel = Math.min((currentEssence / section), 44);
         }
 
         // For save conversion - old versions tracked using metadata instead of NBT
