@@ -416,17 +416,16 @@ public class TileLPMaterializer extends TileEntity implements IInventory, IFluid
                 fluidOutput = null;
             }
 
-            if (this != null) {
-                FluidEvent.fireEvent(
-                        new FluidEvent.FluidDrainingEvent(
-                                fluidOutput,
-                                this.worldObj,
-                                this.xCoord,
-                                this.yCoord,
-                                this.zCoord,
-                                this,
-                                1000));
-            }
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidDrainingEvent(
+                            fluidOutput,
+                            this.worldObj,
+                            this.xCoord,
+                            this.yCoord,
+                            this.zCoord,
+                            this,
+                            drained));
+
         }
 
         if (fluidOutput == null) {
