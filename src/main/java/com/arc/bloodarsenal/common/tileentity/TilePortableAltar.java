@@ -542,17 +542,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
         if (fluidInput == null) {
             fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
 
-            if (tile != null) {
-                FluidEvent.fireEvent(
-                        new FluidEvent.FluidFillingEvent(
-                                fluidInput,
-                                tile.getWorldObj(),
-                                tile.xCoord,
-                                tile.yCoord,
-                                tile.zCoord,
-                                this,
-                                fluidInput.amount));
-            }
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidFillingEvent(
+                            fluidInput,
+                            tile.getWorldObj(),
+                            tile.xCoord,
+                            tile.yCoord,
+                            tile.zCoord,
+                            this,
+                            fluidInput.amount));
 
             return fluidInput.amount;
         }
@@ -570,17 +568,15 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
             fluidInput.amount = bufferCapacity;
         }
 
-        if (tile != null) {
-            FluidEvent.fireEvent(
-                    new FluidEvent.FluidFillingEvent(
-                            fluidInput,
-                            tile.getWorldObj(),
-                            tile.xCoord,
-                            tile.yCoord,
-                            tile.zCoord,
-                            this,
-                            fluidInput.amount));
-        }
+        FluidEvent.fireEvent(
+                new FluidEvent.FluidFillingEvent(
+                        fluidInput,
+                        tile.getWorldObj(),
+                        tile.xCoord,
+                        tile.yCoord,
+                        tile.zCoord,
+                        this,
+                        filled));
 
         return filled;
     }
@@ -606,17 +602,16 @@ public class TilePortableAltar extends TileEntity implements IInventory, IFluidT
                 fluidOutput = null;
             }
 
-            if (this != null) {
-                FluidEvent.fireEvent(
-                        new FluidEvent.FluidDrainingEvent(
-                                fluidOutput,
-                                this.worldObj,
-                                this.xCoord,
-                                this.yCoord,
-                                this.zCoord,
-                                this,
-                                fluidOutput.amount));
-            }
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidDrainingEvent(
+                            fluidOutput,
+                            this.worldObj,
+                            this.xCoord,
+                            this.yCoord,
+                            this.zCoord,
+                            this,
+                            drained));
+
         }
 
         if (fluidOutput == null) {

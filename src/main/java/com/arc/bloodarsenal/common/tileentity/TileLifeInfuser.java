@@ -405,17 +405,15 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
         if (fluidInput == null) {
             fluidInput = new FluidStack(resource, resource.amount);
 
-            if (tile != null) {
-                FluidEvent.fireEvent(
-                        new FluidEvent.FluidFillingEvent(
-                                fluidInput,
-                                tile.getWorldObj(),
-                                tile.xCoord,
-                                tile.yCoord,
-                                tile.zCoord,
-                                this,
-                                fluidInput.amount));
-            }
+            FluidEvent.fireEvent(
+                    new FluidEvent.FluidFillingEvent(
+                            fluidInput,
+                            tile.getWorldObj(),
+                            tile.xCoord,
+                            tile.yCoord,
+                            tile.zCoord,
+                            this,
+                            fluidInput.amount));
 
             return fluidInput.amount;
         }
@@ -433,17 +431,15 @@ public class TileLifeInfuser extends TileEntity implements IInventory, IFluidTan
             fluidInput.amount = bufferCapacity;
         }
 
-        if (tile != null) {
-            FluidEvent.fireEvent(
-                    new FluidEvent.FluidFillingEvent(
-                            fluidInput,
-                            tile.getWorldObj(),
-                            tile.xCoord,
-                            tile.yCoord,
-                            tile.zCoord,
-                            this,
-                            fluidInput.amount));
-        }
+        FluidEvent.fireEvent(
+                new FluidEvent.FluidFillingEvent(
+                        fluidInput,
+                        tile.getWorldObj(),
+                        tile.xCoord,
+                        tile.yCoord,
+                        tile.zCoord,
+                        this,
+                        filled));
 
         return filled;
     }
