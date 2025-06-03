@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TransparentOrb extends EnergyBattery {
 
-    IIcon icons[] = new IIcon[45];
+    IIcon[] icons = new IIcon[45];
 
     public TransparentOrb(int damage) {
         super(damage);
@@ -28,6 +28,7 @@ public class TransparentOrb extends EnergyBattery {
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean something) {
         list.add(StatCollector.translateToLocal("tooltip.energybattery.desc"));
+        list.add(StatCollector.translateToLocalFormatted("tooltip.energybattery.capacity", this.getMaxEssence()));
 
         if (itemStack.getTagCompound() != null) {
             list.add(
@@ -36,7 +37,7 @@ public class TransparentOrb extends EnergyBattery {
 
             list.add(
                     StatCollector.translateToLocal("tooltip.energybattery.currentLP") + " "
-                            + itemStack.getTagCompound().getInteger("essenceAmount"));
+                            + String.format("%,d", itemStack.getTagCompound().getInteger("essenceAmount")));
 
         }
     }
@@ -48,7 +49,7 @@ public class TransparentOrb extends EnergyBattery {
             return;
         }
         if (world.isRemote) {
-            return;// changes of metadata and NBT will be synced to client, no need to proceed on client
+            return; // Changes of metadata and NBT will be synced to client, no need to proceed on client
         }
 
         int maxEssence = SoulNetworkHandler
