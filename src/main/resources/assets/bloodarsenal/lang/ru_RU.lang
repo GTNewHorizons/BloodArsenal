@@ -207,7 +207,7 @@ message.enchant.noPedestals=Постаменты не найдены!
 message.enchant.noEnchantItem=Не найден предмет для зачарования!
 message.enchant.noEnchantments=Нет чар для применения!
 message.enchant.notEnoughLP=У тебя не хватает нужного кол-ва LP!
-message.enchant.The enchantment is not valid for the item
+message.enchant.enchantIsNotValid=Зачарование не подходит предмету
 
 message.tile.contains=Содержит:
 
