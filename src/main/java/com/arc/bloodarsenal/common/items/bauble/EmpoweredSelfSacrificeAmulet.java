@@ -40,11 +40,9 @@ public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements
     public EmpoweredSelfSacrificeAmulet() {
         super();
         setHasSubtypes(true);
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    @SubscribeEvent
     public void selfSacrificeHandler(LivingAttackEvent event) {
         EntityLivingBase entityAttacked = event.entityLiving;
         Entity entityAttacking = event.source.getSourceOfDamage();

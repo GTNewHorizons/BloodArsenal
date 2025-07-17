@@ -35,10 +35,10 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
 
     public SelfSacrificeAmulet() {
         super();
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
-    @SubscribeEvent
+    // not moved to the EventHandler class to allow easy overriding in child class
     public void selfSacrificeHandler(LivingAttackEvent event) {
         EntityLivingBase entityAttacked = event.entityLiving;
 
@@ -163,5 +163,12 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
         NBTTagCompound tag = itemStack.getTagCompound();
 
         return tag.getInteger("storedLP");
+    }
+
+    public class EventHandler{
+        @SubscribeEvent
+        public void selfSacrificeHandlerWrapper(LivingAttackEvent event) {
+            selfSacrificeHandler(event);
+        }
     }
 }
