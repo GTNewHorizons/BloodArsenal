@@ -39,11 +39,9 @@ public class EmpoweredSacrificeAmulet extends SacrificeAmulet implements IBauble
     public EmpoweredSacrificeAmulet() {
         super();
         setHasSubtypes(true);
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    @SubscribeEvent
     public void sacrificeHandler(LivingDeathEvent event) {
         Entity killer = event.source.getEntity();
 
