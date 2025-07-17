@@ -165,7 +165,8 @@ public class SelfSacrificeAmulet extends ItemBauble implements IAltarManipulator
         return tag.getInteger("storedLP");
     }
 
-    public class EventHandler{
+    public class EventHandler {
+
         @SubscribeEvent
         public void selfSacrificeHandlerWrapper(LivingAttackEvent event) {
             selfSacrificeHandler(event);

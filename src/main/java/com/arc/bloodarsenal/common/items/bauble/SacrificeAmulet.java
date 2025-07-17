@@ -158,6 +158,7 @@ public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IB
     }
 
     public class EventHandler {
+
         @SubscribeEvent
         public void sacrificeHandlerWrapper(LivingDeathEvent event) {
             sacrificeHandler(event);
