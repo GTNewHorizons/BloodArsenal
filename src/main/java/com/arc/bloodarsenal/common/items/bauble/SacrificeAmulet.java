@@ -35,10 +35,10 @@ public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IB
 
     public SacrificeAmulet() {
         super();
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
-    @SubscribeEvent
+    // not moved in the event handler class to allow easier overriding from child class
     public void sacrificeHandler(LivingDeathEvent event) {
         Entity killer = event.source.getEntity();
 
@@ -155,5 +155,13 @@ public class SacrificeAmulet extends ItemBauble implements IAltarManipulator, IB
         NBTTagCompound tag = itemStack.getTagCompound();
 
         return tag.getInteger("storedLP");
+    }
+
+    public class EventHandler {
+
+        @SubscribeEvent
+        public void sacrificeHandlerWrapper(LivingDeathEvent event) {
+            sacrificeHandler(event);
+        }
     }
 }

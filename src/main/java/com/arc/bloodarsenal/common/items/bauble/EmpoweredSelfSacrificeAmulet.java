@@ -16,7 +16,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 import com.arc.bloodarsenal.common.BloodArsenalConfig;
@@ -31,7 +30,6 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -40,11 +38,9 @@ public class EmpoweredSelfSacrificeAmulet extends SelfSacrificeAmulet implements
     public EmpoweredSelfSacrificeAmulet() {
         super();
         setHasSubtypes(true);
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    @SubscribeEvent
     public void selfSacrificeHandler(LivingAttackEvent event) {
         EntityLivingBase entityAttacked = event.entityLiving;
         Entity entityAttacking = event.source.getSourceOfDamage();
