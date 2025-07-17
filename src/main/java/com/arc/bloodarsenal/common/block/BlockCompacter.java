@@ -10,9 +10,8 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
@@ -135,8 +134,7 @@ public class BlockCompacter extends BlockContainer {
                 SoulNetworkHandler.syphonFromNetwork(owner, cost);
                 --player.inventory.getCurrentItem().stackSize;
             } else {
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.compacter.notEnoughLP")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.compacter.notEnoughLP"));
             }
         } else if (block instanceof BlockAltar && world.getTileEntity(x, y + 1, z) != null) {
             tile = world.getTileEntity(x, y + 1, z);
@@ -148,13 +146,11 @@ public class BlockCompacter extends BlockContainer {
                 return false;
             }
             if (altar.getStackInSlot(0) != null) {
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.compacter.itemInAltar")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.compacter.itemInAltar"));
                 return true;
             }
             if (bloodOrb.getOrbLevel() < tier) {
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.compacter.wrongOrbTier")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.compacter.wrongOrbTier"));
                 return true;
             }
 
@@ -167,8 +163,7 @@ public class BlockCompacter extends BlockContainer {
                 SoulNetworkHandler.syphonFromNetwork(owner, cost);
                 --player.inventory.getCurrentItem().stackSize;
             } else {
-                player.addChatComponentMessage(
-                        new ChatComponentText(StatCollector.translateToLocal("message.compacter.notEnoughLP")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.compacter.notEnoughLP"));
             }
         }
         return true;
