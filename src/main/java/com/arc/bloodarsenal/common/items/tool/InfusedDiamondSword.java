@@ -56,9 +56,7 @@ public class InfusedDiamondSword extends ItemSword implements IBindable {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        if (!ignoreLeftClick && entity instanceof EntityLivingBase
-                && ((EntityLivingBase) entity).hurtTime == 0
-                && !((EntityLivingBase) entity).isDead) {
+        if (!ignoreLeftClick && entity instanceof EntityLivingBase e && e.hurtTime == 0 && !e.isDead) {
             switch (ToolCapabilities.getMode(stack)) {
                 case 0: {
                     if (!player.capabilities.isCreativeMode) {
@@ -68,7 +66,7 @@ public class InfusedDiamondSword extends ItemSword implements IBindable {
                 }
                 case 1: {
                     int range = 3;
-                    List<Entity> entities = player.worldObj.getEntitiesWithinAABB(
+                    List<? extends Entity> entities = player.worldObj.getEntitiesWithinAABB(
                             entity.getClass(),
                             AxisAlignedBB.getBoundingBox(
                                     entity.posX - range,
@@ -90,8 +88,7 @@ public class InfusedDiamondSword extends ItemSword implements IBindable {
                     break;
                 }
                 case 2: {
-                    EntityLivingBase living = (EntityLivingBase) entity;
-                    living.setFire(3);
+                    e.setFire(3);
 
                     if (!player.capabilities.isCreativeMode) {
                         EnergyItems.syphonBatteries(stack, player, 300);
