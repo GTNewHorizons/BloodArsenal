@@ -164,8 +164,7 @@ public class RitualEffectEnchant extends RitualEffect {
                     if (stageTicks >= 100) {
                         for (EnchantmentData d : enchants) {
                             if (EnchantmentHelper.getEnchantmentLevel(d.enchant, enchantItem) == 0) {
-                                var ench = Enchantment.enchantmentsList[d.enchant];
-                                enchantItem.addEnchantment(ench, Math.min(d.level, ench.getMaxLevel()));
+                                enchantItem.addEnchantment(Enchantment.enchantmentsList[d.enchant], d.level);
                             }
                         }
 
