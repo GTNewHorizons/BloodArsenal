@@ -164,7 +164,12 @@ public class RitualEffectEnchant extends RitualEffect {
                     if (stageTicks >= 100) {
                         for (EnchantmentData d : enchants) {
                             if (EnchantmentHelper.getEnchantmentLevel(d.enchant, enchantItem) == 0) {
-                                enchantItem.addEnchantment(Enchantment.enchantmentsList[d.enchant], d.level);
+                                if (enchantItem.stackTagCompound == null) enchantItem.setTagCompound(new NBTTagCompound());
+                                if (!enchantItem.stackTagCompound.hasKey("ench", 9)) enchantmentItem.setTag("ench", new NBTTagList());
+                                NBTTagCompound ench = new NBTTagCompound();
+                                ench.setShort("id", (short)Enchantment.enchantmentsList[d.enchant].effectId);
+                                ench.setShort("lvl", (short)d.level);
+                                enchantItem.stackTagCompound.getTagList("ench", 10).appendTag(ench);
                             }
                         }
 
