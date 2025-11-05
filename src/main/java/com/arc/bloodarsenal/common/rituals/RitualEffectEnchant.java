@@ -140,10 +140,13 @@ public class RitualEffectEnchant extends RitualEffect {
 
                         for (EnchantmentData d : enchants) {
                             Enchantment ench = Enchantment.enchantmentsList[d.enchant];
-                            lpRequired += (int) (500F * ((15 - Math.min(15, ench.getWeight())) * 1.05F)
-                                    * ((3F + d.level * d.level) * 0.25F)
-                                    * (0.9F + enchants.size() * 0.05F));
+                            lpRequired += (int) Math.min(
+                                    1E8F,
+                                    500F * (Math.max(0, 15 - Math.min(15, ench.getWeight())) * 1.05F)
+                                            * ((3F + d.level * d.level) * 0.25F)
+                                            * (0.9F + enchants.size() * 0.05F));
                         }
+                        if (lpRequired < 0) lpRequired = Integer.MAX_VALUE;
                         if (player != null)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
                     }
@@ -164,11 +167,13 @@ public class RitualEffectEnchant extends RitualEffect {
                     if (stageTicks >= 100) {
                         for (EnchantmentData d : enchants) {
                             if (EnchantmentHelper.getEnchantmentLevel(d.enchant, enchantItem) == 0) {
-                                if (enchantItem.stackTagCompound == null) enchantItem.setTagCompound(new NBTTagCompound());
-                                if (!enchantItem.stackTagCompound.hasKey("ench", 9)) enchantmentItem.setTag("ench", new NBTTagList());
+                                if (enchantItem.stackTagCompound == null)
+                                    enchantItem.setTagCompound(new NBTTagCompound());
+                                if (!enchantItem.stackTagCompound.hasKey("ench", 9))
+                                    enchantItem.stackTagCompound.setTag("ench", new NBTTagList());
                                 NBTTagCompound ench = new NBTTagCompound();
-                                ench.setShort("id", (short)Enchantment.enchantmentsList[d.enchant].effectId);
-                                ench.setShort("lvl", (short)d.level);
+                                ench.setShort("id", (short) Enchantment.enchantmentsList[d.enchant].effectId);
+                                ench.setShort("lvl", (short) d.level);
                                 enchantItem.stackTagCompound.getTagList("ench", 10).appendTag(ench);
                             }
                         }
