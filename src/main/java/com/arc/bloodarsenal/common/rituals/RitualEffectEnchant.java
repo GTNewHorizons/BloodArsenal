@@ -37,8 +37,8 @@ public class RitualEffectEnchant extends RitualEffect {
     int lpRequired = -1;
 
     public ItemStack enchantItem = null;
-    public List<EnchantmentData> enchants = new ArrayList();
-    // public List<ItemStack> itemList = new ArrayList();
+    public List<EnchantmentData> enchants = new ArrayList<>();
+    // public List<ItemStack> itemList = new ArrayList<>();
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
