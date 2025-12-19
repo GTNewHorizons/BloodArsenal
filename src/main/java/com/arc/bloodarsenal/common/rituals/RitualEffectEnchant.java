@@ -145,8 +145,11 @@ public class RitualEffectEnchant extends RitualEffect {
                                     500F * (Math.max(0, 15 - Math.min(15, ench.getWeight())) * 1.05F)
                                             * ((3F + d.level * d.level) * 0.25F)
                                             * (0.9F + enchants.size() * 0.05F));
+                            if (lpRequired < 0) {
+                                lpRequired = Integer.MAX_VALUE;
+                                break;
+                            }
                         }
-                        if (lpRequired < 0) lpRequired = Integer.MAX_VALUE;
                         if (player != null)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
                     }
