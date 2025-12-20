@@ -158,7 +158,7 @@ public class RitualEffectEnchant extends RitualEffect {
                         if (player != null && !tooExpensive)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
                     }
-                    if (SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
+                    if (!tooExpensive && SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
                         SoulNetworkHandler.syphonFromNetwork(owner, lpRequired);
                         lpRequired = 0;
                         advanceStage();
