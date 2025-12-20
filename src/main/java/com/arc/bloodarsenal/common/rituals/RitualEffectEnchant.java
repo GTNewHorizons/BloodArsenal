@@ -35,7 +35,7 @@ public class RitualEffectEnchant extends RitualEffect {
     public int stage3EndTicks = 0;
 
     int lpRequired = -1;
-    boolean tooExpensive = false;
+    // boolean tooExpensive = false;
 
     public ItemStack enchantItem = null;
     public List<EnchantmentData> enchants = new ArrayList<>();
@@ -138,7 +138,6 @@ public class RitualEffectEnchant extends RitualEffect {
                 case 2: {
                     if (lpRequired == -1) {
                         lpRequired = 0;
-                        tooExpensive = false;
 
                         for (EnchantmentData d : enchants) {
                             Enchantment ench = Enchantment.enchantmentsList[d.enchant];
@@ -148,17 +147,16 @@ public class RitualEffectEnchant extends RitualEffect {
                                             * ((3D + d.level * d.level) * 0.25D)
                                             * (0.9D + enchants.size() * 0.05D));
                             if (lpDiff + (double) lpRequired > (double) Integer.MAX_VALUE) {
-                                tooExpensive = true;
                                 lpRequired = Integer.MAX_VALUE;
                                 break;
                             }
                             lpRequired += (int) lpDiff;
                             // lpRequired is an int so this can't sneak an overflow past prev check
                         }
-                        if (player != null && !tooExpensive)
+                        if (player != null)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
                     }
-                    if (!tooExpensive && SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
+                    if (SoulNetworkHandler.getCurrentEssence(owner) >= lpRequired) {
                         SoulNetworkHandler.syphonFromNetwork(owner, lpRequired);
                         lpRequired = 0;
                         advanceStage();
