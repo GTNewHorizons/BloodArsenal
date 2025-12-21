@@ -35,6 +35,7 @@ public class RitualEffectEnchant extends RitualEffect {
     public int stage3EndTicks = 0;
 
     int lpRequired = -1;
+    // boolean tooExpensive = false;
 
     public ItemStack enchantItem = null;
     public List<EnchantmentData> enchants = new ArrayList<>();
@@ -140,13 +141,18 @@ public class RitualEffectEnchant extends RitualEffect {
 
                         for (EnchantmentData d : enchants) {
                             Enchantment ench = Enchantment.enchantmentsList[d.enchant];
-                            lpRequired += (int) Math.min(
-                                    1E8F,
-                                    500F * (Math.max(0, 15 - Math.min(15, ench.getWeight())) * 1.05F)
-                                            * ((3F + d.level * d.level) * 0.25F)
-                                            * (0.9F + enchants.size() * 0.05F));
+                            double lpDiff = Math.min(
+                                    (double) Integer.MAX_VALUE,
+                                    500D * (15D / (double) ench.getWeight() * 1.05D)
+                                            * (0.75D + 2.25D * (double) d.level / (double) d.getMaxLevel())
+                                            * (0.9D + enchants.size() * 0.05D));
+                            if (lpDiff + (double) lpRequired > (double) Integer.MAX_VALUE) {
+                                lpRequired = Integer.MAX_VALUE;
+                                break;
+                            }
+                            lpRequired += (int) lpDiff;
+                            // lpRequired is an int so this can't sneak an overflow past prev check
                         }
-                        if (lpRequired < 0) lpRequired = Integer.MAX_VALUE;
                         if (player != null)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
                     }
