@@ -144,7 +144,8 @@ public class RitualEffectEnchant extends RitualEffect {
                             double lpDiff = Math.min(
                                     (double) Integer.MAX_VALUE,
                                     500D * (15D / (double) ench.getWeight() * 1.05D)
-                                            * (0.75D + 2.25D * (double) d.level / (double) d.getMaxLevel())
+                                            * (0.75D + 2.25D * (double) d.level
+                                            / (double) Enchantment.enchantmentsList[d.enchant].getMaxLevel())
                                             * (0.9D + enchants.size() * 0.05D));
                             if (lpDiff + (double) lpRequired > (double) Integer.MAX_VALUE) {
                                 lpRequired = Integer.MAX_VALUE;
