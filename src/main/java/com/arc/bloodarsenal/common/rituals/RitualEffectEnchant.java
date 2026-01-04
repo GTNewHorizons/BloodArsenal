@@ -35,10 +35,11 @@ public class RitualEffectEnchant extends RitualEffect {
     public int stage3EndTicks = 0;
 
     int lpRequired = -1;
+    // boolean tooExpensive = false;
 
     public ItemStack enchantItem = null;
-    public List<EnchantmentData> enchants = new ArrayList();
-    // public List<ItemStack> itemList = new ArrayList();
+    public List<EnchantmentData> enchants = new ArrayList<>();
+    // public List<ItemStack> itemList = new ArrayList<>();
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone) {
@@ -140,9 +141,18 @@ public class RitualEffectEnchant extends RitualEffect {
 
                         for (EnchantmentData d : enchants) {
                             Enchantment ench = Enchantment.enchantmentsList[d.enchant];
-                            lpRequired += (int) (500F * ((15 - Math.min(15, ench.getWeight())) * 1.05F)
-                                    * ((3F + d.level * d.level) * 0.25F)
-                                    * (0.9F + enchants.size() * 0.05F));
+                            double lpDiff = Math.min(
+                                    (double) Integer.MAX_VALUE,
+                                    500D * (15D / (double) ench.getWeight() * 1.05D)
+                                            * (0.75D + 2.25D * (double) d.level
+                                                    / (double) Enchantment.enchantmentsList[d.enchant].getMaxLevel())
+                                            * (0.9D + enchants.size() * 0.05D));
+                            if (lpDiff + (double) lpRequired > (double) Integer.MAX_VALUE) {
+                                lpRequired = Integer.MAX_VALUE;
+                                break;
+                            }
+                            lpRequired += (int) lpDiff;
+                            // lpRequired is an int so this can't sneak an overflow past prev check
                         }
                         if (player != null)
                             player.addChatComponentMessage(new ChatComponentText("Lp required: " + lpRequired));
@@ -164,7 +174,14 @@ public class RitualEffectEnchant extends RitualEffect {
                     if (stageTicks >= 100) {
                         for (EnchantmentData d : enchants) {
                             if (EnchantmentHelper.getEnchantmentLevel(d.enchant, enchantItem) == 0) {
-                                enchantItem.addEnchantment(Enchantment.enchantmentsList[d.enchant], d.level);
+                                if (enchantItem.stackTagCompound == null)
+                                    enchantItem.setTagCompound(new NBTTagCompound());
+                                if (!enchantItem.stackTagCompound.hasKey("ench", 9))
+                                    enchantItem.stackTagCompound.setTag("ench", new NBTTagList());
+                                NBTTagCompound ench = new NBTTagCompound();
+                                ench.setShort("id", (short) Enchantment.enchantmentsList[d.enchant].effectId);
+                                ench.setShort("lvl", (short) d.level);
+                                enchantItem.stackTagCompound.getTagList("ench", 10).appendTag(ench);
                             }
                         }
 
