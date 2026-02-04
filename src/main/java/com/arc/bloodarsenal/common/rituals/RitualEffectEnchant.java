@@ -164,7 +164,7 @@ public class RitualEffectEnchant extends RitualEffect {
                     } else {
                         sendPlayerInformation(player, 5);
                         lpRequired = -1;
-                        enchants.clear();
+                        this.enchants.clear();
                         ritualStone.setActive(false);
                     }
 
