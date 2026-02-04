@@ -103,7 +103,6 @@ public class RitualEffectEnchant extends RitualEffect {
                             for (ItemStack itemStack : pedestalStack) {
                                 if (itemStack != null && itemStack.getItem() == Items.enchanted_book) {
                                     NBTTagList enchants = Items.enchanted_book.func_92110_g(itemStack);
-
                                     if (enchants != null && enchants.tagCount() > 0) {
                                         NBTTagCompound enchant = enchants.getCompoundTagAt(0);
                                         short id = enchant.getShort("id");
@@ -164,6 +163,8 @@ public class RitualEffectEnchant extends RitualEffect {
                         world.markBlockForUpdate(x, y, z);
                     } else {
                         sendPlayerInformation(player, 5);
+                        lpRequired = -1;
+                        enchants.clear();
                         ritualStone.setActive(false);
                     }
 
