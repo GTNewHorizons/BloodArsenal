@@ -1,7 +1,7 @@
 // Add your dependencies here
 
 dependencies {
-    api 'com.github.GTNewHorizons:Baubles:1.0.4:dev'
+    api 'com.github.GTNewHorizons:Baubles-Expanded:2.2.11-GTNH:dev'
     api 'com.github.GTNewHorizons:Mantle:0.5.1:dev'
     api 'com.github.GTNewHorizons:BloodMagic:1.8.8:dev'
     compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.14.17-GTNH:dev')
