@@ -6,7 +6,7 @@ dependencies {
     api 'com.github.GTNewHorizons:BloodMagic:1.8.8:dev'
     compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.14.17-GTNH:dev')
     compileOnly('com.github.GTNewHorizons:AppleCore:3.3.9:dev')
-    compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.1.0:dev'
+    compileOnlyApi 'com.github.GTNewHorizons:Guide-API:1.1.1:dev'
     compileOnlyApi 'com.github.GTNewHorizons:ForgeMultipart:1.7.2:dev'
     compileOnlyApi 'com.github.GTNewHorizons:waila:1.9.15:api'
 
