@@ -285,7 +285,7 @@ public class BlockCompacter extends BlockContainer {
         sacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSacrificeUpgrades());
         selfSacrificeEfficiencyMultiplier = (float) (0.12 * upgrades.getSelfSacrificeUpgrades());
         capacityMultiplier = (float) ((1 * Math.pow(1.14, upgrades.getBetterCapacitiveUpgrades())
-                + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
+                + 0.35 * upgrades.getAltarCapacitiveUpgrades()));
         dislocationMultiplier = (float) (Math.pow(1.5, upgrades.getDisplacementUpgrades()));
         orbCapacityMultiplier = (float) (1 + 0.04 * upgrades.getOrbCapacitiveUpgrades());
         capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
