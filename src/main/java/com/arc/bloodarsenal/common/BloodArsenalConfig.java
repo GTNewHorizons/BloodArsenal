@@ -1,11 +1,16 @@
 package com.arc.bloodarsenal.common;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+
+import com.gtnewhorizon.gtnhlib.util.data.Lazy;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BloodArsenalConfig {
 
@@ -62,7 +67,7 @@ public class BloodArsenalConfig {
     public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
-    public static Set<String> glassProtectiveItems;
+    public static Lazy<Set<Item>> glassProtectiveItems;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -155,17 +160,25 @@ public class BloodArsenalConfig {
         isGlassDangerous = config
                 .get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
                 .getBoolean(isGlassDangerous);
-        glassProtectiveItems = Arrays
-                .stream(
-                        config.get(
-                                misc,
-                                "Glass-protective Items",
-                                new String[] { "matter-manipulator:itemMatterManipulator0",
-                                        "matter-manipulator:itemMatterManipulator1",
-                                        "matter-manipulator:itemMatterManipulator2",
-                                        "matter-manipulator:itemMatterManipulator3" },
-                                "Breaking glass with any of these items will not cause bleeding").getStringList())
-                .collect(Collectors.toSet());
+
+        String[] glassProtectiveItemIds = config.get(
+                misc,
+                "Glass-protective Items",
+                new String[] { "matter-manipulator:itemMatterManipulator0", "matter-manipulator:itemMatterManipulator1",
+                        "matter-manipulator:itemMatterManipulator2", "matter-manipulator:itemMatterManipulator3" },
+                "Breaking glass with any of these items will not cause bleeding").getStringList();
+
+        glassProtectiveItems = new Lazy<>(() -> {
+            HashSet<Item> set = new HashSet<>();
+            for (String itemId : glassProtectiveItemIds) {
+                UniqueIdentifier id = new UniqueIdentifier(itemId);
+                Item item = GameRegistry.findItem(id.modId, id.name);
+                if (item != null) {
+                    set.add(item);
+                }
+            }
+            return set;
+        });
 
         config.save();
     }

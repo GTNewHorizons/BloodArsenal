@@ -27,7 +27,6 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BloodArsenalEventHooks {
 
@@ -186,9 +185,7 @@ public class BloodArsenalEventHooks {
                             }
                         } else {
                             if (BloodArsenalConfig.isGlassDangerous && random.nextInt(3) == 2) {
-                                UniqueIdentifier equippedItemId = GameRegistry.findUniqueIdentifierFor(equippedItem);
-                                String equippedItemIdStr = equippedItemId == null ? null : equippedItemId.toString();
-                                if (!BloodArsenalConfig.glassProtectiveItems.contains(equippedItemIdStr)) {
+                                if (!BloodArsenalConfig.glassProtectiveItems.get().contains(equippedItem)) {
                                     player.addPotionEffect(
                                             new PotionEffect(BloodArsenal.bleeding.id, 8 * 20, random.nextInt(3)));
                                 }
