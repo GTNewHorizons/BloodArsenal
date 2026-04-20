@@ -1,12 +1,19 @@
 package com.arc.bloodarsenal.common;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BloodArsenalConfig {
 
     public static Configuration config;
+    private static boolean hasPostInit = false;
 
     // Config Categories
     public static String potionId = "Potion ID";
@@ -59,6 +66,8 @@ public class BloodArsenalConfig {
     public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
+    public static Set<Item> glassProtectiveItems;
+    private static String[] glassProtectiveItemIds;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -152,6 +161,32 @@ public class BloodArsenalConfig {
                 .get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
                 .getBoolean(isGlassDangerous);
 
+        glassProtectiveItemIds = config.get(
+                misc,
+                "Glass-protective Items",
+                new String[] { "matter-manipulator:itemMatterManipulator0", "matter-manipulator:itemMatterManipulator1",
+                        "matter-manipulator:itemMatterManipulator2", "matter-manipulator:itemMatterManipulator3" },
+                "Breaking glass with any of these items will not cause bleeding").getStringList();
+
         config.save();
+
+        // Run postInit() if the config was changed from in-game config menu
+        if (hasPostInit) {
+            postInit();
+        }
+    }
+
+    public static void postInit() {
+        hasPostInit = true;
+        glassProtectiveItems = new HashSet<>();
+        if (glassProtectiveItemIds != null) {
+            for (String itemId : glassProtectiveItemIds) {
+                UniqueIdentifier id = new UniqueIdentifier(itemId);
+                Item item = GameRegistry.findItem(id.modId, id.name);
+                if (item != null) {
+                    glassProtectiveItems.add(item);
+                }
+            }
+        }
     }
 }

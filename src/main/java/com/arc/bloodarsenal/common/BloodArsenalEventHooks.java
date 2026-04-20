@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -169,8 +170,9 @@ public class BloodArsenalEventHooks {
             if (player != null && player instanceof EntityPlayerMP && !(player instanceof FakePlayer)) {
                 if (!event.world.isRemote && !event.isSilkTouching) {
                     if (block != null && block instanceof BlockGlass) {
-                        if (player.getCurrentEquippedItem() != null
-                                && player.getCurrentEquippedItem().getItem() == Items.flint) {
+                        ItemStack equippedItemStack = player.getCurrentEquippedItem();
+                        Item equippedItem = equippedItemStack != null ? equippedItemStack.getItem() : null;
+                        if (equippedItem == Items.flint) {
                             event.drops.add(new ItemStack(ModItems.glass_shard));
                             if (random.nextInt() + 5 < 8) {
                                 event.drops.add(new ItemStack(ModItems.glass_shard));
@@ -183,8 +185,10 @@ public class BloodArsenalEventHooks {
                             }
                         } else {
                             if (BloodArsenalConfig.isGlassDangerous && random.nextInt(3) == 2) {
-                                player.addPotionEffect(
-                                        new PotionEffect(BloodArsenal.bleeding.id, 8 * 20, random.nextInt(3)));
+                                if (!BloodArsenalConfig.glassProtectiveItems.contains(equippedItem)) {
+                                    player.addPotionEffect(
+                                            new PotionEffect(BloodArsenal.bleeding.id, 8 * 20, random.nextInt(3)));
+                                }
                             }
                         }
                     }
