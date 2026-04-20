@@ -59,6 +59,7 @@ public class BloodArsenalConfig {
     public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
+    public static String[] glassProtectiveItems;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -151,6 +152,12 @@ public class BloodArsenalConfig {
         isGlassDangerous = config
                 .get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
                 .getBoolean(isGlassDangerous);
+        glassProtectiveItems = config.get(
+                misc,
+                "Glass-protective Items",
+                new String[] { "matter-manipulator:itemMatterManipulator0", "matter-manipulator:itemMatterManipulator1",
+                        "matter-manipulator:itemMatterManipulator2", "matter-manipulator:itemMatterManipulator3" },
+                "Breaking glass with any of these items will not cause bleeding").getStringList();
 
         config.save();
     }
