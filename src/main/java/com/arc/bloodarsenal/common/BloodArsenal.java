@@ -188,5 +188,7 @@ public class BloodArsenal {
             logger.info("Loaded Forge Multipart integration");
             ModBlocks.registerMultiparts();
         }
+
+        BloodArsenalConfig.postInit();
     }
 }

@@ -185,7 +185,7 @@ public class BloodArsenalEventHooks {
                             }
                         } else {
                             if (BloodArsenalConfig.isGlassDangerous && random.nextInt(3) == 2) {
-                                if (!BloodArsenalConfig.glassProtectiveItems.get().contains(equippedItem)) {
+                                if (!BloodArsenalConfig.glassProtectiveItems.contains(equippedItem)) {
                                     player.addPotionEffect(
                                             new PotionEffect(BloodArsenal.bleeding.id, 8 * 20, random.nextInt(3)));
                                 }
