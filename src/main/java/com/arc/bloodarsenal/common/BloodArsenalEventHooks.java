@@ -1,6 +1,5 @@
 package com.arc.bloodarsenal.common;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -189,8 +188,7 @@ public class BloodArsenalEventHooks {
                             if (BloodArsenalConfig.isGlassDangerous && random.nextInt(3) == 2) {
                                 UniqueIdentifier equippedItemId = GameRegistry.findUniqueIdentifierFor(equippedItem);
                                 String equippedItemIdStr = equippedItemId == null ? null : equippedItemId.toString();
-                                if (equippedItemIdStr != null && Arrays.stream(BloodArsenalConfig.glassProtectiveItems)
-                                        .noneMatch(s -> s.equals(equippedItemIdStr))) {
+                                if (!BloodArsenalConfig.glassProtectiveItems.contains(equippedItemIdStr)) {
                                     player.addPotionEffect(
                                             new PotionEffect(BloodArsenal.bleeding.id, 8 * 20, random.nextInt(3)));
                                 }

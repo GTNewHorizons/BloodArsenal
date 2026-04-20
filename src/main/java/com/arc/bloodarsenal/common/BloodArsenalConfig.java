@@ -1,6 +1,9 @@
 package com.arc.bloodarsenal.common;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.minecraftforge.common.config.Configuration;
 
@@ -59,7 +62,7 @@ public class BloodArsenalConfig {
     public static boolean isRedGood;
     public static boolean cakeIsLie;
     public static boolean isGlassDangerous;
-    public static String[] glassProtectiveItems;
+    public static Set<String> glassProtectiveItems;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -152,12 +155,17 @@ public class BloodArsenalConfig {
         isGlassDangerous = config
                 .get(misc, "Is glass dangerous?", true, "Breaking glass is dangerous unless you're a wimp")
                 .getBoolean(isGlassDangerous);
-        glassProtectiveItems = config.get(
-                misc,
-                "Glass-protective Items",
-                new String[] { "matter-manipulator:itemMatterManipulator0", "matter-manipulator:itemMatterManipulator1",
-                        "matter-manipulator:itemMatterManipulator2", "matter-manipulator:itemMatterManipulator3" },
-                "Breaking glass with any of these items will not cause bleeding").getStringList();
+        glassProtectiveItems = Arrays
+                .stream(
+                        config.get(
+                                misc,
+                                "Glass-protective Items",
+                                new String[] { "matter-manipulator:itemMatterManipulator0",
+                                        "matter-manipulator:itemMatterManipulator1",
+                                        "matter-manipulator:itemMatterManipulator2",
+                                        "matter-manipulator:itemMatterManipulator3" },
+                                "Breaking glass with any of these items will not cause bleeding").getStringList())
+                .collect(Collectors.toSet());
 
         config.save();
     }
