@@ -120,7 +120,7 @@ public class BlockCompacter extends BlockContainer {
             float multiplier = 1;
 
             for (RitualComponent ritualComponent : ritualList) {
-                switch (ritualComponent.getStoneType()) {
+                switch (ritualComponent.stoneType()) {
                     case 1, 2, 3, 4 -> multiplier *= 1.05F;
                     case 5, 6 -> multiplier *= 1.075F;
                 }
@@ -225,12 +225,12 @@ public class BlockCompacter extends BlockContainer {
         for (RitualComponent ritualComponent : ritualList) {
             world.setBlockToAir(
                     x + ritualComponent.getX(direction),
-                    y + ritualComponent.getY(),
+                    y + ritualComponent.y(),
                     z + ritualComponent.getZ(direction));
             world.setBlockToAir(x, y, z);
             world.markBlockForUpdate(
                     x + ritualComponent.getX(direction),
-                    y + ritualComponent.getY(),
+                    y + ritualComponent.y(),
                     z + ritualComponent.getZ(direction));
         }
 
@@ -316,11 +316,11 @@ public class BlockCompacter extends BlockContainer {
 
         if (altarComponents != null && !world.isRemote) {
             for (AltarComponent altarComponent : altarComponents) {
-                world.setBlockToAir(x + altarComponent.getX(), y + altarComponent.getY(), z + altarComponent.getZ());
+                world.setBlockToAir(x + altarComponent.x(), y + altarComponent.y(), z + altarComponent.z());
                 world.markBlockForUpdate(
-                        x + altarComponent.getX(),
-                        y + altarComponent.getY(),
-                        z + altarComponent.getZ());
+                        x + altarComponent.x(),
+                        y + altarComponent.y(),
+                        z + altarComponent.z());
             }
         }
 
