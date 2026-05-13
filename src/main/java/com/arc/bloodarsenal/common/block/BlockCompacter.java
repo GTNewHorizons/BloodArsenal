@@ -317,10 +317,7 @@ public class BlockCompacter extends BlockContainer {
         if (altarComponents != null && !world.isRemote) {
             for (AltarComponent altarComponent : altarComponents) {
                 world.setBlockToAir(x + altarComponent.x(), y + altarComponent.y(), z + altarComponent.z());
-                world.markBlockForUpdate(
-                        x + altarComponent.x(),
-                        y + altarComponent.y(),
-                        z + altarComponent.z());
+                world.markBlockForUpdate(x + altarComponent.x(), y + altarComponent.y(), z + altarComponent.z());
             }
         }
 
