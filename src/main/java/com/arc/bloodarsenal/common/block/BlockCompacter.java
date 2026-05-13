@@ -224,14 +224,14 @@ public class BlockCompacter extends BlockContainer {
 
         for (RitualComponent ritualComponent : ritualList) {
             world.setBlockToAir(
-                    x + ritualComponent.getX(direction),
+                    x + ritualComponent.x(direction),
                     y + ritualComponent.y(),
-                    z + ritualComponent.getZ(direction));
+                    z + ritualComponent.z(direction));
             world.setBlockToAir(x, y, z);
             world.markBlockForUpdate(
-                    x + ritualComponent.getX(direction),
+                    x + ritualComponent.x(direction),
                     y + ritualComponent.y(),
-                    z + ritualComponent.getZ(direction));
+                    z + ritualComponent.z(direction));
         }
 
         world.setBlock(x, y, z, ModBlocks.compacted_mrs);
