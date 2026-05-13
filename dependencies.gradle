@@ -2,7 +2,7 @@
 
 dependencies {
     api("com.github.GTNewHorizons:Baubles-Expanded:2.2.14-GTNH:dev")
-    api("com.github.GTNewHorizons:BloodMagic:UPDATEME:dev")
+    api("com.github.GTNewHorizons:BloodMagic:1.9.0:dev")
     compileOnly("com.github.GTNewHorizons:TinkersConstruct:1.14.68-GTNH:dev")
     compileOnly("com.github.GTNewHorizons:AppleCore:3.3.10:dev")
     compileOnly("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
