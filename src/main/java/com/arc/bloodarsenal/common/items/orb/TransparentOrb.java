@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TransparentOrb extends EnergyBattery {
 
-    IIcon[] icons = new IIcon[45];
+    IIcon[] icons = new IIcon[4];
 
     public TransparentOrb(int damage) {
         super(damage);
@@ -54,12 +54,12 @@ public class TransparentOrb extends EnergyBattery {
 
         int maxEssence = SoulNetworkHandler
                 .getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(SoulNetworkHandler.getOwnerName(itemStack)));
-        int section = maxEssence / 44;
+        int section = maxEssence / (icons.length - 1);
         int currentEssence = SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getOwnerName(itemStack));
 
         int fillLevel = 0;
         if (currentEssence > 0) {
-            if (section > 0) fillLevel = Math.min((currentEssence / section), 44);
+            if (section > 0) fillLevel = Math.min((currentEssence / section), (icons.length - 1));
         }
 
         // For save conversion - old versions tracked using metadata instead of NBT
