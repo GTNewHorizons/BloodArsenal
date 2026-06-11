@@ -1,7 +1,5 @@
 package com.arc.bloodarsenal.common.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -36,105 +34,91 @@ public class BlockBloodTNT extends BlockTNT {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int par1, int par2) {
-        return par1 == 0 ? bottom : (par1 == 1 ? top : blockIcon);
+    public IIcon getIcon(int side, int meta) {
+        return side == 0 ? bottom : (side == 1 ? top : blockIcon);
     }
 
     @Override
-    public void onBlockAdded(World par1World, int par2, int par3, int par4) {
-        super.onBlockAdded(par1World, par2, par3, par4);
+    public void onBlockAdded(World world, int x, int y, int z) {
+        super.onBlockAdded(world, x, y, z);
 
-        if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4)) {
-            onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
-            par1World.setBlockToAir(par2, par3, par4);
+        if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
+            onBlockDestroyedByPlayer(world, x, y, z, 1);
+            world.setBlockToAir(x, y, z);
         }
     }
 
     @Override
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, Block par5Block) {
-        if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4)) {
-            onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
-            par1World.setBlockToAir(par2, par3, par4);
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+        if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
+            onBlockDestroyedByPlayer(world, x, y, z, 1);
+            world.setBlockToAir(x, y, z);
         }
     }
 
     @Override
-    public int quantityDropped(Random par1Random) {
-        return 1;
-    }
-
-    @Override
-    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4, Explosion par5Explosion) {
-        if (!par1World.isRemote) {
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+        if (!world.isRemote) {
             EntityBloodTNT entitytntprimed = new EntityBloodTNT(
-                    par1World,
-                    (double) ((float) par2 + 0.5F),
-                    (double) ((float) par3 + 0.5F),
-                    (double) ((float) par4 + 0.5F),
-                    par5Explosion.getExplosivePlacedBy());
-            entitytntprimed.fuse = par1World.rand.nextInt(entitytntprimed.fuse / 4) + entitytntprimed.fuse / 8;
-            par1World.spawnEntityInWorld(entitytntprimed);
+                    world,
+                    (float) x + 0.5F,
+                    (float) y + 0.5F,
+                    (float) z + 0.5F,
+                    explosion.getExplosivePlacedBy());
+            entitytntprimed.fuse = world.rand.nextInt(entitytntprimed.fuse / 4) + entitytntprimed.fuse / 8;
+            world.spawnEntityInWorld(entitytntprimed);
         }
     }
 
     @Override
-    public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
-        spawnTNT(par1World, par2, par3, par4, par5, null);
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta) {
+        spawnTNT(world, x, y, z, meta, null);
     }
 
-    public void spawnTNT(World par1World, int par2, int par3, int par4, int par5,
-            EntityLivingBase par6EntityLivingBase) {
-        if (!par1World.isRemote) {
-            if ((par5 & 1) == 1) {
+    public void spawnTNT(World world, int x, int y, int z, int meta, EntityLivingBase entity) {
+        if (!world.isRemote) {
+            if ((meta & 1) == 1) {
                 EntityBloodTNT entitytntprimed = new EntityBloodTNT(
-                        par1World,
-                        (double) ((float) par2 + 0.5F),
-                        (double) ((float) par3 + 0.5F),
-                        (double) ((float) par4 + 0.5F),
-                        par6EntityLivingBase);
-                par1World.spawnEntityInWorld(entitytntprimed);
-                par1World.playSoundAtEntity(entitytntprimed, "game.tnt.primed", 1.0F, 1.0F);
+                        world,
+                        (float) x + 0.5F,
+                        (float) y + 0.5F,
+                        (float) z + 0.5F,
+                        entity);
+                world.spawnEntityInWorld(entitytntprimed);
+                world.playSoundAtEntity(entitytntprimed, "game.tnt.primed", 1.0F, 1.0F);
             }
         }
     }
 
     @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5, int par6,
-            float par7, float par8, float par9) {
-        if (par5.getCurrentEquippedItem() != null && (par5.getCurrentEquippedItem().getItem() == Items.flint_and_steel
-                || par5.getCurrentEquippedItem().getItem() == ModItems.bound_igniter)) {
-            spawnTNT(par1World, par2, par3, par4, 1, par5);
-            par1World.setBlockToAir(par2, par3, par4);
-            par5.getCurrentEquippedItem().damageItem(1, par5);
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
+        if (player.getCurrentEquippedItem() != null
+                && (player.getCurrentEquippedItem().getItem() == Items.flint_and_steel
+                        || player.getCurrentEquippedItem().getItem() == ModItems.bound_igniter)) {
+            spawnTNT(world, x, y, z, 1, player);
+            world.setBlockToAir(x, y, z);
+            player.getCurrentEquippedItem().damageItem(1, player);
             return true;
         } else {
-            return super.onBlockActivated(par1World, par2, par3, par4, par5, par6, par7, par8, par9);
+            return super.onBlockActivated(world, x, y, z, player, side, subX, subY, subZ);
         }
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity) {
-        if (par5Entity instanceof EntityArrow && !par1World.isRemote) {
-            EntityArrow entityarrow = (EntityArrow) par5Entity;
-
-            if (entityarrow.isBurning()) {
-                spawnTNT(
-                        par1World,
-                        par2,
-                        par3,
-                        par4,
-                        1,
-                        entityarrow.shootingEntity instanceof EntityLivingBase
-                                ? (EntityLivingBase) entityarrow.shootingEntity
-                                : null);
-                par1World.setBlockToAir(par2, par3, par4);
-            }
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+        if (!(entity instanceof EntityArrow entityarrow) || world.isRemote || !entityarrow.isBurning()) {
+            return;
         }
-    }
-
-    @Override
-    public boolean canDropFromExplosion(Explosion par1Explosion) {
-        return false;
+        spawnTNT(
+                world,
+                x,
+                y,
+                z,
+                1,
+                entityarrow.shootingEntity instanceof EntityLivingBase ? (EntityLivingBase) entityarrow.shootingEntity
+                        : null);
+        world.setBlockToAir(x, y, z);
     }
 
     @Override
