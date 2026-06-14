@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 
 public class EntityBloodTNT extends EntityTNTPrimed {
 
-    public int fuse;
     private EntityLivingBase tntPlacedBy;
 
     @SuppressWarnings("unused")
