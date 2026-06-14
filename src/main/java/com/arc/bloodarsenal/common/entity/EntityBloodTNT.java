@@ -1,65 +1,42 @@
 package com.arc.bloodarsenal.common.entity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.world.World;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+public class EntityBloodTNT extends EntityTNTPrimed {
 
-public class EntityBloodTNT extends Entity {
-
-    public int fuse;
     private EntityLivingBase tntPlacedBy;
 
-    public EntityBloodTNT(World par1World) {
-        super(par1World);
-        preventEntitySpawning = true;
-        setSize(0.98F, 0.98F);
-        yOffset = height / 2.0F;
+    @SuppressWarnings("unused")
+    public EntityBloodTNT(World world) {
+        super(world);
+        fuse = 60;
     }
 
-    public EntityBloodTNT(World par1World, double par2, double par4, double par6,
-            EntityLivingBase par8EntityLivingBase) {
-        this(par1World);
-        setPosition(par2, par4, par6);
-        float f = (float) (Math.random() * Math.PI * 2.0D);
-        motionX = (double) (-((float) Math.sin((double) f)) * 0.02F);
-        motionY = 0.20000000298023224D;
-        motionZ = (double) (-((float) Math.cos((double) f)) * 0.02F);
+    public EntityBloodTNT(World world, double x, double y, double z, EntityLivingBase owner) {
+        super(world, x, y, z, owner);
         fuse = 60;
-        prevPosX = par2;
-        prevPosY = par4;
-        prevPosZ = par6;
-        tntPlacedBy = par8EntityLivingBase;
+        tntPlacedBy = owner;
     }
 
     @Override
     public void entityInit() {}
 
     @Override
-    public boolean canTriggerWalking() {
-        return false;
-    }
-
-    @Override
-    public boolean canBeCollidedWith() {
-        return !isDead;
-    }
-
-    @Override
     public void onUpdate() {
         prevPosX = posX;
         prevPosY = posY;
         prevPosZ = posZ;
-        motionY -= 0.03999999910593033D;
+        motionY -= 0.04D;
         moveEntity(motionX, motionY, motionZ);
-        motionX *= 0.9800000190734863D;
-        motionY *= 0.9800000190734863D;
-        motionZ *= 0.9800000190734863D;
+        motionX *= 0.98D;
+        motionY *= 0.98D;
+        motionZ *= 0.98D;
 
         if (onGround) {
+            motionX *= 0.7D;
+            motionZ *= 0.7D;
             motionY *= -0.5D;
         }
 
@@ -77,22 +54,6 @@ public class EntityBloodTNT extends Entity {
     private void explode() {
         float f = 6.0F;
         worldObj.createExplosion(this, posX, posY, posZ, f, true);
-    }
-
-    @Override
-    protected void writeEntityToNBT(NBTTagCompound par1) {
-        par1.setByte("Fuse", (byte) fuse);
-    }
-
-    @Override
-    protected void readEntityFromNBT(NBTTagCompound par1) {
-        fuse = par1.getByte("Fuse");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public float getShadowSize() {
-        return 0.0F;
     }
 
     public EntityLivingBase getTntPlacedBy() {

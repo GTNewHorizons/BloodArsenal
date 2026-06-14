@@ -5,11 +5,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Calendar;
 
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -17,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.arc.bloodarsenal.common.block.ModBlocks;
+import com.arc.bloodarsenal.common.entity.EntityBloodTNT;
 import com.arc.bloodarsenal.common.entity.ModLivingDropsEvent;
 import com.arc.bloodarsenal.common.gui.GuiHandler;
 import com.arc.bloodarsenal.common.items.ModItems;
@@ -190,5 +197,28 @@ public class BloodArsenal {
         }
 
         BloodArsenalConfig.postInit();
+        registerDispenserBehavior();
+    }
+
+    public static void registerDispenserBehavior() {
+        BlockDispenser.dispenseBehaviorRegistry
+                .putObject(Item.getItemFromBlock(ModBlocks.blood_tnt), new BehaviorDefaultDispenseItem() {
+
+                    @Override
+                    protected ItemStack dispenseStack(IBlockSource dispenser, ItemStack dispensedItem) {
+                        EnumFacing enumfacing = BlockDispenser.func_149937_b(dispenser.getBlockMetadata());
+                        World world = dispenser.getWorld();
+                        int x = dispenser.getXInt() + enumfacing.getFrontOffsetX();
+                        int y = dispenser.getYInt() + enumfacing.getFrontOffsetY();
+                        int z = dispenser.getZInt() + enumfacing.getFrontOffsetZ();
+
+                        EntityBloodTNT tnt = new EntityBloodTNT(world, x + 0.5F, y + 0.5F, z + 0.5F, null);
+                        world.spawnEntityInWorld(tnt);
+                        world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, "game.tnt.primed", 1.0F, 1.0F);
+
+                        dispensedItem.stackSize--;
+                        return dispensedItem;
+                    }
+                });
     }
 }
