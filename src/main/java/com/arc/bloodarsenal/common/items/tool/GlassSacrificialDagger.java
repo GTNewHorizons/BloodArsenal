@@ -118,7 +118,7 @@ public class GlassSacrificialDagger extends Item {
             player.onDeath(BloodArsenal.deathFromBlood);
         }
 
-        if (world.rand.nextInt(4) < 1) {
+        if (!world.isRemote && world.rand.nextInt(4) < 1) {
             player.addPotionEffect(new PotionEffect(BloodArsenalConfig.bleedingID, world.rand.nextInt(5) * 20, 0));
         }
         return stack;
