@@ -87,7 +87,7 @@ public class BloodArsenalEventHooks {
         if (entityLiving != null) {
             if (entityLiving instanceof FakePlayer) return;
 
-            if (entityLiving.isPotionActive(BloodArsenal.bleeding)) {
+            if (!entityLiving.worldObj.isRemote && entityLiving.isPotionActive(BloodArsenal.bleeding)) {
                 int amplifier = entityLiving.getActivePotionEffect(BloodArsenal.bleeding).getAmplifier();
                 int duration = entityLiving.getActivePotionEffect(BloodArsenal.bleeding).getDuration();
                 int damage = (rand.nextInt(2) * (amplifier + 1) + rand.nextInt(2));
@@ -96,7 +96,6 @@ public class BloodArsenalEventHooks {
                 if (entityLiving.worldObj.getWorldTime() % (60 / (amplifier + 1)) == 0) {
                     entityLiving.attackEntityFrom(BloodArsenal.deathFromBlood, damage);
                     entityLiving.hurtResistantTime = Math.min(entityLiving.hurtResistantTime, 60 / (amplifier + 1));
-                    entityLiving.onEntityUpdate();
                 }
             }
 
